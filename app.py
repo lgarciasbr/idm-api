@@ -6,6 +6,6 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-    return "Hello World!", 200
+    return "Hello World! \o/", 200
 
 app.run()
