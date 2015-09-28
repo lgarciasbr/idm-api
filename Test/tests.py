@@ -1,5 +1,5 @@
 import unittest
-import app
+from app import app
 
 
 class Test_um(unittest.TestCase):
