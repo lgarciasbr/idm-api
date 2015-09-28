@@ -18,11 +18,11 @@ def json_deserializer(key, value, flags):
         return json.loads(value)
     raise Exception('Unknown serialization format')
 
-
+'''
 client = Client(('192.168.99.100', 32777), serializer=json_serializer, deserializer=json_deserializer)
 client.set('key', {'a':'Hello Memcached!', 'b':'Hello JSon!', 'c':'\o/'})
 result = client.get('key')
-
+'''
 
 @app.route('/')
 def hello_world():
