@@ -1,13 +1,11 @@
 import unittest
-from app import app
-
-__author__ = 'leandro'
+import app
 
 
 class Test_um(unittest.TestCase):
 
     def setUp(self):
-        self.app = app.test_client()
+        self.app = app
 
     def login(self, username, password):
         return self.app.post('/login', data={'username': username, 'password': password}, follow_redirects=True)
