@@ -1,14 +1,15 @@
-import unittest
 from app import app
+import unittest
 
 
-class Test_um(unittest.TestCase):
+class test(unittest.TestCase):
 
     def setUp(self):
-        self.app = app
+        pass
 
     def login(self, username, password):
-        return self.app.post('/login', data={'username': username, 'password': password}, follow_redirects=True)
+        tester = app.app.test_client(self)
+        return tester.post('/login', data={'username': username, 'password': password}, follow_redirects=True)
 
     def logout(self):
         return self.app.get('/logout', follow_redirects=True)
@@ -17,7 +18,7 @@ class Test_um(unittest.TestCase):
         rv = self.login('admin', 'default')
         assert 'You were logged in' in rv.data
 
-        rv = self.logout()
+        rv = self.logout
         assert 'You were logged out' in rv.data
 
         rv = self.login('adminx', 'default')

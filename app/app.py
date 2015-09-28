@@ -52,8 +52,8 @@ def logout():
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
-# Coloca a url do retorno no JSon, interessante para facilitar o retorno para o dev.
 
+# Coloca a url do retorno no JSon, interessante para facilitar o retorno para o dev.
 def make_public_task(task):
     new_task = {}
     for field in task:
@@ -68,5 +68,6 @@ def make_public_task(task):
 def get_tasks():
     return jsonify({'tasks': [make_public_task(task) for task in tasks]})
 
-app.debug = True
+
+# app.debug = True
 app.run()
