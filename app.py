@@ -1,6 +1,6 @@
 import json
 from pymemcache.client.base import Client
-from flask import Flask, jsonify, make_response, url_for
+from flask import Flask, jsonify, make_response, url_for, request
 
 app = Flask(__name__)
 
@@ -33,7 +33,10 @@ def hello_world():
 
 
 @app.route('/login')
-def login(username, password):
+def login():
+    username = request.args.get('username', 0, type=str)
+    password = request.args.get('password', 0, type=str)
+
     if username == 'admin' & password == 'default':
         return 'You were logged in', 200
     else:
