@@ -1,6 +1,6 @@
 import json
 from pymemcache.client.base import Client
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response, url_for
 
 app = Flask(__name__)
 
@@ -30,6 +30,40 @@ def hello_world():
         return jsonify(result), 200
     except ValueError as e:
         return e.message, 500
+
+
+@app.route('/login')
+def login(username, password):
+    if username == 'admin' & password == 'default':
+        return 'You were logged in', 200
+    else:
+        return 'Invalid username or password', 403
+
+
+@app.route('/logout')
+def logout():
+    return 'You were logged out', 200
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not found'}), 404)
+
+# Coloca a url do retorno no JSon, interessante para facilitar o retorno para o dev.
+
+def make_public_task(task):
+    new_task = {}
+    for field in task:
+        if field == 'id':
+            new_task['uri'] = url_for('get_task', task_id=task['id'], _external=True)
+        else:
+            new_task[field] = task[field]
+    return new_task
+
+
+@app.route('/todo/api/v1.0/tasks', methods=['GET'])
+def get_tasks():
+    return jsonify({'tasks': [make_public_task(task) for task in tasks]})
 
 app.debug = True
 app.run()
