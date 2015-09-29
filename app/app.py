@@ -18,11 +18,11 @@ def json_deserializer(key, value, flags):
         return json.loads(value)
     raise Exception('Unknown serialization format')
 
-'''
+
 client = Client(('192.168.99.100', 32777), serializer=json_serializer, deserializer=json_deserializer)
 client.set('key', {'a':'Hello Memcached!', 'b':'Hello JSon!', 'c':'\o/'})
 result = client.get('key')
-'''
+
 
 @app.route('/')
 def hello_world():
@@ -32,15 +32,16 @@ def hello_world():
         return e.message, 500
 
 
-@app.route('/login')
+@app.route('/login', methods=['POST'])
 def login():
-    username = request.args.get('username', 0, type=str)
-    password = request.args.get('password', 0, type=str)
+    try:
+        value = request.json
+        if request.headers['Content-Type'] == 'application/json' and value['username'] == 'admin' and value['password'] == 'default':
+            return 'You were logged in', 200
+    except:
+        pass
 
-    if username == 'admin' & password == 'default':
-        return 'You were logged in', 200
-    else:
-        return 'Invalid username or password', 403
+    return 'Invalid username or password', 403
 
 
 @app.route('/logout')
@@ -50,7 +51,14 @@ def logout():
 
 @app.errorhandler(404)
 def not_found(error):
-    return make_response(jsonify({'error': 'Not found'}), 404)
+    message = {
+            'status': 404,
+            'message': 'Not Found: ' + request.url
+    }
+    resp = jsonify(message)
+    resp.status_code = 404
+
+    return resp
 
 
 # Coloca a url do retorno no JSon, interessante para facilitar o retorno para o dev.
@@ -69,5 +77,5 @@ def get_tasks():
     return jsonify({'tasks': [make_public_task(task) for task in tasks]})
 
 
-# app.debug = True
+app.debug = True
 app.run()
