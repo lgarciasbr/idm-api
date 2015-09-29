@@ -1,3 +1,3 @@
-from app import app
+from Account import app
 
 app.run()

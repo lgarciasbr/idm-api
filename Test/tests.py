@@ -1,4 +1,4 @@
-from app.app import app
+from Account import app
 import unittest
 import json
 
