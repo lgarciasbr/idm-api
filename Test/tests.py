@@ -1,22 +1,16 @@
 from Account.main_app import app
+
 import unittest
 import json
 
+
 class SolutionTestCase(unittest.TestCase):
-
-
-    def setUp(self):
-        pass
-
-
-    def tearDown(self):
-        pass
 
 
     def logout(self):
         tester = app.test_client(self)
 
-        response = tester.get('/', content_type='application/json')
+        response = tester.get('/')
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
@@ -25,6 +19,14 @@ class SolutionTestCase(unittest.TestCase):
         )
 
 '''
+    def setUp(self):
+        pass
+
+
+    def tearDown(self):
+        pass
+
+
     def test_index(self):
 
         tester = app.test_client(self)
