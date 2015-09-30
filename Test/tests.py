@@ -2,24 +2,55 @@ from Account import app
 import unittest
 import json
 
-class test(unittest.TestCase):
+class SolutionTestCase(unittest.TestCase):
+
+
+  def test_index(self):
+
+    tester = app.app.test_client(self)
+
+    response = tester.get('/stunticons.json', content_type='application/json')
+
+    self.assertEqual(response.status_code, 200)
+    self.assertEqual(
+        response.data,
+        json.dumps([
+            "Motormaster",
+            "Dead End",
+            "Breakdown",
+            "Wildrider",
+            "Drag Strip"
+        ])
+    )
+
+
+
 
     def setUp(self):
+         #app['TESTING'] = True
+         self.app = app.app.test_client()
+
+
+    def tearDown(self):
         pass
 
-    def login(self, username, password):
-        tester = app.test_client(self)
-        return tester.post('/login', data={'username': username, 'password': password}, follow_redirects=True)
-
-        #response = self.client.get("/ajax/")
-        #self.assertEquals(response.json, dict(success=True))
 
     def logout(self):
-        return self.app.get('/logout', follow_redirects=True)
+        rv = self.app.get('/logout', follow_redirects=True)
+        assert 'You were logged out' in rv.data
+
+'''
+    def login(self, data, headers):
+        json_data = json.dumps(data)
+        response = self.app.post('/login', data=json_data, content_type=headers)
+
 
     def test_login_logout(self):
-        rv = self.login('admin', 'default')
+        headers = [('Content-Type', 'application/json')]
+        data = {'username': 'admin', 'password': 'default'}
+        rv = self.login(data, headers)
         assert 'You were logged in' in rv.data
+
 
         rv = self.logout
         assert 'You were logged out' in rv.data
@@ -30,7 +61,7 @@ class test(unittest.TestCase):
         rv = self.login('admin', 'defaultx')
         assert 'Invalid username or password' in rv.data
 
-'''
+
     def test_sum(self):
         tester = app.test_client(self)
         response = tester.get('/_add_numbers?a=2&b=6', content_type='application/json')

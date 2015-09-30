@@ -65,6 +65,12 @@ def not_found(error):
 
 '''
 
+        try:
+            user_submission = json.loads(request.data)
+        except ValueError:
+            return Response(status=405)
+
+
 # Coloca a url do retorno no JSon, interessante para facilitar o retorno para o dev.
 def make_public_task(task):
     new_task = {}
