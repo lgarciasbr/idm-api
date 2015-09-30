@@ -11,6 +11,9 @@ class test(unittest.TestCase):
         tester = app.test_client(self)
         return tester.post('/login', data={'username': username, 'password': password}, follow_redirects=True)
 
+        #response = self.client.get("/ajax/")
+        #self.assertEquals(response.json, dict(success=True))
+
     def logout(self):
         return self.app.get('/logout', follow_redirects=True)
 

@@ -33,7 +33,7 @@ def hello_world():
         return e.message, 500
 
 
-'''
+
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -63,6 +63,7 @@ def not_found(error):
 
     return resp
 
+'''
 
 # Coloca a url do retorno no JSon, interessante para facilitar o retorno para o dev.
 def make_public_task(task):
