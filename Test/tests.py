@@ -1,27 +1,21 @@
-from Account import main_app
+from Account.main_app import app
 
 import unittest
 import json
 
 
-class StunticonTest(unittest.TestCase):
+class TestSolution(unittest.TestCase):
 
   def test_index(self):
 
-    tester = main_app.app.test_client(self)
+    tester = app.test_client(self)
 
-    response = tester.get('/')
+    response = tester.get('/logout')
 
     self.assertEqual(response.status_code, 200)
     self.assertEqual(
         response.data,
-        json.dumps([
-            "Motormaster",
-            "Dead End",
-            "Breakdown",
-            "Wildrider",
-            "Drag Strip"
-        ])
+        'You were logged out'
     )
 
 if __name__ == '__main__':

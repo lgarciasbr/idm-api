@@ -10,10 +10,10 @@ config = {
     'download_url': 'Where to download it.',
     'author_email': 'My email.',
     'version': '0.1',
-    'install_requires': ['nose'],
+    'install_requires': ['pymemcache','flask'],
     'packages': ['NAME'],
     'scripts': [],
-    'name': 'projectname'
+    'name': 'Account'
 }
 
-setup(**config)
+setup(**config, requires=['pymemcache','flask'])
