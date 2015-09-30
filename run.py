@@ -1,3 +1,3 @@
-from Account import app
+from Account import main_app
 
-app.run()
+main_app.run()

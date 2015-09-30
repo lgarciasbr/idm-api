@@ -1,34 +1,12 @@
-from Account import app
+from Account.main_app import app
 import unittest
 import json
 
 class SolutionTestCase(unittest.TestCase):
 
 
-  def test_index(self):
-
-    tester = app.app.test_client(self)
-
-    response = tester.get('/stunticons.json', content_type='application/json')
-
-    self.assertEqual(response.status_code, 200)
-    self.assertEqual(
-        response.data,
-        json.dumps([
-            "Motormaster",
-            "Dead End",
-            "Breakdown",
-            "Wildrider",
-            "Drag Strip"
-        ])
-    )
-
-
-
-
     def setUp(self):
-         #app['TESTING'] = True
-         self.app = app.app.test_client()
+        pass
 
 
     def tearDown(self):
@@ -36,10 +14,35 @@ class SolutionTestCase(unittest.TestCase):
 
 
     def logout(self):
-        rv = self.app.get('/logout', follow_redirects=True)
-        assert 'You were logged out' in rv.data
+        tester = app.test_client(self)
+
+        response = tester.get('/', content_type='application/json')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.data,
+            json.dumps({'a':'Hello Memcached!', 'b':'Hello JSon!', 'c':'\o/'})
+        )
 
 '''
+    def test_index(self):
+
+        tester = app.test_client(self)
+
+        response = tester.get('/stunticons.json', content_type='application/json')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.data,
+            json.dumps([
+                "Motormaster",
+                "Dead End",
+                "Breakdown",
+                "Wildrider",
+                "Drag Strip"
+            ])
+        )
+
     def login(self, data, headers):
         json_data = json.dumps(data)
         response = self.app.post('/login', data=json_data, content_type=headers)

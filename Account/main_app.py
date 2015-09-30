@@ -33,8 +33,6 @@ def hello_world():
         return e.message, 500
 
 
-
-
 @app.route('/login', methods=['POST'])
 def login():
     try:
