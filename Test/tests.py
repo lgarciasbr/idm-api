@@ -33,31 +33,35 @@ class TestSolution(unittest.TestCase):
             'Welcome!'
         )
 
+
     # Login
     def test_login_assert(self):
 
         tester = app.test_client(self)
 
         headers = [('Content-Type', 'application/json')]
-        data = {'username':'admin', 'password':'default'}
-        json_data = json.dumps(data)
-        json_data_length = len(json_data)
-        headers.append(('Content-Length', json_data_length))
-        response = tester.post('/login', headers=headers, data)
+        data = '{"username":"admin", "password":"default"}'
+        #json_data = json.dumps(data)
+        #json_data_length = len(json_data)
+        #headers.append(('Content-Length', json_data_length))
+        response = tester.post('/login', data, headers=headers)
 
         self.assertEqual(response.status_code, 200)
 
-
-    def test_login_not_assert(self):
+    def test_login_not_assert_get(self):
         tester = app.test_client(self)
 
         response = tester.get('/login')
 
-        self.assertEqual(response.status_code, 200)
-        self.assertNotEqual(
-            response.data,
-            'I was logged out'
-        )
+        self.assertEqual(response.status_code, 405)
+
+    def test_login_not_assert_post(self):
+        tester = app.test_client(self)
+
+        response = tester.post('/login')
+
+        self.assertEqual(response.status_code, 403)
+
 
     # Logout
     def test_logout_assert(self):
@@ -81,6 +85,7 @@ class TestSolution(unittest.TestCase):
             response.data,
             'I was logged out'
         )
+
 
     # Error 404
     def test_error_404_assert(self):
