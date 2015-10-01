@@ -1,7 +1,7 @@
-from flask import json
-from Account.main_app import app
-
+import json
 import unittest
+
+from Account.main_app import app
 from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSN_404
 
 
@@ -40,7 +40,7 @@ class TestSolution(unittest.TestCase):
         tester = app.test_client(self)
 
         headers = [('Content-Type', 'application/json')]
-        data = '{"username":"admin", "password":"default"}'
+        data = json.dumps({'username':'admin', 'password':'default'})
         #json_data = json.dumps(data)
         #json_data_length = len(json_data)
         #headers.append(('Content-Length', json_data_length))
