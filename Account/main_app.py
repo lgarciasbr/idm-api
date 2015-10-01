@@ -12,10 +12,6 @@ def hello_world():
     return jsonify({'Project': PROJECT_NAME, 'Description': PROJECT_DESCRIPTION}), 200
 
 
-set_memcached("welcome", {'a': 'Hello Memcached!', 'b': 'Hello JSon!', 'c': '\o/'})
-result = get_memcached("welcome")
-
-
 @app.route('/login', methods=['POST'])
 def login():
     try:
@@ -35,9 +31,16 @@ def login():
     return 'Invalid username or password', 403
 
 
-@app.route('/logout')
+@app.route('/logout', methods=['POST'])
 def logout():
-    return 'You were logged out', 200
+    try:
+        user = get_memcached(request.headers['token'])
+
+        return jsonify({'Message': 'You were logged out!', 'Username': user['username']}), 200
+
+    except:
+
+        return jsonify({'Message': 'Invalid Token!', 'Token': request.headers['token']}), 403
 
 
 @app.errorhandler(404)
