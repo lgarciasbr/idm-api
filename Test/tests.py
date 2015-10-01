@@ -41,9 +41,8 @@ class TestSolution(unittest.TestCase):
 
         headers = [('Content-Type', 'application/json')]
         data = json.dumps({'username':'admin', 'password':'default'})
-        #json_data = json.dumps(data)
-        #json_data_length = len(json_data)
-        #headers.append(('Content-Length', json_data_length))
+        # json_data_length = len(data)
+        # headers.append(('Content-Length', json_data_length))
         response = tester.post('/login', data, headers=headers)
 
         self.assertEqual(response.status_code, 200)
