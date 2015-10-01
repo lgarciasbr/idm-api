@@ -1,7 +1,6 @@
 from Account.main_app import app
 
 import unittest
-import json
 
 
 class TestSolution(unittest.TestCase):
@@ -55,7 +54,7 @@ class TestSolution(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
         self.assertNotEqual(
             response.data,
-            '{\n  "message": "Not Found: http://127.0.0.1:5000/eux", \n  "status": 404\n}'
+            'Not Found'
         )
 
 
