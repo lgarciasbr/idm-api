@@ -32,6 +32,29 @@ class TestSolution(unittest.TestCase):
             'Welcome!'
         )
 
+    # Login
+    def test_login_assert(self):
+        tester = app.test_client(self)
+
+        response = tester.get('/login')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.data,
+            'You were logged out'
+        )
+
+    def test_login_not_assert(self):
+        tester = app.test_client(self)
+
+        response = tester.get('/login')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertNotEqual(
+            response.data,
+            'I was logged out'
+        )
+
     # Logout
     def test_logout_assert(self):
         tester = app.test_client(self)
