@@ -1,4 +1,7 @@
 from flask import json
+from pymemcache.client import Client
+
+# JSon
 
 
 def json_serializer(key, value):
@@ -13,3 +16,13 @@ def json_deserializer(key, value, flags):
     if flags == 2:
         return json.loads(value)
     raise Exception('Unknown serialization format')
+
+
+def get_memcached(key):
+    client = Client(('192.168.99.100', 32777), serializer=json_serializer, deserializer=json_deserializer)
+    return client.get(key)
+
+
+def set_memcached(key, value):
+    client = Client(('192.168.99.100', 32777), serializer=json_serializer, deserializer=json_deserializer)
+    client.set(key, value)

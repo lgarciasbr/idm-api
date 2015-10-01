@@ -1,23 +1,18 @@
-from pymemcache.client.base import Client
 from flask import Flask, jsonify, request
+from Account.util import get_memcached, set_memcached
 
 import uuid
-from Account import util
+
 
 app = Flask(__name__)
 
-
-client = Client(('192.168.99.100', 32777), serializer=util.json_serializer, deserializer=util.json_deserializer)
-client.set('key', {'a':'Hello Memcached!', 'b':'Hello JSon!', 'c':'\o/'})
-result = client.get('key')
+set_memcached("welcome", {'a':'Hello Memcached!', 'b':'Hello JSon!', 'c':'\o/'})
 
 
 @app.route('/')
 def hello_world():
-    try:
-        return jsonify({'a':'Hello Memcached!', 'b':'Hello JSon!', 'c':'\o/'}), 200
-    except ValueError as e:
-        return e.message, 500
+        result = get_memcached("welcome")
+        return jsonify(result), 200
 
 
 @app.route('/login', methods=['POST'])
