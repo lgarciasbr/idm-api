@@ -54,16 +54,17 @@ def not_found(error):
 
     return resp
 
+#todo colocar as mensagens no arquivo de config
+#todo limpar o memcached depois do logout
+#todo criar erro personalizado 550
+#todo como eu mostro so o usuario que foi deslogado?
+
+#todo colocar as acoes dos endpoints em outros arquivos e trabalhar versao.
+
+#todo criar os testes de login
+#todo arrumar os testes de logout
+
 '''
-- colocar as mensagens no arquivo de ocnfig
-- limpar o memcached depois do logout
-- criar erro personalizado 550
-- criar os testes de login
-- arrumar os testes de logout
-- como eu mostro só o usuário que foi deslogado?
-- colocar as ações dos endpoints em outros arquivos e trabalhar versão.
-
-
         try:
             user_submission = json.loads(request.data)
         except ValueError:
@@ -86,7 +87,6 @@ def get_tasks():
     return jsonify({'tasks': [make_public_task(task) for task in tasks]})
 
 '''
-
 
 # app.debug = True
 app.run()
