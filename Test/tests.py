@@ -1,3 +1,4 @@
+from flask import json
 from Account.main_app import app
 
 import unittest
@@ -34,15 +35,18 @@ class TestSolution(unittest.TestCase):
 
     # Login
     def test_login_assert(self):
+
         tester = app.test_client(self)
 
-        response = tester.get('/login')
+        headers = [('Content-Type', 'application/json')]
+        data = {'username':'admin', 'password':'default'}
+        json_data = json.dumps(data)
+        json_data_length = len(json_data)
+        headers.append(('Content-Length', json_data_length))
+        response = tester.post('/login', headers=headers, data)
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            response.data,
-            'You were logged out'
-        )
+
 
     def test_login_not_assert(self):
         tester = app.test_client(self)
