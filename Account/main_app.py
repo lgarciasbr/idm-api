@@ -20,9 +20,15 @@ result = get_memcached("welcome")
 def login():
     try:
         value = request.json
-        if request.headers['Content-Type'] == 'application/json' and value['username'] == 'admin' and value[
-            'password'] == 'default':
-            return 'You were logged in ' + uuid.uuid4().__str__(), 200
+        if request.headers['Content-Type'] == 'application/json' and \
+                value['username'] == 'admin' and \
+                value['password'] == 'default':
+            token = uuid.uuid4().__str__()
+
+            set_memcached(token, {'Token': token, 'Username': value['username']})
+
+            return jsonify({'Message': 'You were logged in!', 'Token': token}), 200
+
     except:
         pass
 
