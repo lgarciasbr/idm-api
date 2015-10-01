@@ -36,7 +36,7 @@ def logout():
     try:
         user = get_memcached(request.headers['token'])
 
-        return jsonify({'Message': 'You were logged out!', 'Username': user['username']}), 200
+        return jsonify({'Message': 'You were logged out!', 'User': user}), 200
 
     except:
 
@@ -54,8 +54,15 @@ def not_found(error):
 
     return resp
 
-
 '''
+- colocar as mensagens no arquivo de ocnfig
+- limpar o memcached depois do logout
+- criar erro personalizado 550
+- criar os testes de login
+- arrumar os testes de logout
+- como eu mostro só o usuário que foi deslogado?
+- colocar as ações dos endpoints em outros arquivos e trabalhar versão.
+
 
         try:
             user_submission = json.loads(request.data)
