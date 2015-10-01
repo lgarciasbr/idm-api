@@ -4,6 +4,11 @@ from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGIN, MSG_LOGOUT, MSG
 
 import uuid
 
+#todo criar erro personalizado 550
+#todo colocar as acoes dos endpoints em outros arquivos e trabalhar versao.
+#todo limpar o memcached depois do logout
+#todo como eu mostro so o usuario que foi deslogado?
+
 app = Flask(__name__)
 
 
@@ -54,14 +59,6 @@ def not_found(error):
 
     return resp
 
-#todo limpar o memcached depois do logout
-#todo criar erro personalizado 550
-#todo como eu mostro so o usuario que foi deslogado?
-
-#todo colocar as acoes dos endpoints em outros arquivos e trabalhar versao.
-
-#todo criar os testes de login
-#todo arrumar os testes de logout
 
 '''
         try:

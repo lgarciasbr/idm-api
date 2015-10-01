@@ -3,6 +3,8 @@ from Account.main_app import app
 import unittest
 from config import PROJECT_NAME, PROJECT_DESCRIPTION
 
+#todo criar os testes de login
+#todo arrumar os testes de logout
 
 class TestSolution(unittest.TestCase):
 
