@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from Account.util import get_memcached, set_memcached
-from config import PROJECT_NAME, PROJECT_DESCRIPTION
+from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGIN, MSG_LOGOUT, MSG_INVALID_TOKEN
 
 import uuid
 
@@ -23,7 +23,7 @@ def login():
 
             set_memcached(token, {'Token': token, 'Username': value['username']})
 
-            return jsonify({'Message': 'You were logged in!', 'Token': token}), 200
+            return jsonify({'Message': MSG_LOGIN, 'Token': token}), 200
 
     except:
         pass
@@ -36,11 +36,11 @@ def logout():
     try:
         user = get_memcached(request.headers['token'])
 
-        return jsonify({'Message': 'You were logged out!', 'User': user}), 200
+        return jsonify({'Message': MSG_LOGOUT, 'User': user}), 200
 
     except:
 
-        return jsonify({'Message': 'Invalid Token!', 'Token': request.headers['token']}), 403
+        return jsonify({'Message': MSG_INVALID_TOKEN, 'Token': request.headers['token']}), 403
 
 
 @app.errorhandler(404)
@@ -54,7 +54,6 @@ def not_found(error):
 
     return resp
 
-#todo colocar as mensagens no arquivo de config
 #todo limpar o memcached depois do logout
 #todo criar erro personalizado 550
 #todo como eu mostro so o usuario que foi deslogado?
