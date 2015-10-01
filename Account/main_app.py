@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from Account.util import get_memcached, set_memcached, delete_memcached
-from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGIN, MSG_LOGOUT, MSG_INVALID_TOKEN, MSN_404
+from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGIN, MSG_LOGOUT, MSG_INVALID_TOKEN, MSN_404, MSG_LOGIN_ERROR
 
 import uuid
 
@@ -20,9 +20,11 @@ def hello_world():
 def login():
     try:
         value = request.json
+
         if request.headers['Content-Type'] == 'application/json' and \
                 value['username'] == 'admin' and \
                 value['password'] == 'default':
+
             token = uuid.uuid4().__str__()
 
             set_memcached(token, {'Token': token, 'Username': value['username']})
@@ -32,7 +34,7 @@ def login():
     except:
         pass
 
-    return 'Invalid username or password', 403
+    return MSG_LOGIN_ERROR, 403
 
 
 @app.route('/logout', methods=['POST'])

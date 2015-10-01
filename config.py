@@ -8,6 +8,7 @@ MEMCACHED_PORT = 32777
 
 # General Text
 MSG_LOGIN = 'You were logged in!'
+MSG_LOGIN_ERROR = 'Invalid username or password'
 MSG_LOGOUT = 'You were logged out!'
 MSG_INVALID_TOKEN = 'Invalid Token!'
 MSG_INVALID_SERIALIZATION = 'Unknown serialization format'
