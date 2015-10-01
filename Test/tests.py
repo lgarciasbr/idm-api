@@ -1,14 +1,36 @@
 from Account.main_app import app
 
 import unittest
+from config import PROJECT_NAME, PROJECT_DESCRIPTION
 
 
 class TestSolution(unittest.TestCase):
 
+    # Welcome
+    def test_welcome_assert(self):
+        tester = app.test_client(self)
+
+        response = tester.get('/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.data,
+            '{\n  "Description": "' + PROJECT_DESCRIPTION + '", \n  "Project": "' + PROJECT_NAME + '"\n}'
+        )
+
+    def test_welcome_not_assert(self):
+        tester = app.test_client(self)
+
+        response = tester.get('/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertNotEqual(
+            response.data,
+            'Welcome!'
+        )
+
     # Logout
-
     def test_logout_assert(self):
-
         tester = app.test_client(self)
 
         response = tester.get('/logout')
@@ -20,7 +42,6 @@ class TestSolution(unittest.TestCase):
         )
 
     def test_logout_not_assert(self):
-
         tester = app.test_client(self)
 
         response = tester.get('/logout')
@@ -32,9 +53,7 @@ class TestSolution(unittest.TestCase):
         )
 
     # Error 404
-
     def test_error_404_assert(self):
-
         tester = app.test_client(self)
 
         response = tester.get('/pnf')
@@ -46,7 +65,6 @@ class TestSolution(unittest.TestCase):
         )
 
     def test_error_404_not_assert(self):
-
         tester = app.test_client(self)
 
         response = tester.get('/pnf')

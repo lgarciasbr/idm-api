@@ -1,25 +1,27 @@
 from flask import Flask, jsonify, request
 from Account.util import get_memcached, set_memcached
+from config import PROJECT_NAME, PROJECT_DESCRIPTION
 
 import uuid
 
-
 app = Flask(__name__)
-
-set_memcached("welcome", {'a':'Hello Memcached!', 'b':'Hello JSon!', 'c':'\o/'})
 
 
 @app.route('/')
 def hello_world():
-        result = get_memcached("welcome")
-        return jsonify(result), 200
+    return jsonify({'Project': PROJECT_NAME, 'Description': PROJECT_DESCRIPTION}), 200
+
+
+set_memcached("welcome", {'a': 'Hello Memcached!', 'b': 'Hello JSon!', 'c': '\o/'})
+result = get_memcached("welcome")
 
 
 @app.route('/login', methods=['POST'])
 def login():
     try:
         value = request.json
-        if request.headers['Content-Type'] == 'application/json' and value['username'] == 'admin' and value['password'] == 'default':
+        if request.headers['Content-Type'] == 'application/json' and value['username'] == 'admin' and value[
+            'password'] == 'default':
             return 'You were logged in ' + uuid.uuid4().__str__(), 200
     except:
         pass
@@ -35,13 +37,14 @@ def logout():
 @app.errorhandler(404)
 def not_found(error):
     message = {
-            'status': 404,
-            'message': 'Not Found: ' + request.url
+        'status': 404,
+        'message': 'Not Found: ' + request.url
     }
     resp = jsonify(message)
     resp.status_code = 404
 
     return resp
+
 
 '''
 
@@ -69,5 +72,5 @@ def get_tasks():
 '''
 
 
-#app.debug = True
+# app.debug = True
 app.run()
