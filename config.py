@@ -12,6 +12,9 @@ MSG_LOGOUT = 'You were logged out!'
 MSG_INVALID_TOKEN = 'Invalid Token!'
 MSG_INVALID_SERIALIZATION = 'Unknown serialization format'
 
+#Error
+MSN_404 = 'Not Found: '
+
 '''
 # mail server settings
 MAIL_SERVER = 'localhost'

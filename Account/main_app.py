@@ -1,13 +1,12 @@
 from flask import Flask, jsonify, request
-from Account.util import get_memcached, set_memcached
-from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGIN, MSG_LOGOUT, MSG_INVALID_TOKEN
+from Account.util import get_memcached, set_memcached, delete_memcached
+from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGIN, MSG_LOGOUT, MSG_INVALID_TOKEN, MSN_404
 
 import uuid
 
-#todo criar erro personalizado 550
-#todo colocar as acoes dos endpoints em outros arquivos e trabalhar versao.
-#todo limpar o memcached depois do logout
 #todo como eu mostro so o usuario que foi deslogado?
+#todo capturar a url que o servico esta rodando.
+#todo colocar as acoes dos endpoints em outros arquivos e trabalhar versao.
 
 app = Flask(__name__)
 
@@ -41,18 +40,21 @@ def logout():
     try:
         user = get_memcached(request.headers['token'])
 
-        return jsonify({'Message': MSG_LOGOUT, 'User': user}), 200
+        if user is not None:
+            delete_memcached(request.headers['token'])
+            return jsonify({'Message': MSG_LOGOUT, 'User': user}), 200
 
     except:
+        pass
 
-        return jsonify({'Message': MSG_INVALID_TOKEN, 'Token': request.headers['token']}), 403
+    return jsonify({'Message': MSG_INVALID_TOKEN, 'Token': request.headers['token']}), 403
 
 
 @app.errorhandler(404)
 def not_found(error):
     message = {
         'status': 404,
-        'message': 'Not Found: ' + request.url
+        'message': MSN_404 + request.url
     }
     resp = jsonify(message)
     resp.status_code = 404
