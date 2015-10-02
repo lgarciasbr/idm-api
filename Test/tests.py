@@ -5,8 +5,6 @@ from Account.main_app import app
 from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSN_404, MSG_LOGIN, MSG_LOGOUT, MSG_LOGIN_ERROR
 
 
-#todo arrumar os testes de logout
-
 class TestSolution(unittest.TestCase):
 
     # Welcome
@@ -96,6 +94,7 @@ class TestSolution(unittest.TestCase):
             MSG_LOGIN_ERROR
         )
 
+    #todo arrumar a mensagem do 405
     def test_login_not_assert_get(self):
         tester = app.test_client(self)
 
@@ -103,6 +102,7 @@ class TestSolution(unittest.TestCase):
 
         self.assertEqual(response.status_code, 405)
 
+    #todo arrumar a mensagem do 403
     def test_login_not_assert_post(self):
         tester = app.test_client(self)
 
@@ -110,7 +110,7 @@ class TestSolution(unittest.TestCase):
 
         self.assertEqual(response.status_code, 403)
 
-
+    #todo arrumar os testes de logout
     # Logout
     def test_logout_assert(self):
         tester = app.test_client(self)
@@ -134,7 +134,7 @@ class TestSolution(unittest.TestCase):
             'I was logged out'
         )
 
-
+    #todo capturar a url de forma dinmica
     # Error
     def test_error_404_assert(self):
         tester = app.test_client(self)

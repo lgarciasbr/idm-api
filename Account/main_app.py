@@ -5,8 +5,6 @@ from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGIN, MSG_LOGOUT, MSG
 
 import uuid
 
-#todo como eu mostro so o usuario que foi deslogado?
-#todo capturar a url que o servico esta rodando.
 #todo colocar as acoes dos endpoints em outros arquivos e trabalhar versao.
 
 app = Flask(__name__)
@@ -37,7 +35,7 @@ def login():
 
     return MSG_LOGIN_ERROR, 403
 
-
+#todo mostar so o nome do usuario que foi deslogado.
 @app.route('/logout', methods=['POST'])
 def logout():
     try:
@@ -52,6 +50,22 @@ def logout():
 
     return jsonify({'Message': MSG_INVALID_TOKEN, 'Token': request.headers['token']}), 403
 
+'''
+# Coloca a url do retorno no JSon, interessante para facilitar o retorno para o dev. Usar para a lista de usuarios.
+def make_public_task(task):
+    new_task = {}
+    for field in task:
+        if field == 'id':
+            new_task['uri'] = url_for('get_task', task_id=task['id'], _external=True)
+        else:
+            new_task[field] = task[field]
+    return new_task
+
+
+@app.route('/todo/api/v1.0/tasks', methods=['GET'])
+def get_tasks():
+    return jsonify({'tasks': [make_public_task(task) for task in tasks]})
+'''
 
 # Error
 @app.errorhandler(404)
@@ -77,29 +91,6 @@ def not_found(error):
 
     return resp
 
-'''
-        try:
-            user_submission = json.loads(request.data)
-        except ValueError:
-            return Response(status=405)
-
-
-# Coloca a url do retorno no JSon, interessante para facilitar o retorno para o dev.
-def make_public_task(task):
-    new_task = {}
-    for field in task:
-        if field == 'id':
-            new_task['uri'] = url_for('get_task', task_id=task['id'], _external=True)
-        else:
-            new_task[field] = task[field]
-    return new_task
-
-
-@app.route('/todo/api/v1.0/tasks', methods=['GET'])
-def get_tasks():
-    return jsonify({'tasks': [make_public_task(task) for task in tasks]})
-
-'''
 
 # app.debug = True
 app.run()
