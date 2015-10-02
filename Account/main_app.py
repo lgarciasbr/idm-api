@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def hello_world():
+def home():
     return jsonify({'project': PROJECT_NAME, 'description': PROJECT_DESCRIPTION}), 200
 
 
@@ -90,7 +90,7 @@ def not_found(error):
 
 
 @app.errorhandler(405)
-def not_found(error):
+def not_allowed(error):
     message = {
         'status': 405,
         'message': MSN_405 + request.url
