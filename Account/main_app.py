@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from Account.util import get_memcached, set_memcached, delete_memcached
-from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGIN, MSG_LOGOUT, MSG_INVALID_TOKEN, MSN_404, MSG_LOGIN_ERROR
+from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGIN, MSG_LOGOUT, MSG_INVALID_TOKEN, MSN_404, MSG_LOGIN_ERROR, \
+    MSN_405
 
 import uuid
 
@@ -52,6 +53,7 @@ def logout():
     return jsonify({'Message': MSG_INVALID_TOKEN, 'Token': request.headers['token']}), 403
 
 
+# Error
 @app.errorhandler(404)
 def not_found(error):
     message = {
@@ -63,6 +65,17 @@ def not_found(error):
 
     return resp
 
+
+@app.errorhandler(405)
+def not_found(error):
+    message = {
+        'status': 405,
+        'message': MSN_405 + request.url
+    }
+    resp = jsonify(message)
+    resp.status_code = 405
+
+    return resp
 
 '''
         try:

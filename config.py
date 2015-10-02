@@ -15,6 +15,7 @@ MSG_INVALID_SERIALIZATION = 'Unknown serialization format'
 
 #Error
 MSN_404 = 'Not Found: '
+MSN_405 = 'The method is not allowed for '
 
 '''
 # mail server settings
