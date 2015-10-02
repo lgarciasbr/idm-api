@@ -84,32 +84,50 @@ class TestSolution(unittest.TestCase):
 
     #todo arrumar os testes de logout
     # Logout
+    def logout(self,token):
+        tester = app.test_client(self)
+
+        header = [('Content-Type', 'application/json')]
+
+        header.append(('token', token))
+
+        return tester.post('/logout', headers=header)
+
+
     def test_logout_assert(self):
 
         response_login = self.login('admin', 'default')
 
         if response_login.status_code == 200:
-            tester = app.test_client(self)
-
-            header = [('Content-Type', 'application/json')]
-
-            header.append(('token', json.loads(response_login.data)['token']))
-
-            response = tester.post('/logout', headers=header)
+            response = self.logout(json.loads(response_login.data)['token'])
 
             self.assertEqual(response.status_code, 200)
             self.assertEqual(
                 json.loads(response.data)['message'],
                 MSG_LOGOUT)
 
+    def test_logout_assert_second_shot(self):
+
+        response_login = self.login('admin', 'default')
+
+        token = json.loads(response_login.data)['token']
+
+        if response_login.status_code == 200:
+            #logout
+            self.logout(token)
+            #Second Shot
+            response = self.logout(token)
+
+            self.assertEqual(response.status_code, 403)
+            self.assertEqual(
+                json.loads(response.data)['message'],
+                MSG_INVALID_TOKEN)
+            self.assertEqual(
+                json.loads(response.data)['token'],
+                token)
+
     def test_logout_not_assert(self):
-        tester = app.test_client(self)
-
-        header = [('Content-Type', 'application/json')]
-
-        header.append(('token', 'error'))
-
-        response = tester.post('/logout', headers=header)
+        response = self.logout('error')
 
         self.assertEqual(response.status_code, 403)
         self.assertEqual(
