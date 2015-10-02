@@ -113,11 +113,15 @@ class TestSolution(unittest.TestCase):
     def test_logout_assert(self):
         tester = app.test_client(self)
 
-        response = tester.get('/logout')
+        header = [('Content-Type', 'application/json')]
+
+        header.append(('token', 'error'))
+
+        response = tester.post('/logout', headers=header)
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
-            response.data,
+            json.loads(response.data)['message'],
             MSG_LOGOUT)
 
     def test_logout_not_assert(self):

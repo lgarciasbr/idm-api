@@ -44,7 +44,7 @@ def logout():
 
         if user is not None:
             delete_memcached(request.headers['token'])
-            return jsonify({'message': MSG_LOGOUT, 'user': user}), 200
+            return jsonify({'message': MSG_LOGOUT}), 200
 
     except:
         pass
