@@ -14,9 +14,8 @@ class TestSolution(unittest.TestCase):
         response = tester.get('/')
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            response.data,
-            '{\n  "description": "' + PROJECT_DESCRIPTION + '", \n  "project": "' + PROJECT_NAME + '"\n}')
+        self.assertEqual(json.loads(response.data)['description'], PROJECT_DESCRIPTION)
+        self.assertEqual(json.loads(response.data)['project'], PROJECT_NAME)
 
 
     # Login
@@ -37,33 +36,25 @@ class TestSolution(unittest.TestCase):
         response = self.login('admin', 'default')
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            json.loads(response.data)['message'],
-            MSG_LOGIN)
+        self.assertEqual(json.loads(response.data)['message'], MSG_LOGIN)
 
     def test_login_not_assert_user(self):
         response = self.login('error', 'default')
 
         self.assertEqual(response.status_code, 403)
-        self.assertEqual(
-            json.loads(response.data)['message'],
-            MSG_LOGIN_ERROR)
+        self.assertEqual(json.loads(response.data)['message'], MSG_LOGIN_ERROR)
 
     def test_login_not_assert_password(self):
         response = self.login('admin', 'error')
 
         self.assertEqual(response.status_code, 403)
-        self.assertEqual(
-            json.loads(response.data)['message'],
-            MSG_LOGIN_ERROR)
+        self.assertEqual(json.loads(response.data)['message'], MSG_LOGIN_ERROR)
 
     def test_login_not_assert_username_password(self):
         response = self.login('error', 'error')
 
         self.assertEqual(response.status_code, 403)
-        self.assertEqual(
-            json.loads(response.data)['message'],
-            MSG_LOGIN_ERROR)
+        self.assertEqual(json.loads(response.data)['message'], MSG_LOGIN_ERROR)
 
     def test_login_not_assert_get(self):
         tester = app.test_client(self)
@@ -78,9 +69,7 @@ class TestSolution(unittest.TestCase):
         response = tester.post('/login')
 
         self.assertEqual(response.status_code, 403)
-        self.assertEqual(
-            json.loads(response.data)['message'],
-            MSG_LOGIN_ERROR)
+        self.assertEqual(json.loads(response.data)['message'], MSG_LOGIN_ERROR)
 
     # Logout
     def logout(self,token):
@@ -101,9 +90,7 @@ class TestSolution(unittest.TestCase):
             response = self.logout(json.loads(response_login.data)['token'])
 
             self.assertEqual(response.status_code, 200)
-            self.assertEqual(
-                json.loads(response.data)['message'],
-                MSG_LOGOUT)
+            self.assertEqual(json.loads(response.data)['message'], MSG_LOGOUT)
 
     def test_logout_assert_second_shot(self):
 
@@ -118,23 +105,15 @@ class TestSolution(unittest.TestCase):
             response = self.logout(token)
 
             self.assertEqual(response.status_code, 403)
-            self.assertEqual(
-                json.loads(response.data)['message'],
-                MSG_INVALID_TOKEN)
-            self.assertEqual(
-                json.loads(response.data)['token'],
-                token)
+            self.assertEqual(json.loads(response.data)['message'], MSG_INVALID_TOKEN)
+            self.assertEqual(json.loads(response.data)['token'], token)
 
     def test_logout_not_assert(self):
         response = self.logout('error')
 
         self.assertEqual(response.status_code, 403)
-        self.assertEqual(
-            json.loads(response.data)['message'],
-            MSG_INVALID_TOKEN)
-        self.assertEqual(
-            json.loads(response.data)['token'],
-            'error')
+        self.assertEqual(json.loads(response.data)['message'], MSG_INVALID_TOKEN)
+        self.assertEqual(json.loads(response.data)['token'], 'error')
 
     #todo capturar a url de forma dinmica
     # Error
@@ -144,9 +123,8 @@ class TestSolution(unittest.TestCase):
         response = tester.get('/pnf')
 
         self.assertEqual(response.status_code, 404)
-        self.assertEqual(
-            response.data,
-            '{\n  "message": "' + MSN_404 + 'http://localhost/pnf", \n  "status": 404\n}')
+        self.assertEqual(json.loads(response.data)['message'], MSN_404 + 'http://localhost/pnf')
+        self.assertEqual(json.loads(response.data)['status'], 404)
 
 
 if __name__ == '__main__':

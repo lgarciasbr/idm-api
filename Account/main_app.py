@@ -36,7 +36,6 @@ def login():
     return jsonify({'message': MSG_LOGIN_ERROR}), 403
 
 
-#todo mostar so o nome do usuario que foi deslogado.
 @app.route('/logout', methods=['POST'])
 def logout():
     try:
