@@ -40,12 +40,19 @@ class TestSolution(unittest.TestCase):
         tester = app.test_client(self)
 
         header = [('Content-Type', 'application/json')]
-        dataj = json.dumps({'username': 'admin', 'password': 'default'})
-        json_data_length = len(dataj)
+
+        data_json = json.dumps({'username': 'admin', 'password': 'default'})
+
+        json_data_length = len(data_json)
         header.append(('Content-Length', json_data_length))
-        response = tester.post('/login', data=dataj, headers=header)
+
+        response = tester.post('/login', data=data_json, headers=header)
 
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            json.loads(response.data)['Message'],
+            'You were logged in!'
+        )
 
     def test_login_not_assert_get(self):
         tester = app.test_client(self)
