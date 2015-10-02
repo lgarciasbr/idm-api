@@ -82,7 +82,6 @@ class TestSolution(unittest.TestCase):
             json.loads(response.data)['message'],
             MSG_LOGIN_ERROR)
 
-    #todo arrumar os testes de logout
     # Logout
     def logout(self,token):
         tester = app.test_client(self)
