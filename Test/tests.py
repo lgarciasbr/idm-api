@@ -2,7 +2,7 @@ import json
 import unittest
 
 from Account.main_app import app
-from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSN_404, MSG_LOGIN, MSG_LOGOUT, MSG_LOGIN_ERROR
+from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSN_404, MSG_LOGIN, MSG_LOGOUT, MSG_LOGIN_ERROR, MSG_INVALID_TOKEN
 
 
 class TestSolution(unittest.TestCase):
@@ -16,8 +16,7 @@ class TestSolution(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             response.data,
-            '{\n  "Description": "' + PROJECT_DESCRIPTION + '", \n  "Project": "' + PROJECT_NAME + '"\n}'
-        )
+            '{\n  "description": "' + PROJECT_DESCRIPTION + '", \n  "project": "' + PROJECT_NAME + '"\n}')
 
 
     # Login
@@ -36,9 +35,8 @@ class TestSolution(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
-            json.loads(response.data)['Message'],
-            MSG_LOGIN
-        )
+            json.loads(response.data)['message'],
+            MSG_LOGIN)
 
     def test_login_not_assert_user(self):
         tester = app.test_client(self)
@@ -54,9 +52,8 @@ class TestSolution(unittest.TestCase):
 
         self.assertEqual(response.status_code, 403)
         self.assertEqual(
-            response.data,
-            MSG_LOGIN_ERROR
-        )
+            json.loads(response.data)['message'],
+            MSG_LOGIN_ERROR)
 
     def test_login_not_assert_password(self):
         tester = app.test_client(self)
@@ -72,9 +69,8 @@ class TestSolution(unittest.TestCase):
 
         self.assertEqual(response.status_code, 403)
         self.assertEqual(
-            response.data,
-            MSG_LOGIN_ERROR
-        )
+            json.loads(response.data)['message'],
+            MSG_LOGIN_ERROR)
 
     def test_login_not_assert_username_password(self):
         tester = app.test_client(self)
@@ -90,9 +86,8 @@ class TestSolution(unittest.TestCase):
 
         self.assertEqual(response.status_code, 403)
         self.assertEqual(
-            response.data,
-            MSG_LOGIN_ERROR
-        )
+            json.loads(response.data)['message'],
+            MSG_LOGIN_ERROR)
 
     #todo arrumar a mensagem do 405
     def test_login_not_assert_get(self):
@@ -109,6 +104,9 @@ class TestSolution(unittest.TestCase):
         response = tester.post('/login')
 
         self.assertEqual(response.status_code, 403)
+        self.assertEqual(
+            json.loads(response.data)['message'],
+            MSG_LOGIN_ERROR)
 
     #todo arrumar os testes de logout
     # Logout
@@ -120,19 +118,24 @@ class TestSolution(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             response.data,
-            MSG_LOGOUT
-        )
+            MSG_LOGOUT)
 
     def test_logout_not_assert(self):
         tester = app.test_client(self)
 
-        response = tester.get('/logout')
+        header = [('Content-Type', 'application/json')]
 
-        self.assertEqual(response.status_code, 200)
-        self.assertNotEqual(
-            response.data,
-            'I was logged out'
-        )
+        header.append(('token', 'error'))
+
+        response = tester.post('/logout', headers=header)
+
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(
+            json.loads(response.data)['message'],
+            MSG_INVALID_TOKEN)
+        self.assertEqual(
+            json.loads(response.data)['token'],
+            'error')
 
     #todo capturar a url de forma dinmica
     # Error
@@ -144,8 +147,7 @@ class TestSolution(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
         self.assertEqual(
             response.data,
-            '{\n  "message": "' + MSN_404 + 'http://localhost/pnf", \n  "status": 404\n}'
-        )
+            '{\n  "message": "' + MSN_404 + 'http://localhost/pnf", \n  "status": 404\n}')
 
 
 if __name__ == '__main__':

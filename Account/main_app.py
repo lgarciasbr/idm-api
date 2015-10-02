@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from Account.util import get_memcached, set_memcached, delete_memcached
-from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGIN, MSG_LOGOUT, MSG_INVALID_TOKEN, MSN_404,\
-    MSG_LOGIN_ERROR, MSN_405
+from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGIN, MSG_LOGOUT, MSG_INVALID_TOKEN, \
+    MSN_404, MSG_LOGIN_ERROR, MSN_405
 
 import uuid
 
@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return jsonify({'Project': PROJECT_NAME, 'Description': PROJECT_DESCRIPTION}), 200
+    return jsonify({'project': PROJECT_NAME, 'description': PROJECT_DESCRIPTION}), 200
 
 
 @app.route('/login', methods=['POST'])
@@ -26,14 +26,15 @@ def login():
 
             token = uuid.uuid4().__str__()
 
-            set_memcached(token, {'Token': token, 'Username': value['username']})
+            set_memcached(token, {'token': token, 'username': value['username']})
 
-            return jsonify({'Message': MSG_LOGIN, 'Token': token}), 200
+            return jsonify({'message': MSG_LOGIN, 'token': token}), 200
 
     except:
         pass
 
-    return MSG_LOGIN_ERROR, 403
+    return jsonify({'message': MSG_LOGIN_ERROR}), 403
+
 
 #todo mostar so o nome do usuario que foi deslogado.
 @app.route('/logout', methods=['POST'])
@@ -43,12 +44,12 @@ def logout():
 
         if user is not None:
             delete_memcached(request.headers['token'])
-            return jsonify({'Message': MSG_LOGOUT, 'User': user}), 200
+            return jsonify({'message': MSG_LOGOUT, 'user': user}), 200
 
     except:
         pass
 
-    return jsonify({'Message': MSG_INVALID_TOKEN, 'Token': request.headers['token']}), 403
+    return jsonify({'message': MSG_INVALID_TOKEN, 'token': request.headers['token']}), 403
 
 '''
 # Coloca a url do retorno no JSon, interessante para facilitar o retorno para o dev. Usar para a lista de usuarios.
@@ -66,6 +67,7 @@ def make_public_task(task):
 def get_tasks():
     return jsonify({'tasks': [make_public_task(task) for task in tasks]})
 '''
+
 
 # Error
 @app.errorhandler(404)
