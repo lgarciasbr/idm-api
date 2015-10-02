@@ -1,3 +1,4 @@
+#todo arrumar o arquivo de setup, foco nas dependencias
 try:
     from setuptools import setup
 except ImportError:

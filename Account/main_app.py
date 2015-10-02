@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from Account.util import get_memcached, set_memcached, delete_memcached
-from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGIN, MSG_LOGOUT, MSG_INVALID_TOKEN, MSN_404, MSG_LOGIN_ERROR, \
-    MSN_405
+from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGIN, MSG_LOGOUT, MSG_INVALID_TOKEN, MSN_404,\
+    MSG_LOGIN_ERROR, MSN_405
 
 import uuid
 
