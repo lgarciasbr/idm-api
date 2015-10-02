@@ -20,18 +20,21 @@ class TestSolution(unittest.TestCase):
 
 
     # Login
-    def test_login_assert(self):
-
+    def login(self, username, password):
         tester = app.test_client(self)
 
         header = [('Content-Type', 'application/json')]
 
-        data_json = json.dumps({'username': 'admin', 'password': 'default'})
+        data_json = json.dumps({'username': username, 'password': password})
 
         json_data_length = len(data_json)
         header.append(('Content-Length', json_data_length))
 
-        response = tester.post('/login', data=data_json, headers=header)
+        return tester.post('/login', data=data_json, headers=header)
+
+
+    def test_login_assert(self):
+        response = self.login('admin', 'default')
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
@@ -39,16 +42,7 @@ class TestSolution(unittest.TestCase):
             MSG_LOGIN)
 
     def test_login_not_assert_user(self):
-        tester = app.test_client(self)
-
-        header = [('Content-Type', 'application/json')]
-
-        data_json = json.dumps({'username': 'error', 'password': 'default'})
-
-        json_data_length = len(data_json)
-        header.append(('Content-Length', json_data_length))
-
-        response = tester.post('/login', data=data_json, headers=header)
+        response = self.login('error', 'default')
 
         self.assertEqual(response.status_code, 403)
         self.assertEqual(
@@ -56,16 +50,7 @@ class TestSolution(unittest.TestCase):
             MSG_LOGIN_ERROR)
 
     def test_login_not_assert_password(self):
-        tester = app.test_client(self)
-
-        header = [('Content-Type', 'application/json')]
-
-        data_json = json.dumps({'username': 'admin', 'password': 'error'})
-
-        json_data_length = len(data_json)
-        header.append(('Content-Length', json_data_length))
-
-        response = tester.post('/login', data=data_json, headers=header)
+        response = self.login('admin', 'error')
 
         self.assertEqual(response.status_code, 403)
         self.assertEqual(
@@ -73,23 +58,13 @@ class TestSolution(unittest.TestCase):
             MSG_LOGIN_ERROR)
 
     def test_login_not_assert_username_password(self):
-        tester = app.test_client(self)
-
-        header = [('Content-Type', 'application/json')]
-
-        data_json = json.dumps({'username': 'error', 'password': 'error'})
-
-        json_data_length = len(data_json)
-        header.append(('Content-Length', json_data_length))
-
-        response = tester.post('/login', data=data_json, headers=header)
+        response = self.login('error', 'error')
 
         self.assertEqual(response.status_code, 403)
         self.assertEqual(
             json.loads(response.data)['message'],
             MSG_LOGIN_ERROR)
 
-    #todo arrumar a mensagem do 405
     def test_login_not_assert_get(self):
         tester = app.test_client(self)
 
@@ -97,7 +72,6 @@ class TestSolution(unittest.TestCase):
 
         self.assertEqual(response.status_code, 405)
 
-    #todo arrumar a mensagem do 403
     def test_login_not_assert_post(self):
         tester = app.test_client(self)
 
@@ -111,18 +85,22 @@ class TestSolution(unittest.TestCase):
     #todo arrumar os testes de logout
     # Logout
     def test_logout_assert(self):
-        tester = app.test_client(self)
 
-        header = [('Content-Type', 'application/json')]
+        response_login = self.login('admin', 'default')
 
-        header.append(('token', 'error'))
+        if response_login.status_code == 200:
+            tester = app.test_client(self)
 
-        response = tester.post('/logout', headers=header)
+            header = [('Content-Type', 'application/json')]
 
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            json.loads(response.data)['message'],
-            MSG_LOGOUT)
+            header.append(('token', json.loads(response_login.data)['token']))
+
+            response = tester.post('/logout', headers=header)
+
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(
+                json.loads(response.data)['message'],
+                MSG_LOGOUT)
 
     def test_logout_not_assert(self):
         tester = app.test_client(self)
