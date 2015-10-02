@@ -17,10 +17,12 @@ class TestSolution(unittest.TestCase):
         self.assertEqual(json.loads(response.data)['project'], PROJECT_NAME)
 
     # Login
-    def login(self, username, password):
+    def login(self, ver, username, password):
         tester = app.test_client(self)
 
         header = [('Content-Type', 'application/json')]
+
+        header.append(('ver', ver))
 
         data_json = json.dumps({'username': username, 'password': password})
 
@@ -30,25 +32,25 @@ class TestSolution(unittest.TestCase):
         return tester.post('/login', data=data_json, headers=header)
 
     def test_login_assert(self):
-        response = self.login('admin', 'default')
+        response = self.login('1', 'admin', 'default')
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json.loads(response.data)['message'], MSG_LOGIN)
 
     def test_login_not_assert_user(self):
-        response = self.login('error', 'default')
+        response = self.login('1', 'error', 'default')
 
         self.assertEqual(response.status_code, 403)
         self.assertEqual(json.loads(response.data)['message'], MSG_LOGIN_ERROR)
 
     def test_login_not_assert_password(self):
-        response = self.login('admin', 'error')
+        response = self.login('1', 'admin', 'error')
 
         self.assertEqual(response.status_code, 403)
         self.assertEqual(json.loads(response.data)['message'], MSG_LOGIN_ERROR)
 
     def test_login_not_assert_username_password(self):
-        response = self.login('error', 'error')
+        response = self.login('1', 'error', 'error')
 
         self.assertEqual(response.status_code, 403)
         self.assertEqual(json.loads(response.data)['message'], MSG_LOGIN_ERROR)
@@ -80,7 +82,7 @@ class TestSolution(unittest.TestCase):
 
     def test_logout_assert(self):
 
-        response_login = self.login('admin', 'default')
+        response_login = self.login('1', 'admin', 'default')
 
         if response_login.status_code == 200:
             response = self.logout(json.loads(response_login.data)['token'])
@@ -90,7 +92,7 @@ class TestSolution(unittest.TestCase):
 
     def test_logout_assert_second_shot(self):
 
-        response_login = self.login('admin', 'default')
+        response_login = self.login('1', 'admin', 'default')
 
         token = json.loads(response_login.data)['token']
 

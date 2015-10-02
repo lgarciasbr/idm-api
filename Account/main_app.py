@@ -20,20 +20,30 @@ def login():
     try:
         value = request.json
 
-        if request.headers['Content-Type'] == 'application/json' and \
-                value['username'] == 'admin' and \
-                value['password'] == 'default':
-
-            token = uuid.uuid4().__str__()
-
-            set_memcached(token, {'token': token, 'username': value['username']})
-
-            return jsonify({'message': MSG_LOGIN, 'token': token}), 200
-
+        if request.headers['ver'] == 1:
+            return login_v1(request.headers['Content-Type'], value['username'], value['password'])
+        else:
+            return login_v1(request.headers['Content-Type'], value['username'], value['password'])
     except:
         pass
 
     return jsonify({'message': MSG_LOGIN_ERROR}), 403
+
+
+def login_v1(content_type, username, password):
+    value = request.json
+
+    if content_type == 'application/json' and \
+            username == 'admin' and \
+            password == 'default':
+
+        token = uuid.uuid4().__str__()
+
+        set_memcached(token, {'token': token, 'username': value['username']})
+
+        return jsonify({'message': MSG_LOGIN, 'token': token}), 200
+    else:
+        raise Exception()
 
 
 @app.route('/logout', methods=['POST'])
