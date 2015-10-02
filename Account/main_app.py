@@ -20,22 +20,20 @@ def login():
     try:
         value = request.json
 
-        if request.headers['ver'] == 1:
-            return login_v1(request.headers['Content-Type'], value['username'], value['password'])
+        if request.headers['ver'] == 1 and request.headers['Content-Type'] == 'application/json':
+            return login_v1(value['username'], value['password'])
         else:
-            return login_v1(request.headers['Content-Type'], value['username'], value['password'])
+            return login_v1(value['username'], value['password'])
     except:
         pass
 
     return jsonify({'message': MSG_LOGIN_ERROR}), 403
 
 
-def login_v1(content_type, username, password):
+def login_v1(username, password):
     value = request.json
 
-    if content_type == 'application/json' and \
-            username == 'admin' and \
-            password == 'default':
+    if username == 'admin' and password == 'default':
 
         token = uuid.uuid4().__str__()
 
