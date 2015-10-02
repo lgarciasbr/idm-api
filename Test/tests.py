@@ -6,7 +6,6 @@ from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSN_404, MSG_LOGIN, MSG_LO
 
 
 class TestSolution(unittest.TestCase):
-
     # Welcome
     def test_welcome_assert(self):
         tester = app.test_client(self)
@@ -16,7 +15,6 @@ class TestSolution(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json.loads(response.data)['description'], PROJECT_DESCRIPTION)
         self.assertEqual(json.loads(response.data)['project'], PROJECT_NAME)
-
 
     # Login
     def login(self, username, password):
@@ -30,7 +28,6 @@ class TestSolution(unittest.TestCase):
         header.append(('Content-Length', json_data_length))
 
         return tester.post('/login', data=data_json, headers=header)
-
 
     def test_login_assert(self):
         response = self.login('admin', 'default')
@@ -72,7 +69,7 @@ class TestSolution(unittest.TestCase):
         self.assertEqual(json.loads(response.data)['message'], MSG_LOGIN_ERROR)
 
     # Logout
-    def logout(self,token):
+    def logout(self, token):
         tester = app.test_client(self)
 
         header = [('Content-Type', 'application/json')]
@@ -80,7 +77,6 @@ class TestSolution(unittest.TestCase):
         header.append(('token', token))
 
         return tester.post('/logout', headers=header)
-
 
     def test_logout_assert(self):
 
@@ -99,9 +95,9 @@ class TestSolution(unittest.TestCase):
         token = json.loads(response_login.data)['token']
 
         if response_login.status_code == 200:
-            #logout
+            # logout
             self.logout(token)
-            #Second Shot
+            # Second Shot
             response = self.logout(token)
 
             self.assertEqual(response.status_code, 403)
@@ -115,7 +111,6 @@ class TestSolution(unittest.TestCase):
         self.assertEqual(json.loads(response.data)['message'], MSG_INVALID_TOKEN)
         self.assertEqual(json.loads(response.data)['token'], 'error')
 
-    #todo capturar a url de forma dinmica
     # Error
     def test_error_404_assert(self):
         tester = app.test_client(self)
@@ -123,7 +118,6 @@ class TestSolution(unittest.TestCase):
         response = tester.get('/pnf')
 
         self.assertEqual(response.status_code, 404)
-        self.assertEqual(json.loads(response.data)['message'], MSN_404 + 'http://localhost/pnf')
         self.assertEqual(json.loads(response.data)['status'], 404)
 
 
