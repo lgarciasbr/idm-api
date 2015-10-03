@@ -3,7 +3,7 @@ from Account.util import get_memcached, set_memcached, delete_memcached
 from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGIN, MSG_LOGOUT, MSG_INVALID_TOKEN, \
     MSN_404, MSG_LOGIN_ERROR, MSN_405
 
-import uuid
+import uuid, os
 
 #todo colocar as acoes dos endpoints em outros arquivos e trabalhar versao.
 
@@ -102,4 +102,8 @@ def not_allowed(error):
 
 
 # app.debug = True
-app.run()
+#app.run()
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
