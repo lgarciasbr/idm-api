@@ -34,11 +34,10 @@ def login():
 def login_v1(username, password):
     value = request.json
 
+    # todo implementar a chamada via banco de dados
     if username == 'admin' and password == 'default':
 
-        token = uuid.uuid4().__str__()
-
-        set_token(token, {'token': token, 'username': value['username']})
+        token = set_token({'username': value['username']})
 
         return jsonify({'message': MSG_LOGIN, 'token': token}), 200
     else:

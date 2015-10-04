@@ -7,9 +7,18 @@ import os
 PROJECT_NAME = 'Account'
 PROJECT_DESCRIPTION = 'Studying Python!'
 
-# Memcached
-MEMCACHED_HOST = '192.168.99.100'
-MEMCACHED_PORT = 32777
+# Token
+# Option: memcached, postgres
+# todo implementar o token via banco.
+TOKEN_HOST = 'memcached'
+
+if os.environ.get('SERVER') is None:
+    MEMCACHED_HOST = '192.168.99.100'
+    MEMCACHED_PORT = 32777
+else:
+    # todo documentar que precisa criar as variaveis de ambiente para o memcached
+    MEMCACHED_HOST = ''
+    MEMCACHED_PORT = ''
 
 # General Text
 MSG_LOGIN = 'You were logged in!'
