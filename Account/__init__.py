@@ -1,4 +1,4 @@
-# arrumar a parte de envio de mensagem e log de erro, deve ate ter alguma biblioteca pronta pra isso.
+#todo arrumar a parte de envio de mensagem e log de erro, deve ate ter alguma biblioteca pronta pra isso.
 '''
 
 Testing this on a development PC that does not have an email server is easy, thanks to Python's SMTP debugging server.

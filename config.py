@@ -13,7 +13,7 @@ MSG_LOGOUT = 'You were logged out!'
 MSG_INVALID_TOKEN = 'Invalid Token!'
 MSG_INVALID_SERIALIZATION = 'Unknown serialization format'
 
-#Error
+# Error
 MSN_404 = 'Not found: '
 MSN_405 = 'The method is not allowed for '
 
