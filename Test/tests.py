@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from Account.main_app import app
+from Account.end_point import app
 from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSN_404, MSG_LOGIN, MSG_LOGOUT, MSG_LOGIN_ERROR, MSG_INVALID_TOKEN
 
 
