@@ -1,18 +1,17 @@
-#todo arrumar o arquivo de setup, foco nas dependencias
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
 
 config = {
-    'description': 'My Project',
-    'author': 'My Name',
-    'url': 'URL to get it at.',
-    'download_url': 'Where to download it.',
-    'author_email': 'My email.',
+    'description': 'Simple account app with Memcached and Postgree',
+    'author': 'Leandro Garcia',
+    'url': '',
+    'download_url': '',
+    'author_email': 'leandro.garcias@gmail.com',
     'version': '0.1',
     'install_requires': ['pymemcache','flask'],
-    'packages': ['NAME'],
+    'packages': ['LG_Account'],
     'scripts': [],
     'name': 'Account'
 }

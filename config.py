@@ -1,7 +1,7 @@
 import os
 
 # Ajuda a verificar se estou rodando local ou na nuvem.
-WHOOSH_ENABLED = os.environ.get('HEROKU') is None
+# WHOOSH_ENABLED = os.environ.get('HEROKU') is None
 
 # Project
 PROJECT_NAME = 'Account'
