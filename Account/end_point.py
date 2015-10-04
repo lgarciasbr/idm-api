@@ -15,6 +15,7 @@ def home():
     return jsonify({'project': PROJECT_NAME, 'description': PROJECT_DESCRIPTION}), 200
 
 
+#todo precisa funcionar mesmo sem a versao
 @app.route('/login', methods=['POST'])
 def login():
     try:
