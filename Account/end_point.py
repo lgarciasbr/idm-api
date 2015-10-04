@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from Account.util import get_memcached, set_memcached, delete_memcached
+from Account.service.token import get_token, set_token, delete_token
 from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGIN, MSG_LOGOUT, MSG_INVALID_TOKEN, \
     MSN_404, MSG_LOGIN_ERROR, MSN_405
 
@@ -38,7 +38,7 @@ def login_v1(username, password):
 
         token = uuid.uuid4().__str__()
 
-        set_memcached(token, {'token': token, 'username': value['username']})
+        set_token(token, {'token': token, 'username': value['username']})
 
         return jsonify({'message': MSG_LOGIN, 'token': token}), 200
     else:
@@ -48,10 +48,10 @@ def login_v1(username, password):
 @app.route('/logout', methods=['POST'])
 def logout():
     try:
-        user = get_memcached(request.headers['token'])
+        user = get_token(request.headers['token'])
 
         if user is not None:
-            delete_memcached(request.headers['token'])
+            delete_token(request.headers['token'])
             return jsonify({'message': MSG_LOGOUT}), 200
 
     except:
