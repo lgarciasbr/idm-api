@@ -1,11 +1,12 @@
 from flask import Flask, jsonify, request
-from Account.service.token import get_token, set_token, delete_token
-from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGIN, MSG_LOGOUT, MSG_INVALID_TOKEN, \
+from Account.service.login import login_v1
+from Account.service.token import get_token, delete_token
+from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGOUT, MSG_INVALID_TOKEN, \
     MSN_404, MSG_LOGIN_ERROR, MSN_405
 
 import uuid
 
-#todo colocar as acoes dos endpoints em outros arquivos e trabalhar versao.
+# todo colocar as acoes dos endpoints em outros arquivos e trabalhar versao.
 
 app = Flask(__name__)
 
@@ -15,7 +16,7 @@ def home():
     return jsonify({'project': PROJECT_NAME, 'description': PROJECT_DESCRIPTION}), 200
 
 
-#todo precisa funcionar mesmo sem a versao
+# todo precisa funcionar mesmo sem a versao
 @app.route('/login', methods=['POST'])
 def login():
     try:
@@ -23,40 +24,32 @@ def login():
 
         if request.headers['ver'] == 1 and request.headers['Content-Type'] == 'application/json':
             return login_v1(value['username'], value['password'])
-        else:
+        elif request.headers['Content-Type'] == 'application/json':
+            # Always use last version here.
             return login_v1(value['username'], value['password'])
+        else:
+            pass
     except:
         pass
 
     return jsonify({'message': MSG_LOGIN_ERROR}), 403
 
 
-def login_v1(username, password):
-    value = request.json
-
-    # todo implementar a chamada via banco de dados
-    if username == 'admin' and password == 'default':
-
-        token = set_token({'username': value['username']})
-
-        return jsonify({'message': MSG_LOGIN, 'token': token}), 200
-    else:
-        raise Exception()
-
-
 @app.route('/logout', methods=['POST'])
 def logout():
-    try:
-        user = get_token(request.headers['token'])
+    if request.headers['ver'] == '1' and request.headers['Content-Type'] == 'application/json':
+        try:
+            user = get_token(request.headers['token'])
 
-        if user is not None:
-            delete_token(request.headers['token'])
-            return jsonify({'message': MSG_LOGOUT}), 200
+            if user is not None:
+                delete_token(request.headers['token'])
+                return jsonify({'message': MSG_LOGOUT}), 200
 
-    except:
-        pass
+        except:
+            pass
 
     return jsonify({'message': MSG_INVALID_TOKEN, 'token': request.headers['token']}), 403
+
 
 '''
 # Coloca a url do retorno no JSon, interessante para facilitar o retorno para o dev. Usar para a lista de usuarios.
