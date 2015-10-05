@@ -4,8 +4,6 @@ from Account.service.token import get_token, delete_token
 from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGOUT, MSG_INVALID_TOKEN, \
     MSN_404, MSG_LOGIN_ERROR, MSN_405
 
-import uuid
-
 # todo colocar as acoes dos endpoints em outros arquivos e trabalhar versao.
 
 app = Flask(__name__)

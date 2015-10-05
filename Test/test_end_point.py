@@ -21,7 +21,6 @@ class TestSolution(unittest.TestCase):
         tester = app.test_client(self)
 
         header = [('Content-Type', 'application/json')]
-
         header.append(('ver', ver))
 
         data_json = json.dumps({'username': username, 'password': password})
@@ -75,7 +74,6 @@ class TestSolution(unittest.TestCase):
         tester = app.test_client(self)
 
         header = [('Content-Type', 'application/json')]
-
         header.append(('token', token))
 
         return tester.post('/logout', headers=header)
