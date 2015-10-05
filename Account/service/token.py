@@ -3,7 +3,7 @@ from config import TOKEN_HOST
 
 import uuid
 
-
+#todo preprar unittest do token
 def get_token_number():
     return uuid.uuid4().__str__()
 
