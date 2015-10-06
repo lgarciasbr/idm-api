@@ -1,7 +1,10 @@
 from flask import Flask
-app = Flask(__name__)
 
 import Account.view
+
+
+app = Flask(__name__)
+
 
 #todo arrumar a parte de envio de mensagem e log de erro, deve ate ter alguma biblioteca pronta pra isso.
 '''
