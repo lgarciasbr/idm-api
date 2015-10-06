@@ -16,6 +16,7 @@ class TestSolution(unittest.TestCase):
         self.assertEqual(json.loads(response.data)['description'], PROJECT_DESCRIPTION)
         self.assertEqual(json.loads(response.data)['project'], PROJECT_NAME)
 
+
     # Login
     def login(self, ver, username, password):
         tester = app.test_client(self)
@@ -68,6 +69,7 @@ class TestSolution(unittest.TestCase):
 
         self.assertEqual(response.status_code, 403)
         self.assertEqual(json.loads(response.data)['message'], MSG_LOGIN_ERROR)
+
 
     # Logout
     def logout(self, token):
