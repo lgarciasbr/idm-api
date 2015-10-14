@@ -1,8 +1,8 @@
 from flask import Flask, jsonify, request
-from Account.service.login import login_v1
+from Account.service.login import login, login_v1
 from Account.service.token import get_token, delete_token
 from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGOUT, MSG_INVALID_TOKEN, \
-    MSN_404, MSG_LOGIN_ERROR, MSN_405
+    MSN_404, MSN_405
 
 # todo colocar as acoes dos endpoints em outros arquivos e trabalhar versao.
 
@@ -14,23 +14,9 @@ def home():
     return jsonify({'project': PROJECT_NAME, 'description': PROJECT_DESCRIPTION}), 200
 
 
-# todo precisa funcionar mesmo sem a versao
 @app.route('/login', methods=['POST'])
 def login():
-    try:
-        value = request.json
-
-        if request.headers['ver'] == 1 and request.headers['Content-Type'] == 'application/json':
-            return login_v1(value['username'], value['password'])
-        elif request.headers['Content-Type'] == 'application/json':
-            # Always use last version here.
-            return login_v1(value['username'], value['password'])
-        else:
-            pass
-    except:
-        pass
-
-    return jsonify({'message': MSG_LOGIN_ERROR}), 403
+        return login(request.json, request.headers)
 
 
 @app.route('/logout', methods=['POST'])
