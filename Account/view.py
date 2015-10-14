@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from Account.service.login import login, login_v1
+from Account.service.login import login
 from Account.service.token import get_token, delete_token
 from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGOUT, MSG_INVALID_TOKEN, \
     MSN_404, MSN_405
@@ -16,7 +16,7 @@ def home():
 
 @app.route('/login', methods=['POST'])
 def login():
-        return login(request.json, request.headers)
+        return login(request.headers, request.json)
 
 
 @app.route('/logout', methods=['POST'])

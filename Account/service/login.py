@@ -5,7 +5,7 @@ from config import MSG_LOGIN, MSG_LOGIN_ERROR
 
 # todo precisa funcionar mesmo sem a versao
 # todo implementar unittest aqui no login ???
-def login(body, header):
+def login(header, body):
     try:
         if header['Content-Type'] == 'application/json':
             if header['ver'] == 1:
