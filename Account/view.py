@@ -1,8 +1,8 @@
 from flask import Flask, jsonify, request
-from Account.service.login import login
 from Account.service.token import get_token, delete_token
 from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGOUT, MSG_INVALID_TOKEN, \
-    MSN_404, MSN_405
+    MSN_404, MSN_405, MSN_400
+from Account.controller import login_controller
 
 # todo colocar as acoes dos endpoints em outros arquivos e trabalhar versao.
 
@@ -16,7 +16,7 @@ def home():
 
 @app.route('/login', methods=['POST'])
 def login():
-        return login(request.headers, request.json)
+        return login_controller(request.headers, request.json)
 
 
 @app.route('/logout', methods=['POST'])
@@ -54,6 +54,17 @@ def get_tasks():
 
 
 # Error
+@app.errorhandler(400)
+def not_found(error):
+    message = {
+        'status': 400,
+        'message': MSN_400 + request.url
+    }
+    resp = jsonify(message)
+    resp.status_code = 400
+
+    return resp
+
 @app.errorhandler(404)
 def not_found(error):
     message = {

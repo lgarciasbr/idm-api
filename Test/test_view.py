@@ -1,8 +1,8 @@
 import json
 import unittest
 
-from Account.end_point import app
-from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSN_404, MSG_LOGIN, MSG_LOGOUT, MSG_LOGIN_ERROR, MSG_INVALID_TOKEN
+from Account.view import app
+from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGIN, MSG_LOGOUT, MSG_LOGIN_ERROR, MSG_INVALID_TOKEN
 
 
 class test_solution(unittest.TestCase):
@@ -25,9 +25,6 @@ class test_solution(unittest.TestCase):
         header.append(('ver', '1'))
 
         data_json = json.dumps({'username': username, 'password': password})
-        json_data_length = len(data_json)
-
-        header.append(('Content-Length', json_data_length))
 
         return tester.post('/login', data=data_json, headers=header)
 

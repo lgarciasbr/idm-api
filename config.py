@@ -28,6 +28,7 @@ MSG_INVALID_TOKEN = 'Invalid Token!'
 MSG_INVALID_SERIALIZATION = 'Unknown serialization format'
 
 # Error
+MSN_400 = 'Bad Request'
 MSN_404 = 'Not found: '
 MSN_405 = 'The method is not allowed for '
 
