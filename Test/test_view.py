@@ -2,7 +2,8 @@ import json
 import unittest
 
 from Account.view import app
-from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGIN, MSG_LOGOUT, MSG_LOGIN_ERROR, MSG_INVALID_TOKEN
+from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGIN, MSG_LOGOUT, MSG_LOGIN_ERROR,\
+    MSG_INVALID_TOKEN, MSN_400
 
 
 class test_solution(unittest.TestCase):
@@ -64,8 +65,8 @@ class test_solution(unittest.TestCase):
 
         response = tester.post('/login')
 
-        self.assertEqual(response.status_code, 403)
-        self.assertEqual(json.loads(response.data)['message'], MSG_LOGIN_ERROR)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(json.loads(response.data)['message'], MSN_400)
 
 
     # Logout

@@ -1,7 +1,6 @@
-import traceback
 from flask import jsonify
 from Account.service.token import set_token
-from config import MSG_LOGIN
+from config import MSG_LOGIN, MSG_LOGIN_ERROR
 
 
 # todo precisa funcionar mesmo sem a versao
@@ -14,3 +13,6 @@ def login_v1(username, password):
         token = set_token({'username': username})
 
         return jsonify({'message': MSG_LOGIN, 'token': token}), 200
+
+    else:
+        return jsonify({'message': MSG_LOGIN_ERROR}), 403
