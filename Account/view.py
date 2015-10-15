@@ -19,7 +19,7 @@ def login():
 
 @app.route('/logout', methods=['POST'])
 def logout():
-    return logout_controller(request.headers, request.json)
+    return logout_controller(request.headers)
 
 
 '''
@@ -42,7 +42,7 @@ def get_tasks():
 
 # Error
 @app.errorhandler(400)
-def not_found(error):
+def bad_request(error):
     message = {
         'status': 400,
         'message': MSN_400 + request.url

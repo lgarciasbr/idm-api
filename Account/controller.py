@@ -17,7 +17,7 @@ def login_controller(header, data):
     return jsonify({'message': MSN_400}), 400
 
 
-def logout_controller(header, data):
+def logout_controller(header):
     try:
         if header['Content-Type'] == 'application/json':
             if header['ver'] == '1':
