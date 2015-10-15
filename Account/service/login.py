@@ -5,7 +5,6 @@ from config import MSG_LOGIN, MSG_LOGIN_ERROR
 
 # todo precisa funcionar mesmo sem a versao
 # todo implementar unittest aqui no login ???
-
 def login_v1(username, password):
 
     # todo implementar a chamada via banco de dados

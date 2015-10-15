@@ -1,8 +1,6 @@
 from flask import Flask, jsonify, request
-from Account.service.token import get_token, delete_token
-from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGOUT, MSG_INVALID_TOKEN, \
-    MSN_404, MSN_405, MSN_400
-from Account.controller import login_controller
+from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSN_404, MSN_405, MSN_400
+from Account.controller import login_controller, logout_controller
 
 # todo colocar as acoes dos endpoints em outros arquivos e trabalhar versao.
 
@@ -16,23 +14,12 @@ def home():
 
 @app.route('/login', methods=['POST'])
 def login():
-        return login_controller(request.headers, request.json)
+    return login_controller(request.headers, request.json)
 
 
 @app.route('/logout', methods=['POST'])
 def logout():
-    if request.headers['ver'] == '1' and request.headers['Content-Type'] == 'application/json':
-        try:
-            user = get_token(request.headers['token'])
-
-            if user is not None:
-                delete_token(request.headers['token'])
-                return jsonify({'message': MSG_LOGOUT}), 200
-
-        except:
-            pass
-
-    return jsonify({'message': MSG_INVALID_TOKEN, 'token': request.headers['token']}), 403
+    return logout_controller(request.headers, request.json)
 
 
 '''
