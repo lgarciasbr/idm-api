@@ -1,9 +1,10 @@
-from flask import jsonify
-from Account.service.login import login_v1
-from Account.service.logout import logout_v1
-from config import MSN_400
-
 import traceback
+
+from flask import jsonify
+
+from Account.model.service.login import login_v1
+from Account.model.service.logout import logout_v1
+from config import MSN_400
 
 
 def login_controller(header, data):
