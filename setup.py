@@ -10,10 +10,8 @@ config = {
     'download_url': '',
     'author_email': 'leandro.garcias@gmail.com',
     'version': '0.1',
-    'install_requires': ['pymemcache','flask'],
+    'install_requires': ['pymemcache', 'flask', 'gunicorn'],
     'packages': ['LG_Account'],
     'scripts': [],
     'name': 'Account'
 }
-
-setup(**config, requires=['pymemcache','flask'])
