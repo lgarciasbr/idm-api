@@ -1,7 +1,20 @@
 from flask import jsonify
 
 from Account.model.service.token import set_token
-from config import MSG_LOGIN, MSG_LOGIN_ERROR
+from config import MSG_LOGIN, MSG_LOGIN_ERROR, MSN_400
+
+
+def login_controller(header, data):
+    try:
+        if header['Content-Type'] == 'application/json':
+            if header['ver'] == '1':
+                return ver_1(data['username'], data['password'])
+            # elif header['ver'] == '2':
+            #    return login.ver_1(data['username'], data['password'], data['ip'])
+    except Exception:
+        pass
+
+    return jsonify({'message': MSN_400}), 400
 
 
 # todo precisa funcionar mesmo sem a versao
