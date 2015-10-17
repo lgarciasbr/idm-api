@@ -4,7 +4,7 @@ from Account.model.service.token import get_token, delete_token
 from config import MSG_LOGOUT, MSG_INVALID_TOKEN, MSN_400
 
 
-def logout_controller(header):
+def logouts(header):
     try:
         if header['Content-Type'] == 'application/json':
             if header['ver'] == '1':

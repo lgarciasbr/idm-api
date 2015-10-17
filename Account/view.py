@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
+from Account.model.service.login import logins
+from Account.model.service.logout import logouts
 from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSN_404, MSN_405, MSN_400
-from Account.controller import login_controller, logout_controller
 
 # todo colocar as acoes dos endpoints em outros arquivos e trabalhar versao.
 
@@ -14,12 +15,12 @@ def home():
 
 @app.route('/login', methods=['POST'])
 def login():
-    return login_controller(request.headers, request.json)
+    return logins(request.headers, request.json)
 
 
 @app.route('/logout', methods=['POST'])
 def logout():
-    return logout_controller(request.headers)
+    return logouts(request.headers)
 
 
 '''
@@ -51,6 +52,7 @@ def bad_request(error):
     resp.status_code = 400
 
     return resp
+
 
 @app.errorhandler(404)
 def not_found(error):

@@ -4,7 +4,7 @@ from Account.model.service.token import set_token
 from config import MSG_LOGIN, MSG_LOGIN_ERROR, MSN_400
 
 
-def login_controller(header, data):
+def logins(header, data):
     try:
         if header['Content-Type'] == 'application/json':
             if header['ver'] == '1':

@@ -1,6 +1,6 @@
 from pymemcache.client import Client
 
-from Account.model.service.json import json_serializer, json_deserializer
+from lib.json import json_serializer, json_deserializer
 from config import MEMCACHED_HOST, MEMCACHED_PORT
 
 
