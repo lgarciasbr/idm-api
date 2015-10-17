@@ -14,13 +14,13 @@ def home():
 @app.route('/login', methods=['POST'])
 def login():
     response = login_service.login(request.headers, request.json)
-    return view.message_json(response)
+    return view.message_json(response), response.get('http_code_status')
 
 
 @app.route('/logout', methods=['POST'])
 def logout():
     response = logout_service.logout(request.headers)
-    return view.message_json(response)
+    return view.message_json(response), response.get('http_code_status')
 
 '''
 # Coloca a url do retorno no JSon, interessante para facilitar o retorno para o dev. Usar para a lista de usuarios.
