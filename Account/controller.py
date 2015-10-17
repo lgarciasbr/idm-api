@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from Account.model.service import login_service, logout_service
+from Account import view
 from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSN_404, MSN_405, MSN_400
 
 # todo colocar as acoes dos endpoints em outros arquivos e trabalhar versao.
@@ -14,13 +15,14 @@ def home():
 
 @app.route('/login', methods=['POST'])
 def login():
-    return login_service.login(request.headers, request.json)
+    response = login_service.login(request.headers, request.json)
+    return view.message_json(response)
 
 
 @app.route('/logout', methods=['POST'])
 def logout():
-    return logout_service.logout(request.headers)
-
+    response = logout_service.logout(request.headers)
+    return view.message_json(response)
 
 '''
 # Coloca a url do retorno no JSon, interessante para facilitar o retorno para o dev. Usar para a lista de usuarios.

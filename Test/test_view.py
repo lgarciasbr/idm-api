@@ -103,6 +103,7 @@ class test_solution(unittest.TestCase):
             self.assertEqual(json.loads(response.data)['message'], MSG_INVALID_TOKEN)
             self.assertEqual(json.loads(response.data)['token'], token)
 
+
     def test_logout_not_assert(self):
         response = self.logout_v1('error')
 
@@ -110,20 +111,20 @@ class test_solution(unittest.TestCase):
         self.assertEqual(json.loads(response.data)['message'], MSG_INVALID_TOKEN)
         self.assertEqual(json.loads(response.data)['token'], 'error')
 
-    def test_logout_not_assert_get(self):
-        tester = app.test_client(self)
-
-        response = tester.get('/logout')
-
-        self.assertEqual(response.status_code, 405)
-
-    def test_logout_not_assert_post(self):
+    def test_logout_not_assert_no_header(self):
         tester = app.test_client(self)
 
         response = tester.post('/logout')
 
         self.assertEqual(response.status_code, 400)
         self.assertEqual(json.loads(response.data)['message'], MSN_400)
+
+    def test_logout_not_assert_get(self):
+        tester = app.test_client(self)
+
+        response = tester.get('/logout')
+
+        self.assertEqual(response.status_code, 405)
 
     # Error
     def test_error_404_assert(self):

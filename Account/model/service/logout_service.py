@@ -1,5 +1,3 @@
-from flask import jsonify
-
 from Account.model.service.token_service import get_token, delete_token
 from config import MSG_LOGOUT, MSG_INVALID_TOKEN, MSN_400
 
@@ -14,7 +12,8 @@ def logout(header):
     except Exception:
         pass
 
-    return jsonify({'message': MSN_400}), 400
+    # Bad Request
+    return {'message': MSN_400, 'http_code_status': 400}
 
 
 # todo precisa funcionar mesmo sem a versao
@@ -24,9 +23,11 @@ def logout_ver_1(token):
 
     if user is not None:
         delete_token(token)
-        return jsonify({'message': MSG_LOGOUT}), 200
+        # Logout
+        return {'message': MSG_LOGOUT, 'token': token, 'http_code_status': 200}
     else:
-        return jsonify({'message': MSG_INVALID_TOKEN, 'token': token}), 403
+        # Forbidden
+        return {'message': MSG_INVALID_TOKEN, 'token': token, 'http_code_status': 403}
 
 
 def logout_ver_2(token, ip):

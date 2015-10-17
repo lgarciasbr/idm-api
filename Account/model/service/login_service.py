@@ -1,5 +1,3 @@
-from flask import jsonify
-
 from Account.model.service.token_service import set_token
 from config import MSG_LOGIN, MSG_LOGIN_ERROR, MSN_400
 
@@ -14,7 +12,8 @@ def login(header, data):
     except Exception:
         pass
 
-    return jsonify({'message': MSN_400}), 400
+    # Bad Request
+    return {'message': MSN_400, 'http_code_status': 400}
 
 
 # todo precisa funcionar mesmo sem a versao
@@ -24,11 +23,12 @@ def login_ver_1(username, password):
     # todo implementar a chamada via banco de dados
     if username == 'admin' and password == 'default':
         token = set_token({'username': username})
-
-        return jsonify({'message': MSG_LOGIN, 'token': token}), 200
+        # Login
+        return {'message': MSG_LOGIN, 'token': token, 'http_code_status': 200}
 
     else:
-        return jsonify({'message': MSG_LOGIN_ERROR}), 403
+        # Forbidden
+        return {'message': MSG_LOGIN_ERROR, 'http_code_status': 403}
 
 
 def login_ver_2(username, password, ip):

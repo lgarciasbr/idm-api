@@ -1,3 +1,5 @@
-from lib import messenger
+from flask import jsonify
 
-m = messenger(a=1)
+
+def message_json(value):
+    return jsonify(value)
