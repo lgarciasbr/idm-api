@@ -8,9 +8,9 @@ def login(header, data):
     try:
         if header['Content-Type'] == 'application/json':
             if header['ver'] == '1':
-                return ver_1(data['username'], data['password'])
+                return login_ver_1(data['username'], data['password'])
             # elif header['ver'] == '2':
-            #    return login.ver_1(data['username'], data['password'], data['ip'])
+            #    return login_ver_2(data['username'], data['password'], data['ip'])
     except Exception:
         pass
 
@@ -19,7 +19,7 @@ def login(header, data):
 
 # todo precisa funcionar mesmo sem a versao
 # todo implementar unittest aqui no login ???
-def ver_1(username, password):
+def login_ver_1(username, password):
 
     # todo implementar a chamada via banco de dados
     if username == 'admin' and password == 'default':
@@ -29,3 +29,7 @@ def ver_1(username, password):
 
     else:
         return jsonify({'message': MSG_LOGIN_ERROR}), 403
+
+
+def login_ver_2(username, password, ip):
+    pass
