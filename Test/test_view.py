@@ -1,10 +1,11 @@
 import json
 import unittest
 
-from Account.view import app
+from Account.controller import app
 from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSG_LOGIN, MSG_LOGOUT, MSG_LOGIN_ERROR,\
     MSG_INVALID_TOKEN, MSN_400
 
+# todo precisa fazer os testes nao passando todos os itens do header
 
 class test_solution(unittest.TestCase):
     # Welcome

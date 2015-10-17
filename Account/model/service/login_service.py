@@ -1,10 +1,10 @@
 from flask import jsonify
 
-from Account.model.service.token import set_token
+from Account.model.service.token_service import set_token
 from config import MSG_LOGIN, MSG_LOGIN_ERROR, MSN_400
 
 
-def logins(header, data):
+def login(header, data):
     try:
         if header['Content-Type'] == 'application/json':
             if header['ver'] == '1':
