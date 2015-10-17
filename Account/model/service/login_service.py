@@ -16,8 +16,6 @@ def login(header, data):
     return {'message': MSN_400, 'http_code_status': 400}
 
 
-# todo precisa funcionar mesmo sem a versao
-# todo implementar unittest aqui no login ???
 def login_ver_1(username, password):
 
     # todo implementar a chamada via banco de dados

@@ -1,9 +1,7 @@
+from Account import view
 from flask import Flask, jsonify, request
 from Account.model.service import login_service, logout_service
-from Account import view
 from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSN_404, MSN_405, MSN_400
-
-# todo colocar as acoes dos endpoints em outros arquivos e trabalhar versao.
 
 app = Flask(__name__)
 

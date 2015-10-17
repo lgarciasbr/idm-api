@@ -16,8 +16,6 @@ def logout(header):
     return {'message': MSN_400, 'http_code_status': 400}
 
 
-# todo precisa funcionar mesmo sem a versao
-# todo implementar unittest aqui no login ???
 def logout_ver_1(token):
     user = get_token(token)
 
