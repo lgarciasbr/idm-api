@@ -3,6 +3,8 @@ import os
 # Ajuda a verificar se estou rodando local ou na nuvem.
 # WHOOSH_ENABLED = os.environ.get('HEROKU') is None
 
+# todo implementar o sistema em mais de um idioma
+
 # Project
 PROJECT_NAME = 'Account'
 PROJECT_DESCRIPTION = 'Studying Python!'
