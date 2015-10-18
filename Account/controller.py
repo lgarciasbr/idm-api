@@ -5,6 +5,8 @@ from config import PROJECT_NAME, PROJECT_DESCRIPTION, MSN_404, MSN_405, MSN_400
 
 app = Flask(__name__)
 
+# todo implementar blueprint
+# todo com blueprint tirar o home e os erros deste modulo
 
 @app.route('/')
 def home():
