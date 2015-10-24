@@ -2,9 +2,6 @@ from Authentication import view
 from flask import request, Blueprint
 from Authentication.model.service import login_service, logout_service
 
-# todo implementar blueprint
-# todo com blueprint tirar o home e os erros deste modulo
-
 authentication_blueprint = Blueprint('authentication', __name__)
 
 

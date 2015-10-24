@@ -13,5 +13,5 @@ config = {
     'install_requires': ['pymemcache', 'flask', 'gunicorn'],
     'packages': ['LG_Account'],
     'scripts': [],
-    'name': 'Account'
+    'name': 'LG_Account'
 }
