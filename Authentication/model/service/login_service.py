@@ -1,4 +1,4 @@
-from Account.model.service.token_service import set_token
+from Authentication.model.service.token_service import set_token
 from config import MSG_LOGIN, MSG_LOGIN_ERROR, MSN_400
 
 

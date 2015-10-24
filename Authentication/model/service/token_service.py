@@ -1,6 +1,6 @@
 import uuid
 
-from Account.model.data.memcached_data import delete_memcached, set_memcached, get_memcached
+from Authentication.model.data.memcached_data import delete_memcached, set_memcached, get_memcached
 from config import TOKEN_HOST
 
 

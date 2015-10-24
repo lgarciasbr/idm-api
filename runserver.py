@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from Account.controller import authentication_blueprint
+from Authentication.controller import authentication_blueprint
 from Home.controller import home_blueprint
 from config import MSN_405, MSN_404, MSN_400
 import gunicorn

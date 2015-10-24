@@ -1,4 +1,4 @@
-from Account.model.service.token_service import get_token, delete_token
+from Authentication.model.service.token_service import get_token, delete_token
 from config import MSG_LOGOUT, MSG_INVALID_TOKEN, MSN_400
 
 
