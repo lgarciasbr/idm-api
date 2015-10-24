@@ -4,14 +4,14 @@ except ImportError:
     from distutils.core import setup
 
 config = {
-    'description': 'Simple account app with Memcached and Postgree',
+    'description': 'Identity Management System',
     'author': 'Leandro Garcia',
     'url': '',
     'download_url': '',
     'author_email': 'leandro.garcias@gmail.com',
     'version': '0.1',
     'install_requires': ['pymemcache', 'flask', 'gunicorn'],
-    'packages': ['LG_Account'],
+    'packages': ['LG_idM'],
     'scripts': [],
-    'name': 'LG_Account'
+    'name': 'LG idM - LG Identity Management'
 }
