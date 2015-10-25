@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from runserver import app
+from lg_idm import app
 from config import PROJECT_NAME, PROJECT_DESCRIPTION
 
 
