@@ -1,6 +1,6 @@
 from Account import view
 from flask import request, Blueprint
-from Account.model.service import register_service
+#from Account.model.service import register_service
 
 account_blueprint = Blueprint('account', __name__)
 
