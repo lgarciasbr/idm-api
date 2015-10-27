@@ -1,10 +1,10 @@
 from flask import Flask, request, jsonify
+from flask.ext.sqlalchemy import SQLAlchemy
 from Account.controller import account_blueprint
 from Authentication.controller import authentication_blueprint
 from Home.controller import home_blueprint
-import gunicorn
 from config import MSN_400, MSN_404, MSN_405
-from flask.ext.sqlalchemy import SQLAlchemy
+import gunicorn
 
 app = Flask(__name__)
 app.register_blueprint(authentication_blueprint)
