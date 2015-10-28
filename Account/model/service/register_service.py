@@ -1,3 +1,5 @@
+from Account.model.data.account import User
+from lg_idm import db
 from config import MSN_400
 
 
@@ -5,7 +7,7 @@ def register(header, data):
     try:
         if header['Content-Type'] == 'application/json':
             if header['ver'] == '1':
-                return register_ver_1()
+                return register_ver_1(data["email"], data["password"])
             # elif header['ver'] == '2':
             #    return login_ver_2()
     except Exception:
@@ -15,12 +17,8 @@ def register(header, data):
     return {'message': MSN_400, 'http_code_status': 400}
 
 
-def register_ver_1():
+def register_ver_1(email, password):
+    db.session.add(User(email, password))
+    db.session.commit()
 
-    # todo implementar a chamada via banco de dados
-        # Login
-        return {'message': MSN_400, 'http_code_status': 200}
-
-# postgresql://scott:tiger@localhost/mydatabase
-
-# postgresql://scott:tiger@localhost/mydatabase
+    return {'message': "Ok", 'http_code_status': 200}

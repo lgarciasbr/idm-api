@@ -37,7 +37,8 @@ MSN_405 = 'The method is not allowed for '
 # BD
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, '/DB/app.db')
+SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')  # postgresql://user:password/mydatabase
+SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 
 '''
