@@ -28,5 +28,3 @@ def make_public_task(task):
 def get_tasks():
     return jsonify({'tasks': [make_public_task(task) for task in tasks]})
 '''
-
-

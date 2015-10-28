@@ -1,5 +1,5 @@
+from Account import db
 from Account.model.data.account import User
-from lg_idm import db
 from config import MSN_400
 
 

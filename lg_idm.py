@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-from flask.ext.sqlalchemy import SQLAlchemy
 from Account.controller import account_blueprint
 from Authentication.controller import authentication_blueprint
 from Home.controller import home_blueprint
@@ -10,9 +9,6 @@ app = Flask(__name__)
 app.register_blueprint(authentication_blueprint)
 app.register_blueprint(account_blueprint)
 app.register_blueprint(home_blueprint)
-
-app.config.from_object('config')
-db = SQLAlchemy(app)
 
 # todo montar o view e o model da home
 # todo separar os erros em um modulo so para cuidar disso.

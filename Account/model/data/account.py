@@ -1,4 +1,4 @@
-from lg_idm import db
+from Account import db
 
 
 class User(db.Model):
