@@ -1,7 +1,21 @@
 from flask import Blueprint, request, jsonify
-from config import MSN_404
+from config import MSN_404, MSN_405, MSN_400
 
 error_blueprint = Blueprint('errors', __name__)
+
+# todo melhorar o codigo dos erros - refatorar
+
+
+@app.errorhandler(400)
+def bad_request(error):
+    message = {
+        'status': 400,
+        'message': MSN_400 + request.url
+    }
+    resp = jsonify(message)
+    resp.status_code = 400
+
+    return resp
 
 
 @error_blueprint.app_errorhandler(404)
@@ -12,6 +26,18 @@ def not_found(error):
     }
     resp = jsonify(message)
     resp.status_code = 404
+
+    return resp
+
+
+@app.errorhandler(405)
+def not_allowed(error):
+    message = {
+        'status': 405,
+        'message': MSN_405 + request.url
+    }
+    resp = jsonify(message)
+    resp.status_code = 405
 
     return resp
 
