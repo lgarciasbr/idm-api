@@ -6,7 +6,7 @@ error_blueprint = Blueprint('errors', __name__)
 # todo melhorar o codigo dos erros - refatorar
 
 
-@app.errorhandler(400)
+@error_blueprint.errorhandler(400)
 def bad_request(error):
     message = {
         'status': 400,
@@ -21,7 +21,7 @@ def bad_request(error):
 @error_blueprint.app_errorhandler(404)
 def not_found(error):
     message = {
-        'status': 405,
+        'status': 404,
         'message': MSN_404 + request.url
     }
     resp = jsonify(message)
@@ -30,7 +30,7 @@ def not_found(error):
     return resp
 
 
-@app.errorhandler(405)
+@error_blueprint.errorhandler(405)
 def not_allowed(error):
     message = {
         'status': 405,
