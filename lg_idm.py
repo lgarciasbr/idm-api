@@ -10,7 +10,7 @@ app.register_blueprint(authentication_blueprint)
 app.register_blueprint(account_blueprint)
 app.register_blueprint(home_blueprint)
 
-# todo montar o view e o model da home
+
 # todo separar os erros em um modulo so para cuidar disso.
 # Error
 @app.errorhandler(400)
