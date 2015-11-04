@@ -121,7 +121,6 @@ class AuthenticationSolution(unittest.TestCase):
         response = tester.get('/pnf')
 
         self.assertEqual(response.status_code, 404)
-        self.assertEqual(json.loads(response.data)['status'], 404)
 
 
 if __name__ == '__main__':

@@ -1,80 +1,38 @@
-from flask import Blueprint, request, jsonify
-from config import MSN_404, MSN_405, MSN_400
+from flask import Blueprint
+from Errors import view
+from config import MSN_400, MSN_404, MSN_405, MSN_500
 
 error_blueprint = Blueprint('errors', __name__)
-
-# todo melhorar o codigo dos erros - refatorar
 
 
 @error_blueprint.errorhandler(400)
 def bad_request(error):
-    message = {
-        'status': 400,
-        'message': MSN_400 + request.url
-    }
-    resp = jsonify(message)
-    resp.status_code = 400
+    response = {'message': MSN_400}
+    http_code_status = 400
 
-    return resp
+    return view.message_json(response), http_code_status
 
 
 @error_blueprint.app_errorhandler(404)
 def not_found(error):
-    message = {
-        'status': 404,
-        'message': MSN_404 + request.url
-    }
-    resp = jsonify(message)
-    resp.status_code = 404
+    response = {'message': MSN_404}
+    http_code_status = 404
 
-    return resp
+    return view.message_json(response), http_code_status
 
 
 @error_blueprint.errorhandler(405)
 def not_allowed(error):
-    message = {
-        'status': 405,
-        'message': MSN_405 + request.url
-    }
-    resp = jsonify(message)
-    resp.status_code = 405
+    response = {'message': MSN_405}
+    http_code_status = 405
 
-    return resp
+    return view.message_json(response), http_code_status
 
 '''
-from httplib import HTTPException
-from flask import jsonify, request, current_app
-from werkzeug.exceptions import default_exceptions
+@error_blueprint.errorhandler(500)
+def not_allowed(error):
+    response = {'message': MSN_500}
+    http_code_status = 500
 
-
-def error_handler(error):
-    msg = "Request resulted in {}".format(error)
-    current_app.logger.warning(msg, exc_info=error)
-
-    if isinstance(error, HTTPException):
-        description = error.get_description(request.environ)
-        code = error.code
-        name = error.name + ' ' + request.url
-    else:
-        description = ("We encountered an error "
-                       "while trying to fulfill your request")
-        code = 500
-        name = 'Internal Server Error'
-
-    message = {
-        'status': code,
-        'message': name + ' ' + request.url
-    }
-
-    resp = jsonify(message)
-    resp.status_code = code
-
-    return resp
-
-
-def init_app(app):
-    for exception in default_exceptions:
-        app.register_error_handler(exception, error_handler)
-
-    app.register_error_handler(Exception, error_handler)
+    return view.message_json(response), http_code_status
 '''

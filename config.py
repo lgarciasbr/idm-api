@@ -31,8 +31,9 @@ MSG_INVALID_SERIALIZATION = 'Unknown serialization format'
 
 # Error
 MSN_400 = 'Bad Request'
-MSN_404 = 'Not found: '
-MSN_405 = 'The method is not allowed for '
+MSN_404 = 'Not Found'
+MSN_405 = 'The method is not allowed!'
+MSN_500 = 'Sorry, we encountered an error while trying to fulfill your request.'
 
 # BD
 basedir = os.path.abspath(os.path.dirname(__file__))

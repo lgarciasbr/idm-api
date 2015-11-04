@@ -9,6 +9,7 @@ account_blueprint = Blueprint('account', __name__)
 def register():
     response = register_service.login(request.headers, request.json)
     http_code_status = response.get('http_code_status')
+
     return view.message_json(response), http_code_status
 
 

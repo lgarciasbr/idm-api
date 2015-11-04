@@ -9,6 +9,7 @@ authentication_blueprint = Blueprint('authentication', __name__)
 def login():
     response = login_service.login(request.headers, request.json)
     http_code_status = response.get('http_code_status')
+
     return view.message_json(response), http_code_status
 
 
@@ -16,4 +17,5 @@ def login():
 def logout():
     response = logout_service.logout(request.headers)
     http_code_status = response.get('http_code_status')
+
     return view.message_json(response), http_code_status
