@@ -1,4 +1,4 @@
-from Account import db
+from database import db
 from Account.model.data.account import User
 from config import MSN_400
 
