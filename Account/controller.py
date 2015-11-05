@@ -7,7 +7,7 @@ account_blueprint = Blueprint('account', __name__)
 
 @account_blueprint.route('/register', methods=['POST'])
 def register():
-    response = register_service.login(request.headers, request.json)
+    response = register_service.register(request.headers, request.json)
     http_code_status = response.get('http_code_status')
 
     return view.message_json(response), http_code_status
