@@ -11,4 +11,4 @@ class User(db.Model):
         self.password = password
 
     def __repr__(self):
-        return '<e-mail %r>' % self.email
+        return {'e-mail': self.email}

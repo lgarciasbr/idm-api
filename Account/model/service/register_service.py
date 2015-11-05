@@ -21,4 +21,4 @@ def register_ver_1(email, password):
     db.session.add(User(email, password))
     db.session.commit()
 
-    return {'message': "Ok", 'http_code_status': 200}
+    return {'message': 'Ok', 'http_code_status': 200}
