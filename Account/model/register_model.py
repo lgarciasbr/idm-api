@@ -1,5 +1,4 @@
 from database import db, User
-# from Account.model.data.account import User
 from config import MSN_400
 
 
