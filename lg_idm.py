@@ -16,5 +16,12 @@ app.register_blueprint(account_blueprint)
 app.register_blueprint(home_blueprint)
 app.register_blueprint(error_blueprint)
 
-#with app.app_context():
-#    db.create_all()
+# todo resolver o problema de criacao do banco.
+# todo resolver o problema de upgrade do banco.
+
+import os
+from config import basedir
+
+if not os.path.isfile(basedir + 'app.db'):
+    with app.app_context():
+        db.create_all()
