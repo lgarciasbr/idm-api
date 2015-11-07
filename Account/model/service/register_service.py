@@ -1,5 +1,6 @@
 from Account.model.data import user
 from config import MSN_400
+import bcrypt
 
 
 def register(header, data):
@@ -17,7 +18,8 @@ def register(header, data):
 
 
 def register_ver_1(email, password):
-    user.register(email, password)
+    salt = bcrypt.gensalt()
+    user.register(email, bcrypt.hashpw(str(password), salt))
 
     return {'message': 'Ok', 'http_code_status': 200}
 
