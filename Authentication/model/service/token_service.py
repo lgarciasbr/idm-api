@@ -1,7 +1,6 @@
 import uuid
-
-from Authentication.model.data.memcached_data import delete_memcached, set_memcached, get_memcached
 from config import TOKEN_HOST
+from Authentication.model.data.token_data import delete_memcached, set_memcached, get_memcached
 
 
 #todo preprar unittest do token
