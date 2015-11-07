@@ -1,4 +1,4 @@
-from database import db, User
+from Account.model.data import user
 from config import MSN_400
 
 
@@ -17,8 +17,7 @@ def register(header, data):
 
 
 def register_ver_1(email, password):
-    db.session.add(User(email, password))
-    db.session.commit()
+    user.register(email, password)
 
     return {'message': 'Ok', 'http_code_status': 200}
 
