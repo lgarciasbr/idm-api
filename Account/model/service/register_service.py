@@ -1,5 +1,5 @@
 from Account.model.data import user_data
-from config import MSN_400
+from config import MSN_400, MSG_EMAIL_ALREADY_REGISTERED, MSG_ACCOUNT_SET
 import bcrypt
 
 
@@ -24,9 +24,9 @@ def register_ver_1(email, password):
     if user is None:
         user_data.register(email, bcrypt.hashpw(str(password), bcrypt.gensalt()))
 
-        return {'message': 'Account set!', 'http_code_status': 200}
+        return {'message': MSG_ACCOUNT_SET, 'http_code_status': 200}
     else:
-        return {'message': 'E-mail is already registered.', 'http_code_status': 403}
+        return {'message': MSG_EMAIL_ALREADY_REGISTERED, 'http_code_status': 403}
 
 '''
 class MyAdapter(DBAdapter):
