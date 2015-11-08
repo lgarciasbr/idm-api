@@ -1,4 +1,6 @@
-from Authentication.model.service.token_service import set_token
+import bcrypt
+from Authentication.model.service import token_service
+from Authentication.model.data import user_data
 from config import MSG_LOGIN, MSG_LOGIN_ERROR, MSN_400
 
 
@@ -18,10 +20,11 @@ def login(header, data):
 
 def login_ver_1(username, password):
 
-    # todo implementar a chamada via banco de dados
-    if username == 'admin' and password == 'default':
-        token = set_token({'username': username})
-        # Login
+    user = user_data.get_user(username)
+
+    if user is not None and user.password == bcrypt.hashpw(str(password), str(user.password)):
+        token = token_service.set_token({'username': username})
+        # Allowed
         return {'message': MSG_LOGIN, 'token': token, 'http_code_status': 200}
 
     else:

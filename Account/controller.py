@@ -1,5 +1,4 @@
 from flask import request, Blueprint
-
 from Account import view
 from Account.model.service import register_service
 
