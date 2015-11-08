@@ -18,12 +18,12 @@ def login(header, data):
     return {'message': MSN_400, 'http_code_status': 400}
 
 
-def login_ver_1(username, password):
+def login_ver_1(email, password):
 
-    user = user_data.get_user(username)
+    user = user_data.get_user(email)
 
     if user is not None and user.password == bcrypt.hashpw(str(password), str(user.password)):
-        token = token_service.set_token({'username': username})
+        token = token_service.set_token({'email': email})
         # Allowed
         return {'message': MSG_LOGIN, 'token': token, 'http_code_status': 200}
 

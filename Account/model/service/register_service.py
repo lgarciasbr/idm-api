@@ -18,6 +18,7 @@ def register(header, data):
 
 
 def register_ver_1(email, password):
+
     user.register(email, bcrypt.hashpw(str(password), bcrypt.gensalt()))
 
     return {'message': 'Ok', 'http_code_status': 200}

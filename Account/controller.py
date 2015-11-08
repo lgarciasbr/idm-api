@@ -5,7 +5,7 @@ from Account.model.service import register_service
 account_blueprint = Blueprint('account', __name__)
 
 
-@account_blueprint.route('/register', methods=['POST'])
+@account_blueprint.route('/account', methods=['POST'])
 def register():
     response = register_service.register(request.headers, request.json)
     http_code_status = response.get('http_code_status')

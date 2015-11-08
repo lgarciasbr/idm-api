@@ -20,7 +20,7 @@ class AuthenticationSolution(unittest.TestCase):
         return tester.post('/login', data=data_json, headers=header)
 
     def test_login_assert(self):
-        response = self.login_v1('admin', 'default')
+        response = self.login_v1('admin@admin', 'default')
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json.loads(response.data)['message'], MSG_LOGIN)
@@ -32,7 +32,7 @@ class AuthenticationSolution(unittest.TestCase):
         self.assertEqual(json.loads(response.data)['message'], MSG_LOGIN_ERROR)
 
     def test_login_not_assert_password(self):
-        response = self.login_v1('admin', 'error')
+        response = self.login_v1('admin@admin', 'error')
 
         self.assertEqual(response.status_code, 403)
         self.assertEqual(json.loads(response.data)['message'], MSG_LOGIN_ERROR)
@@ -70,7 +70,7 @@ class AuthenticationSolution(unittest.TestCase):
         return tester.post('/logout', headers=header)
 
     def test_logout_assert(self):
-        response_login = self.login_v1('admin', 'default')
+        response_login = self.login_v1('admin@admin', 'default')
 
         response = self.logout_v1(json.loads(response_login.data)['token'])
 
@@ -78,7 +78,7 @@ class AuthenticationSolution(unittest.TestCase):
         self.assertEqual(json.loads(response.data)['message'], MSG_LOGOUT)
 
     def test_logout_assert_second_shot(self):
-        response_login = self.login_v1('admin', 'default')
+        response_login = self.login_v1('admin@admin', 'default')
 
         token = json.loads(response_login.data)['token']
 
