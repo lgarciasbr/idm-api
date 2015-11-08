@@ -1,4 +1,4 @@
-from Account.model.data import user
+from Account.model.data import user_data
 from config import MSN_400
 import bcrypt
 
@@ -19,9 +19,14 @@ def register(header, data):
 
 def register_ver_1(email, password):
 
-    user.register(email, bcrypt.hashpw(str(password), bcrypt.gensalt()))
+    user = user_data.get_user(email)
 
-    return {'message': 'Ok', 'http_code_status': 200}
+    if user is None:
+        user_data.register(email, bcrypt.hashpw(str(password), bcrypt.gensalt()))
+
+        return {'message': 'Account set!', 'http_code_status': 200}
+    else:
+        return {'message': 'E-mail is already registered.', 'http_code_status': 403}
 
 '''
 class MyAdapter(DBAdapter):
