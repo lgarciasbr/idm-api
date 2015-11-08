@@ -4,7 +4,7 @@ from config import MSN_400, MSN_404, MSN_405, MSN_500
 
 error_blueprint = Blueprint('errors', __name__)
 
-
+# todo criar unittest
 @error_blueprint.errorhandler(400)
 def bad_request(error):
     response = {'message': MSN_400}
