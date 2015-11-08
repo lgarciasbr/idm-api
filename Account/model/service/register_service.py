@@ -16,7 +16,7 @@ def register(header, data):
     # Bad Request
     return {'message': MSN_400, 'http_code_status': 400}
 
-
+# TODO CRIAR OS TESTES DO REGISTER
 def register_ver_1(email, password):
 
     user = user_data.get_user(email)
