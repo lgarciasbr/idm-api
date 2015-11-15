@@ -1,6 +1,6 @@
 import bcrypt
+from Account import controller
 from Authentication.model.service import token_service
-from Authentication.model.data import user_data
 from config import MSG_LOGIN, MSG_LOGIN_ERROR, MSN_400
 
 
@@ -20,7 +20,7 @@ def login(header, data):
 
 def login_ver_1(email, password):
 
-    user = user_data.get_user(email)
+    user = controller.account_get_email(email)
 
     if user is not None and user.password == bcrypt.hashpw(str(password), str(user.password)):
         token = token_service.set_token({'email': email})

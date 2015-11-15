@@ -17,7 +17,7 @@ class AuthenticationSolution(unittest.TestCase):
 
         data_json = json.dumps({'username': username, 'password': password})
 
-        return tester.post('/login', data=data_json, headers=header)
+        return tester.post('/auth', data=data_json, headers=header)
 
     def test_login_assert(self):
         response = self.login_v1('admin@admin', 'default')
@@ -46,14 +46,14 @@ class AuthenticationSolution(unittest.TestCase):
     def test_login_not_assert_get(self):
         tester = app.test_client(self)
 
-        response = tester.get('/login')
+        response = tester.get('/auth')
 
         self.assertEqual(response.status_code, 405)
 
     def test_login_not_assert_post(self):
         tester = app.test_client(self)
 
-        response = tester.post('/login')
+        response = tester.post('/auth')
 
         self.assertEqual(response.status_code, 400)
         self.assertEqual(json.loads(response.data)['message'], MSN_400)
@@ -67,7 +67,7 @@ class AuthenticationSolution(unittest.TestCase):
         header.append(('ver', '1'))
         header.append(('token', token))
 
-        return tester.post('/logout', headers=header)
+        return tester.delete('/auth', headers=header)
 
     def test_logout_assert(self):
         response_login = self.login_v1('admin@admin', 'default')
@@ -102,7 +102,7 @@ class AuthenticationSolution(unittest.TestCase):
     def test_logout_not_assert_no_header(self):
         tester = app.test_client(self)
 
-        response = tester.post('/logout')
+        response = tester.delete('/auth')
 
         self.assertEqual(response.status_code, 400)
         self.assertEqual(json.loads(response.data)['message'], MSN_400)
@@ -110,7 +110,7 @@ class AuthenticationSolution(unittest.TestCase):
     def test_logout_not_assert_get(self):
         tester = app.test_client(self)
 
-        response = tester.get('/logout')
+        response = tester.get('/auth')
 
         self.assertEqual(response.status_code, 405)
 

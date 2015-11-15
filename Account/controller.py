@@ -1,16 +1,20 @@
 from flask import request, Blueprint
 from Account import view
-from Account.model.service import register_service
+from Account.model.service import account_service
 
 account_blueprint = Blueprint('account', __name__)
 
 
 @account_blueprint.route('/account', methods=['POST'])
-def register():
-    response = register_service.register(request.headers, request.json)
+def account_register():
+    response = account_service.register(request.headers, request.json)
     http_code_status = response.get('http_code_status')
 
     return view.message_json(response), http_code_status
+
+
+def account_get_email(email):
+    return account_service.get_user_by_email(email)
 
 
 '''
