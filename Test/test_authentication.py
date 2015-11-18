@@ -7,6 +7,8 @@ from config import MSG_LOGIN, MSG_LOGOUT, MSG_LOGIN_ERROR,\
 
 
 class AuthenticationSolution(unittest.TestCase):
+    # Account
+    # Register
     def test_account_register_assert(self):
         tester = app.test_client(self)
 
@@ -21,6 +23,7 @@ class AuthenticationSolution(unittest.TestCase):
 
 
     # todo precisa fazer os testes nao passando todos os itens do header no login
+    # Authentication
     # Login
     def login_v1(self, email, password):
         tester = app.test_client(self)
