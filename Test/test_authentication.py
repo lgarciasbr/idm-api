@@ -7,15 +7,28 @@ from config import MSG_LOGIN, MSG_LOGOUT, MSG_LOGIN_ERROR,\
 
 
 class AuthenticationSolution(unittest.TestCase):
-    # todo precisa fazer os testes nao passando todos os itens do header no login
-    # Login
-    def login_v1(self, username, password):
+    def test_account_register_assert(self):
         tester = app.test_client(self)
 
         header = [('Content-Type', 'application/json')]
         header.append(('ver', '1'))
 
-        data_json = json.dumps({'username': username, 'password': password})
+        data_json = json.dumps({'email': 'admin@admin', 'password': 'default'})
+
+        response = tester.post('/account', data=data_json, headers=header)
+
+        self.assertEqual(response.status_code, 200)
+
+
+    # todo precisa fazer os testes nao passando todos os itens do header no login
+    # Login
+    def login_v1(self, email, password):
+        tester = app.test_client(self)
+
+        header = [('Content-Type', 'application/json')]
+        header.append(('ver', '1'))
+
+        data_json = json.dumps({'email': email, 'password': password})
 
         return tester.post('/auth', data=data_json, headers=header)
 
