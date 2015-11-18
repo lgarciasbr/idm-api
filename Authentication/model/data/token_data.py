@@ -11,7 +11,6 @@ def get_memcached(key):
 
 
 def set_memcached(key, value):
-    #value.email
     client = Client((MEMCACHED_HOST, MEMCACHED_PORT), serializer=json_serializer, deserializer=json_deserializer)
     client.set(key, value)
 

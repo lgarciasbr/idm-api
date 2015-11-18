@@ -9,7 +9,7 @@ def login(header, data):
     try:
         if header['Content-Type'] == 'application/json':
             if header['ver'] == '1':
-                return login_ver_1(data['username'], data['password'])
+                return login_ver_1(data['email'], data['password'])
             # elif header['ver'] == '2':
             #    return login_ver_2(data['username'], data['password'], data['ip'])
     except Exception:
