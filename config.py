@@ -10,9 +10,9 @@ PROJECT_NAME = 'Account'
 PROJECT_DESCRIPTION = 'Studying Python!'
 
 # Token
-# Option: memcached, postgres
+# Option: memcached, database
 # todo implementar o token via banco.
-TOKEN_HOST = 'memcached'
+TOKEN_HOST = 'database'
 
 if os.environ.get('SERVER') is None:
     MEMCACHED_HOST = '192.168.99.100'

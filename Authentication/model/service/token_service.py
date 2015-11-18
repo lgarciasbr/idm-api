@@ -1,6 +1,5 @@
 import uuid
-from config import TOKEN_HOST
-from Authentication.model.data.token_data import delete_memcached, set_memcached, get_memcached
+from Authentication.model.data import token_data
 
 
 #todo preprar unittest do token
@@ -8,27 +7,15 @@ def get_token_number():
     return uuid.uuid4().__str__()
 
 
-def get_token(key):
-    if TOKEN_HOST == 'memcached':
-        return get_memcached(key)
-    else:
-        #todo implementar get_token com banco de dados
-        pass
+def get_token(email):
+    return token_data.get_token(email)
 
 
 def set_token(value):
-    if TOKEN_HOST == 'memcached':
-        token = get_token_number()
-        set_memcached(token, value)
-        return token
-    else:
-        #todo implementar set_token com banco de dados
-        pass
+    token = get_token_number()
+    token_data.set_token(token, value)
+    return token
 
 
-def delete_token(key):
-    if TOKEN_HOST == 'memcached':
-        return delete_memcached(key)
-    else:
-        #todo implementar delete_token com banco de dados
-        pass
+def delete_token(token):
+    return token_data.delete_token(token)
