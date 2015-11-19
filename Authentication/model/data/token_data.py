@@ -4,11 +4,12 @@ from database import db, Token
 from lib.json import json_serializer, json_deserializer
 from config import MEMCACHED_HOST, MEMCACHED_PORT, TOKEN_HOST
 
+client = Client((MEMCACHED_HOST, MEMCACHED_PORT), serializer=json_serializer, deserializer=json_deserializer)
+
 
 #todo criar os unittests do memcached
 def get_token(email):
     if TOKEN_HOST == 'memcached':
-        client = Client((MEMCACHED_HOST, MEMCACHED_PORT), serializer=json_serializer, deserializer=json_deserializer)
         return client.get(email)
     elif TOKEN_HOST == 'database':
         return Token.query.filter_by(token=email).first()
@@ -18,7 +19,6 @@ def get_token(email):
 
 def set_token(token, value):
     if TOKEN_HOST == 'memcached':
-        client = Client((MEMCACHED_HOST, MEMCACHED_PORT), serializer=json_serializer, deserializer=json_deserializer)
         client.set(token, value)
     elif TOKEN_HOST == 'database':
         db.session.add(Token(token, value['email']))
@@ -27,7 +27,6 @@ def set_token(token, value):
 
 def delete_token(token):
     if TOKEN_HOST == 'memcached':
-        client = Client((MEMCACHED_HOST, MEMCACHED_PORT), serializer=json_serializer, deserializer=json_deserializer)
         return client.delete(token)
     elif TOKEN_HOST == 'database':
         pass
