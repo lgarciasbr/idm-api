@@ -6,12 +6,12 @@ from config import MEMCACHED_HOST, MEMCACHED_PORT, TOKEN_HOST
 
 
 #todo criar os unittests do memcached
-def get_token(key):
+def get_token(email):
     if TOKEN_HOST == 'memcached':
         client = Client((MEMCACHED_HOST, MEMCACHED_PORT), serializer=json_serializer, deserializer=json_deserializer)
-        return client.get(key)
+        return client.get(email)
     elif TOKEN_HOST == 'database':
-        return Token.query.filter_by(token=key).first()
+        return Token.query.filter_by(token=email).first()
     else:
         pass
 
@@ -25,10 +25,10 @@ def set_token(token, value):
         db.session.commit()
 
 
-def delete_token(key):
+def delete_token(token):
     if TOKEN_HOST == 'memcached':
         client = Client((MEMCACHED_HOST, MEMCACHED_PORT), serializer=json_serializer, deserializer=json_deserializer)
-        return client.delete(key)
+        return client.delete(token)
     elif TOKEN_HOST == 'database':
         pass
         #todo criar o codigo para apagar o token via base de dados
