@@ -20,9 +20,11 @@ def get_token(email):
 def set_token(token, value):
     if TOKEN_HOST == 'memcached':
         client.set(token, value)
+        return token
     elif TOKEN_HOST == 'database':
-        db.session.add(Token(token, value['email']))
+        db.session.add(Token(value['email']), token)
         db.session.commit()
+        return token
 
 
 def delete_token(token):
