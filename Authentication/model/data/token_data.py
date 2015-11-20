@@ -8,11 +8,11 @@ client = Client((MEMCACHED_HOST, MEMCACHED_PORT), serializer=json_serializer, de
 
 
 #todo criar os unittests do memcached
-def get_token(email):
+def get_token(token):
     if TOKEN_HOST == 'memcached':
-        return client.get(email)
+        return client.get(token)
     elif TOKEN_HOST == 'database':
-        return Token.query.filter_by(token=email).first()
+        return Token.query.filter_by(token=token).first()
     else:
         pass
 
@@ -31,8 +31,8 @@ def delete_token(token):
     if TOKEN_HOST == 'memcached':
         return client.delete(token)
     elif TOKEN_HOST == 'database':
-        pass
-        #todo criar o codigo para apagar o token via base de dados
+        Token.query.filter_by(token=token).delete()
+        db.session.commit()
 
 
 '''

@@ -88,10 +88,14 @@ class AuthenticationSolution(unittest.TestCase):
     def test_logout_assert(self):
         response_login = self.login_v1('admin@admin', 'default')
 
-        response = self.logout_v1(json.loads(response_login.data)['token'])
+        token = json.loads(response_login.data)['token']
 
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(json.loads(response.data)['message'], MSG_LOGOUT)
+        if response_login.status_code == 200:
+            # logout
+            response = self.logout_v1(token)
+
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(json.loads(response.data)['message'], MSG_LOGOUT)
 
     def test_logout_assert_second_shot(self):
         response_login = self.login_v1('admin@admin', 'default')
