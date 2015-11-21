@@ -1,5 +1,6 @@
 from Account.model.data import user_data
 from config import MSN_400, MSG_EMAIL_ALREADY_REGISTERED, MSG_ACCOUNT_SET
+from email_validator import validate_email, EmailNotValidError
 import bcrypt
 
 
@@ -19,6 +20,15 @@ def register(header, data):
 
 # TODO CRIAR OS TESTES DO REGISTER
 def register_ver_1(email, password):
+    try:
+        # validate and get info
+        v = validate_email(email)
+        # replace with normalized form
+        email = v["email"]
+    except EmailNotValidError as e:
+        # email is not valid, exception message is human-readable
+        return {'message': str(e), 'http_code_status': 403}
+
     if not get_user_by_email(email):
         user_data.register(email, bcrypt.hashpw(str(password), bcrypt.gensalt()))
 
@@ -27,6 +37,5 @@ def register_ver_1(email, password):
         return {'message': MSG_EMAIL_ALREADY_REGISTERED, 'http_code_status': 403}
 
 
-# TODO CRIAR OS TESTES para check email
 def get_user_by_email(email):
     return user_data.get_user(email)
