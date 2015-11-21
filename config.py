@@ -9,10 +9,11 @@ import os
 PROJECT_NAME = 'Account'
 PROJECT_DESCRIPTION = 'Studying Python!'
 
-# Token
+# Token Host
 # Option: memcached, database
 TOKEN_HOST = 'database'
 
+# Mencached Host
 if os.environ.get('SERVER') is None:
     MEMCACHED_HOST = '192.168.99.100'
     MEMCACHED_PORT = 32777
@@ -20,6 +21,12 @@ else:
     # todo documentar que precisa criar as variaveis de ambiente para o memcached
     MEMCACHED_HOST = ''
     MEMCACHED_PORT = ''
+
+# BD
+basedir = os.path.abspath(os.path.dirname(__file__))
+SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')  # postgresql://user:password/mydatabase
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 
 # General Text
 MSG_LOGIN = 'You were logged in!'
@@ -36,12 +43,9 @@ MSN_404 = 'Not Found'
 MSN_405 = 'The method is not allowed!'
 MSN_500 = 'Sorry, we encountered an error while trying to fulfill your request.'
 
-# BD
-basedir = os.path.abspath(os.path.dirname(__file__))
-
-SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')  # postgresql://user:password/mydatabase
-SQLALCHEMY_TRACK_MODIFICATIONS = False
-SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
+# Test
+EMAIL_TEST = 'admin@admin.com'
+PWD_TEST = 'default'
 
 '''
 # mail server settings
