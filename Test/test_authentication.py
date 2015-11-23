@@ -3,7 +3,7 @@ import unittest
 
 from lg_idm import app
 from config import MSG_LOGIN, MSG_LOGOUT, MSG_LOGIN_ERROR,\
-    MSG_INVALID_TOKEN, MSN_400
+    MSG_INVALID_TOKEN, MSN_400, EMAIL_TEST, PWD_TEST
 
 
 class AuthenticationSolution(unittest.TestCase):
@@ -15,7 +15,7 @@ class AuthenticationSolution(unittest.TestCase):
         header = [('Content-Type', 'application/json')]
         header.append(('ver', '1'))
 
-        data_json = json.dumps({'email': 'admin@admin', 'password': 'default'})
+        data_json = json.dumps({'email': EMAIL_TEST, 'password': PWD_TEST})
 
         response = tester.post('/account', data=data_json, headers=header)
 
@@ -36,25 +36,25 @@ class AuthenticationSolution(unittest.TestCase):
         return tester.post('/auth', data=data_json, headers=header)
 
     def test_login_assert(self):
-        response = self.login_v1('admin@admin', 'default')
+        response = self.login_v1(EMAIL_TEST, PWD_TEST)
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json.loads(response.data)['message'], MSG_LOGIN)
 
     def test_login_not_assert_user(self):
-        response = self.login_v1('error', 'default')
+        response = self.login_v1('wrong_email', PWD_TEST)
 
         self.assertEqual(response.status_code, 403)
         self.assertEqual(json.loads(response.data)['message'], MSG_LOGIN_ERROR)
 
     def test_login_not_assert_password(self):
-        response = self.login_v1('admin@admin', 'error')
+        response = self.login_v1(EMAIL_TEST, 'wrong_password')
 
         self.assertEqual(response.status_code, 403)
         self.assertEqual(json.loads(response.data)['message'], MSG_LOGIN_ERROR)
 
     def test_login_not_assert_username_password(self):
-        response = self.login_v1('error', 'error')
+        response = self.login_v1('wrong_email', 'wrong_password')
 
         self.assertEqual(response.status_code, 403)
         self.assertEqual(json.loads(response.data)['message'], MSG_LOGIN_ERROR)
@@ -86,7 +86,7 @@ class AuthenticationSolution(unittest.TestCase):
         return tester.delete('/auth', headers=header)
 
     def test_logout_assert(self):
-        response_login = self.login_v1('admin@admin', 'default')
+        response_login = self.login_v1(EMAIL_TEST, PWD_TEST)
 
         token = json.loads(response_login.data)['token']
 
@@ -98,7 +98,7 @@ class AuthenticationSolution(unittest.TestCase):
             self.assertEqual(json.loads(response.data)['message'], MSG_LOGOUT)
 
     def test_logout_assert_second_shot(self):
-        response_login = self.login_v1('admin@admin', 'default')
+        response_login = self.login_v1(EMAIL_TEST, PWD_TEST)
 
         token = json.loads(response_login.data)['token']
 
