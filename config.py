@@ -29,7 +29,7 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 
 # Set to 'False' or True to domain name resolution on email check when register a new account.
-CHECK_DELIVERABILITY = False
+CHECK_DELIVERABILITY = True
 
 # General Messages
 MSG_LOGIN = 'You were logged in!'
