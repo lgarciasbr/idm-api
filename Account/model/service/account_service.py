@@ -1,5 +1,5 @@
 from Account.model.data import user_data
-from config import MSN_400, MSG_EMAIL_ALREADY_REGISTERED, MSG_ACCOUNT_SET
+from config import MSN_400, MSG_EMAIL_ALREADY_REGISTERED, MSG_ACCOUNT_SET, CHECK_DELIVERABILITY
 from email_validator import validate_email, EmailNotValidError
 import bcrypt
 
@@ -22,7 +22,7 @@ def register(header, data):
 def register_ver_1(email, password):
     try:
         # validate and get info
-        v = validate_email(email)
+        v = validate_email(email, check_deliverability=CHECK_DELIVERABILITY)
         # replace with normalized form
         email = v["email"]
     except EmailNotValidError as e:

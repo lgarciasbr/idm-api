@@ -22,13 +22,16 @@ else:
     MEMCACHED_HOST = ''
     MEMCACHED_PORT = ''
 
-# BD
+# BD Config
 basedir = os.path.abspath(os.path.dirname(__file__))
 SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')  # postgresql://user:password/mydatabase
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 
-# General Text
+# Set to 'False' or True to domain name resolution on email check when register a new account.
+CHECK_DELIVERABILITY = False
+
+# General Messages
 MSG_LOGIN = 'You were logged in!'
 MSG_LOGIN_ERROR = 'Invalid username or password'
 MSG_LOGOUT = 'You were logged out!'
@@ -44,7 +47,7 @@ MSN_405 = 'The method is not allowed!'
 MSN_500 = 'Sorry, we encountered an error while trying to fulfill your request.'
 
 # Test
-EMAIL_TEST = 'admin@admin.com'
+EMAIL_TEST = 'admin@admin'
 PWD_TEST = 'default'
 
 '''
