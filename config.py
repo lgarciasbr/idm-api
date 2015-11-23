@@ -47,7 +47,7 @@ MSN_405 = 'The method is not allowed!'
 MSN_500 = 'Sorry, we encountered an error while trying to fulfill your request.'
 
 # Test
-EMAIL_TEST = 'admin@admin'
+EMAIL_TEST = 'admin@admin.com'
 PWD_TEST = 'default'
 
 '''
