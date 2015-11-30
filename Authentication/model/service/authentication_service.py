@@ -4,7 +4,7 @@ from Authentication.model.service import token_service
 from Authentication.model.service.token_service import get_token, delete_token
 from config import MSG_LOGIN, MSG_LOGIN_ERROR, MSN_400, MSG_LOGOUT, MSG_INVALID_TOKEN, MSG_VALID_TOKEN
 
-
+# todo Implementar o timeout do login, precisa pensar nas regras.
 def login(header, data):
     try:
         if header['Content-Type'] == 'application/json':
@@ -38,6 +38,7 @@ def login_ver_2(username, password, ip):
 
 
 # todo Criar test para o is_valid_token
+# todo Com o timeout do lgin implementado o is_valid_token pode fazer um refresh no timeout.
 def is_token_valid(header):
     try:
         if header['Content-Type'] == 'application/json':
