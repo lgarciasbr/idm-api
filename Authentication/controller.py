@@ -13,6 +13,14 @@ def auth_login():
     return view.message_json(response), http_code_status
 
 
+@authentication_blueprint.route('/auth', methods=['GET'])
+def auth_login():
+    response = authentication_service.list(request.headers, request.json)
+    http_code_status = response.get('http_code_status')
+
+    return view.message_json(response), http_code_status
+
+
 @authentication_blueprint.route('/auth', methods=['DELETE'])
 def auth_logout():
     response = authentication_service.logout(request.headers)
