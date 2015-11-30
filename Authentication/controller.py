@@ -14,8 +14,8 @@ def auth_login():
 
 
 @authentication_blueprint.route('/auth', methods=['GET'])
-def auth_login():
-    response = authentication_service.list(request.headers, request.json)
+def auth_is_valid():
+    response = authentication_service.is_token_valid(request.headers)
     http_code_status = response.get('http_code_status')
 
     return view.message_json(response), http_code_status
