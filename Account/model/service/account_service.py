@@ -18,6 +18,7 @@ def register(header, data):
     return {'message': MSN_400, 'http_code_status': 400}
 
 
+# TODO PRECISA CRIAR UMA SOLUCAO PARA REGRAS DE SENHA. Ex.: uma maiscula e etc. Olhar o AD para ver como funciona.
 # TODO CRIAR OS TESTES DO REGISTER
 def register_ver_1(email, password):
     try:
