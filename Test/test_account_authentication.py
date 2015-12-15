@@ -7,6 +7,9 @@ from config import MSG_LOGIN, MSG_LOGOUT, MSG_LOGIN_ERROR,\
 
 
 class AuthenticationSolution(unittest.TestCase):
+
+    sortTestMethodsUsing = cmp
+
     # todo precisa fazer os testes nao passando todos os itens do header no registro.
     # todo precisa fazer os testes nao passando o login e depois a senha e os dois.
     # Account
@@ -86,7 +89,7 @@ class AuthenticationSolution(unittest.TestCase):
 
         response = tester.get('/auth')
 
-        self.assertEqual(response.status_code, 405)
+        self.assertEqual(response.status_code, 400)
 
     def test_login_not_assert_post(self):
         tester = app.test_client(self)
@@ -154,7 +157,7 @@ class AuthenticationSolution(unittest.TestCase):
 
         response = tester.get('/auth')
 
-        self.assertEqual(response.status_code, 405)
+        self.assertEqual(response.status_code, 400)
 
     # Error
     def test_error_404_assert(self):
