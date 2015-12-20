@@ -8,7 +8,7 @@ from config import MSG_LOGIN, MSG_LOGOUT, MSG_LOGIN_ERROR,\
 
 class AuthenticationSolution(unittest.TestCase):
 
-    sortTestMethodsUsing = cmp
+    #sortTestMethodsUsing = cmp
 
     # todo precisa fazer os testes nao passando todos os itens do header no registro.
     # todo precisa fazer os testes nao passando o login e depois a senha e os dois.
