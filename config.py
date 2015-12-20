@@ -4,7 +4,7 @@ import os
 # WHOOSH_ENABLED = os.environ.get('HEROKU') is None
 
 # todo implementar o sistema em mais de um idioma
-# todo implementar a biblioteca do Henrique Bastos para a configuração .env
+# todo implementar a biblioteca do Henrique Bastos para a configuracao .env
 
 # Project
 PROJECT_NAME = 'Account'
