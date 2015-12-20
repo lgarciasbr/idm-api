@@ -16,6 +16,14 @@ class HomeSolution(unittest.TestCase):
         self.assertEqual(json.loads(response.data)['description'], PROJECT_DESCRIPTION)
         self.assertEqual(json.loads(response.data)['project'], PROJECT_NAME)
 
+    # todo Verificar se nao existem outros testes como 403 que podem ser feitos.
+    # Error
+    def test_error_404_assert(self):
+        tester = app.test_client(self)
+
+        response = tester.get('/pnf')
+
+        self.assertEqual(response.status_code, 404)
 
 if __name__ == '__main__':
     unittest.main()
