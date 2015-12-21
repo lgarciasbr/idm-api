@@ -26,7 +26,6 @@ class Token(db.Model):
     token = db.Column(db.String(200), unique=False)
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
     user = db.relationship(User, backref=backref('tokens'))
-    # email = db.Column(db.String(120), unique=False)
 
     def __init__(self, token, user):
         self.token = token

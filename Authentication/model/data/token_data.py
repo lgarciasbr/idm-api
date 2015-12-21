@@ -19,7 +19,7 @@ def get_token(token):
 
 def set_token(token, user):
     if TOKEN_HOST == 'memcached':
-        client.set(token, user.email)
+        client.set(token, user.id)
         return token
     elif TOKEN_HOST == 'database':
         db.session.add(Token(token, user))
