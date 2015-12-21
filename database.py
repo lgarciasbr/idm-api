@@ -5,6 +5,7 @@ from sqlalchemy.orm import backref
 db = SQLAlchemy()
 
 
+# todo Precisa configurar uma maneira de fazer upgrade quando o banco muda.
 # TODO Precisa testar para verificar se o sistema esta diferenciando maiuscula de minuscula.
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -20,7 +21,6 @@ class User(db.Model):
         return {'e-mail': self.email}
 
 
-# todo precisa tirar a coluna email e colocar um id_user
 class Token(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     token = db.Column(db.String(200), unique=False)
