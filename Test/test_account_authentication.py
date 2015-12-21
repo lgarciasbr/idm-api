@@ -5,10 +5,17 @@ from lg_idm import app
 from config import MSG_LOGIN, MSG_LOGOUT, MSG_LOGIN_ERROR,\
     MSG_INVALID_TOKEN, MSN_400, EMAIL_TEST, PWD_TEST
 
+# todo Precisa fazer os testes com o token no banco e no Memcached.
 
 class AuthenticationSolution(unittest.TestCase):
 
-    #sortTestMethodsUsing = cmp
+    def setUp(self):
+        # Register an user for test purpose.
+        self.register_v1(EMAIL_TEST, PWD_TEST)
+
+    # def tearDown(self):
+        # todo remover o usuario criado para o teste.
+        # todo sera que nao devo apagar o banco criado?
 
     # todo precisa fazer os testes nao passando todos os itens do header no registro.
     # todo precisa fazer os testes nao passando o login e depois a senha e os dois.
@@ -23,11 +30,6 @@ class AuthenticationSolution(unittest.TestCase):
         data_json = json.dumps({'email': email, 'password': password})
 
         return tester.post('/account', data=data_json, headers=header)
-
-    def test_register_assert(self):
-        response = self.register_v1(EMAIL_TEST, PWD_TEST)
-
-        self.assertEqual(response.status_code, 200)
 
     def test_register_not_assert_invalid_email(self):
         response = self.register_v1('not_email', PWD_TEST)
@@ -158,14 +160,6 @@ class AuthenticationSolution(unittest.TestCase):
         response = tester.get('/auth')
 
         self.assertEqual(response.status_code, 400)
-
-    # Error
-    def test_error_404_assert(self):
-        tester = app.test_client(self)
-
-        response = tester.get('/pnf')
-
-        self.assertEqual(response.status_code, 404)
 
 
 if __name__ == '__main__':

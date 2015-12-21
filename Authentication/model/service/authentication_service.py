@@ -25,7 +25,7 @@ def login_ver_1(email, password):
     user = controller.account_get_email(email)
 
     if user is not None and user.password == bcrypt.hashpw(str(password), str(user.password)):
-        token = token_service.set_token({'email': email})
+        token = token_service.set_token(user)
         # Allowed
         return {'message': MSG_LOGIN, 'token': token, 'http_code_status': 200}
 

@@ -11,8 +11,8 @@ def get_token(token):
     return token_data.get_token(token)
 
 
-def set_token(value):
-    return token_data.set_token(generate_token_number(), value)
+def set_token(user):
+    return token_data.set_token(generate_token_number(), user)
 
 
 def delete_token(token):

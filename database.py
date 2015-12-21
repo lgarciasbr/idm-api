@@ -1,4 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import func
+from sqlalchemy.orm import backref
 
 db = SQLAlchemy()
 
@@ -8,6 +10,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True)
     password = db.Column(db.String(80), unique=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=func.now())
 
     def __init__(self, email, password):
         self.email = email
@@ -21,11 +24,13 @@ class User(db.Model):
 class Token(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     token = db.Column(db.String(200), unique=False)
-    email = db.Column(db.String(120), unique=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
+    user = db.relationship(User, backref=backref('tokens'))
+    # email = db.Column(db.String(120), unique=False)
 
-    def __init__(self, token, email):
+    def __init__(self, token, user):
         self.token = token
-        self.email = email
+        self.user = user
 
     def __repr__(self):
         return {'token': self.token}
