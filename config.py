@@ -5,6 +5,8 @@ import os
 
 # todo implementar o sistema em mais de um idioma
 # todo implementar a biblioteca do Henrique Bastos para a configuracao .env
+# todo ALLOWED_HOSTS, Secret Key,
+# todo Verificar como buscar foto de perfil, igual os sites fazem hoje, voce cadastra e aparece sua foto.
 
 # Project
 PROJECT_NAME = 'Account'
