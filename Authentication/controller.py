@@ -5,6 +5,8 @@ from Authentication.model.service import authentication_service
 authentication_blueprint = Blueprint('authentication', __name__)
 
 
+# todo 2 steps verification - http://blog.miguelgrinberg.com/post/two-factor-authentication-with-flask
+
 @authentication_blueprint.route('/auth', methods=['POST'])
 def auth_login():
     response = authentication_service.login(request.headers, request.json)

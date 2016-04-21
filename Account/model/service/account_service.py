@@ -31,7 +31,7 @@ def register_ver_1(email, password):
         return {'message': str(e), 'http_code_status': 403}
 
     if not get_user_by_email(email):
-        user_data.register(email, bcrypt.hashpw(str(password), bcrypt.gensalt()))
+        user_data.register(email, bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()))
 
         return {'message': MSG_ACCOUNT_SET, 'http_code_status': 200}
     else:
