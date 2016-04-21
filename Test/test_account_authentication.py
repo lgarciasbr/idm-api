@@ -66,25 +66,25 @@ class AuthenticationSolution(unittest.TestCase):
         response = self.login_v1(EMAIL_TEST, PWD_TEST)
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json.loads(response.data)['message'], MSG_LOGIN)
+        self.assertEqual(json.loads(response.data.decode('utf-8'))['message'], MSG_LOGIN)
 
     def test_login_not_assert_user(self):
         response = self.login_v1('wrong_email', PWD_TEST)
 
         self.assertEqual(response.status_code, 403)
-        self.assertEqual(json.loads(response.data)['message'], MSG_LOGIN_ERROR)
+        self.assertEqual(json.loads(response.data.decode('utf-8'))['message'], MSG_LOGIN_ERROR)
 
     def test_login_not_assert_password(self):
         response = self.login_v1(EMAIL_TEST, 'wrong_password')
 
         self.assertEqual(response.status_code, 403)
-        self.assertEqual(json.loads(response.data)['message'], MSG_LOGIN_ERROR)
+        self.assertEqual(json.loads(response.data.decode('utf-8'))['message'], MSG_LOGIN_ERROR)
 
     def test_login_not_assert_username_password(self):
         response = self.login_v1('wrong_email', 'wrong_password')
 
         self.assertEqual(response.status_code, 403)
-        self.assertEqual(json.loads(response.data)['message'], MSG_LOGIN_ERROR)
+        self.assertEqual(json.loads(response.data.decode('utf-8'))['message'], MSG_LOGIN_ERROR)
 
     def test_login_not_assert_get(self):
         tester = app.test_client(self)
@@ -99,7 +99,7 @@ class AuthenticationSolution(unittest.TestCase):
         response = tester.post('/auth')
 
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(json.loads(response.data)['message'], MSN_400)
+        self.assertEqual(json.loads(response.data.decode('utf-8'))['message'], MSN_400)
 
     # todo precisa fazer os testes nao passando todos os itens do header no login
     # Logout
@@ -115,19 +115,19 @@ class AuthenticationSolution(unittest.TestCase):
     def test_logout_assert(self):
         response_login = self.login_v1(EMAIL_TEST, PWD_TEST)
 
-        token = json.loads(response_login.data)['token']
+        token = json.loads(response_login.data.decode('utf-8'))['token']
 
         if response_login.status_code == 200:
             # logout
             response = self.logout_v1(token)
 
             self.assertEqual(response.status_code, 200)
-            self.assertEqual(json.loads(response.data)['message'], MSG_LOGOUT)
+            self.assertEqual(json.loads(response.data.decode('utf-8'))['message'], MSG_LOGOUT)
 
     def test_logout_assert_second_shot(self):
         response_login = self.login_v1(EMAIL_TEST, PWD_TEST)
 
-        token = json.loads(response_login.data)['token']
+        token = json.loads(response_login.data.decode('utf-8'))['token']
 
         if response_login.status_code == 200:
             # logout
@@ -136,15 +136,15 @@ class AuthenticationSolution(unittest.TestCase):
             response = self.logout_v1(token)
 
             self.assertEqual(response.status_code, 403)
-            self.assertEqual(json.loads(response.data)['message'], MSG_INVALID_TOKEN)
-            self.assertEqual(json.loads(response.data)['token'], token)
+            self.assertEqual(json.loads(response.data.decode('utf-8'))['message'], MSG_INVALID_TOKEN)
+            self.assertEqual(json.loads(response.data.decode('utf-8'))['token'], token)
 
     def test_logout_not_assert(self):
         response = self.logout_v1('error')
 
         self.assertEqual(response.status_code, 403)
-        self.assertEqual(json.loads(response.data)['message'], MSG_INVALID_TOKEN)
-        self.assertEqual(json.loads(response.data)['token'], 'error')
+        self.assertEqual(json.loads(response.data.decode('utf-8'))['message'], MSG_INVALID_TOKEN)
+        self.assertEqual(json.loads(response.data.decode('utf-8'))['token'], 'error')
 
     def test_logout_not_assert_no_header(self):
         tester = app.test_client(self)
@@ -152,7 +152,7 @@ class AuthenticationSolution(unittest.TestCase):
         response = tester.delete('/auth')
 
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(json.loads(response.data)['message'], MSN_400)
+        self.assertEqual(json.loads(response.data.decode('utf-8'))['message'], MSN_400)
 
     def test_logout_not_assert_get(self):
         tester = app.test_client(self)

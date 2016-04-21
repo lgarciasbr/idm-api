@@ -9,7 +9,7 @@ import os
 # todo Verificar como buscar foto de perfil, igual os sites fazem hoje, voce cadastra e aparece sua foto.
 
 # Project
-PROJECT_NAME = 'Account'
+PROJECT_NAME = 'LG-IdM'
 PROJECT_DESCRIPTION = 'Studying Python!'
 
 # Token Host

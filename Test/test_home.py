@@ -13,8 +13,8 @@ class HomeSolution(unittest.TestCase):
         response = tester.get('/')
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json.loads(response.data)['description'], PROJECT_DESCRIPTION)
-        self.assertEqual(json.loads(response.data)['project'], PROJECT_NAME)
+        self.assertEqual(json.loads(response.data.decode('utf-8'))['description'], PROJECT_DESCRIPTION)
+        self.assertEqual(json.loads(response.data.decode('utf-8'))['project'], PROJECT_NAME)
 
     # todo Verificar se nao existem outros testes como 403 que podem ser feitos.
     # Error
