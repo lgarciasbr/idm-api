@@ -1,11 +1,37 @@
 import argparse
 import os
+import gunicorn
+from flask import Flask
+from database import db
+from Account.controller import account_blueprint
+from Authentication.controller import authentication_blueprint
+from Home.controller import home_blueprint
+from Errors.controller import error_blueprint
+from config import basedir
+
+app = Flask(__name__)
+app.config.from_object('config')
+
+db.init_app(app)
+
+app.register_blueprint(authentication_blueprint)
+app.register_blueprint(account_blueprint)
+app.register_blueprint(home_blueprint)
+app.register_blueprint(error_blueprint)
+
+# todo resolver o problema de criacao do banco.
+# todo resolver o problema de upgrade do banco.
+if not os.path.isfile(basedir + 'app.db'):
+    with app.app_context():
+        db.create_all()
+
+
+def run_server():
+    app.run()
 
 
 def test():
     import unittest
-
-    """Runs the unit tests without coverage."""
 
     tests = unittest.TestLoader().discover('Test')
     unittest.TextTestRunner(verbosity=2).run(tests)
@@ -15,7 +41,6 @@ def test_coverage():
     import coverage
     import unittest
 
-    """Runs the unit tests with coverage."""
     cov = coverage.coverage(
         branch=True,
         include={'Authentication/*', 'Account/*', 'Home/*'}
@@ -33,17 +58,10 @@ def test_coverage():
     cov.erase()
 
 
-def run_server():
-    from lg_idm import app
-
-    app.run()
-
-
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-
     option_help = "Choose manage.py runserver or test or test_coverage"
 
+    parser = argparse.ArgumentParser()
     parser.add_argument("option", help=option_help, nargs='?')
 
     args = parser.parse_args()

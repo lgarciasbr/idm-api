@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from lg_idm import app
+from manage import app
 from config import PROJECT_NAME, PROJECT_DESCRIPTION
 
 

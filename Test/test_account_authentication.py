@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from lg_idm import app
+from manage import app
 from config import MSG_LOGIN, MSG_LOGOUT, MSG_LOGIN_ERROR,\
     MSG_INVALID_TOKEN, MSN_400, EMAIL_TEST, PWD_TEST
 
