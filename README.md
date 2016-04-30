@@ -1,7 +1,5 @@
 # LG-IdM - LG Identity Management
 
-Sistema de Eventos encomendado pela Morena.
-
 [ ![Codeship Status for lgarciasbr/lg-idm](https://codeship.com/projects/875dd1c0-6694-0133-fcc4-72bdfd530753/status?branch=master)](https://codeship.com/projects/113803)
 
 ## Como desenvolver?
