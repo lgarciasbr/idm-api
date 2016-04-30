@@ -6,7 +6,7 @@ db = SQLAlchemy()
 
 
 # todo Precisa configurar uma maneira de fazer upgrade quando o banco muda.
-# todo Precisa testar para verificar se o sistema esta diferenciando maiuscula de minuscula.
+# TODO Precisa testar para verificar se o sistema esta diferenciando maiuscula de minuscula.
 # todo https://github.com/miguelgrinberg/Flask-Migrate testar a parte de migracao, colocar no manage.py
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
