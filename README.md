@@ -18,7 +18,7 @@ Sistema de Eventos encomendado pela Morena.
 git clone https://lgarciasbr@bitbucket.org/lgarciasbr/lg-idm.git lg-idm
 cd lg-idm
 python -m venv .lg-idm
-source .wttd/bin/activate
+source .lg-idm/bin/activate
 pip install -r requirements-dev.txt
 python manage.py test
 ```
