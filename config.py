@@ -10,7 +10,7 @@ import os
 
 # Project
 PROJECT_NAME = 'LG-IdM'
-PROJECT_DESCRIPTION = 'Studying Python!'
+PROJECT_DESCRIPTION = 'Studying Python and CI!'
 
 # Token Host
 # Option: memcached, database
