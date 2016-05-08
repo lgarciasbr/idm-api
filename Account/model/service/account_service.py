@@ -1,5 +1,5 @@
 from Account.model.data import user_data
-from config import MSN_400, MSG_EMAIL_ALREADY_REGISTERED, MSG_ACCOUNT_SET, CHECK_DELIVERABILITY
+from settings import MSN_400, MSG_EMAIL_ALREADY_REGISTERED, MSG_ACCOUNT_SET, CHECK_DELIVERABILITY
 from email_validator import validate_email, EmailNotValidError
 import bcrypt
 

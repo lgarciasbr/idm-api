@@ -2,7 +2,7 @@ import json
 import unittest
 
 from manage import app
-from config import MSG_LOGIN, MSG_LOGOUT, MSG_LOGIN_ERROR,\
+from settings import MSG_LOGIN, MSG_LOGOUT, MSG_LOGIN_ERROR,\
     MSG_INVALID_TOKEN, MSN_400, EMAIL_TEST, PWD_TEST
 
 # todo Precisa fazer os testes com o token no banco e no Memcached.

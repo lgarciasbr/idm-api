@@ -1,5 +1,5 @@
 from flask import json
-from config import MSG_INVALID_SERIALIZATION
+from settings import MSG_INVALID_SERIALIZATION
 
 
 # JSon

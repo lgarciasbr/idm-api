@@ -7,10 +7,10 @@ from Account.controller import account_blueprint
 from Authentication.controller import authentication_blueprint
 from Home.controller import home_blueprint
 from Errors.controller import error_blueprint
-from config import basedir
+from settings import SQLITE_BASEDIR
 
 app = Flask(__name__)
-app.config.from_object('config')
+app.config.from_object('settings')
 
 db.init_app(app)
 
@@ -21,7 +21,7 @@ app.register_blueprint(error_blueprint)
 
 # todo resolver o problema de criacao do banco.
 # todo resolver o problema de upgrade do banco.
-if not os.path.isfile(basedir + 'app.db'):
+if not os.path.isfile(SQLITE_BASEDIR):
     with app.app_context():
         db.create_all()
 

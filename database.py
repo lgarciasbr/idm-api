@@ -19,7 +19,7 @@ class User(db.Model):
         self.password = password
 
     def __repr__(self):
-        return {'e-mail': self.email}
+        return self.email
 
 
 class Token(db.Model):
@@ -33,4 +33,4 @@ class Token(db.Model):
         self.user = user
 
     def __repr__(self):
-        return {'token': self.token}
+        return self.token

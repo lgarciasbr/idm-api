@@ -2,7 +2,7 @@ import json
 import unittest
 
 from manage import app
-from config import PROJECT_NAME, PROJECT_DESCRIPTION
+from settings import PROJECT_NAME, PROJECT_DESCRIPTION
 
 
 class HomeSolution(unittest.TestCase):

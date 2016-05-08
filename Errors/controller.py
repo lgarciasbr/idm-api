@@ -1,6 +1,6 @@
 from flask import Blueprint
 from Errors import view
-from config import MSN_400, MSN_404, MSN_405, MSN_500
+from settings import MSN_400, MSN_404, MSN_405, MSN_500
 
 error_blueprint = Blueprint('errors', __name__)
 

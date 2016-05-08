@@ -2,7 +2,7 @@ from pymemcache.client import Client
 from database import db, Token
 
 from lib.json import json_serializer, json_deserializer
-from config import MEMCACHED_HOST, MEMCACHED_PORT, TOKEN_HOST
+from settings import MEMCACHED_HOST, MEMCACHED_PORT, TOKEN_HOST
 
 client = Client((MEMCACHED_HOST, MEMCACHED_PORT), serializer=json_serializer, deserializer=json_deserializer)
 

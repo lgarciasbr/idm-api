@@ -1,5 +1,5 @@
 from flask import jsonify, Blueprint
-from config import PROJECT_NAME, PROJECT_DESCRIPTION
+from settings import PROJECT_NAME, PROJECT_DESCRIPTION
 
 home_blueprint = Blueprint('home', __name__)
 
