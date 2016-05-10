@@ -1,10 +1,8 @@
-from pymemcache.client import Client
+import bmemcached
 from database import db, Token
+from settings import TOKEN_HOST, MEMCACHED_SERVERS, MEMCACHED_USERNAME, MEMCACHED_PASSWORD
 
-from lib.json import json_serializer, json_deserializer
-from settings import MEMCACHED_HOST, MEMCACHED_PORT, TOKEN_HOST
-
-client = Client((MEMCACHED_HOST, MEMCACHED_PORT), serializer=json_serializer, deserializer=json_deserializer)
+client = bmemcached.Client(MEMCACHED_SERVERS, MEMCACHED_USERNAME, MEMCACHED_PASSWORD)
 
 
 #todo criar os unittests do memcached

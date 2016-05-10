@@ -10,8 +10,9 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 # Token Host - option: memcached, database
 TOKEN_HOST = config('TOKEN_HOST', default='database')
 # Memcahed
-MEMCACHED_HOST = config('MEMCACHED_HOST', default='localhost')
-MEMCACHED_PORT = config('MEMCACHED_PORT', default=11211, cast=int)
+MEMCACHED_SERVERS = config('MEMCACHED_HOST', default='localhost:11211')
+MEMCACHED_USERNAME = config('MEMCACHED_USERNAME', default='')
+MEMCACHED_PASSWORD = config('MEMCACHED_PASSWORD', default='')
 # BD Config
 SQLITE_BASEDIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'app.db')
 SQLALCHEMY_TRACK_MODIFICATIONS = False
