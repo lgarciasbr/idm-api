@@ -2,7 +2,7 @@ import bmemcached
 from database import db, Token
 from settings import TOKEN_HOST, MEMCACHED_SERVERS, MEMCACHED_USERNAME, MEMCACHED_PASSWORD
 
-client = bmemcached.Client(MEMCACHED_SERVERS, MEMCACHED_USERNAME, MEMCACHED_PASSWORD)
+client = bmemcached.Client((MEMCACHED_SERVERS, ), MEMCACHED_USERNAME, MEMCACHED_PASSWORD)
 
 
 #todo criar os unittests do memcached

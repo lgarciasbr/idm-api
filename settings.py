@@ -10,7 +10,7 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 # Token Host - option: memcached, database
 TOKEN_HOST = config('TOKEN_HOST', default='database')
 # Memcahed
-MEMCACHED_SERVERS = config('MEMCACHED_HOST', default='localhost:11211')
+MEMCACHED_SERVERS = config('MEMCACHED_SERVERS', default='localhost:11211')
 MEMCACHED_USERNAME = config('MEMCACHED_USERNAME', default='')
 MEMCACHED_PASSWORD = config('MEMCACHED_PASSWORD', default='')
 # BD Config
