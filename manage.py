@@ -22,8 +22,11 @@ app.register_blueprint(error_blueprint)
 # todo resolver o problema de criacao do banco.
 # todo resolver o problema de upgrade do banco.
 if not os.path.isfile(BASE_DIR.child('app.db')):
-    with app.app_context():
-        db.create_all()
+    try:
+        with app.app_context():
+            db.create_all()
+    except Exception:
+        pass
 
 
 def run_server():
