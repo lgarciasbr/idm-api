@@ -1,4 +1,4 @@
-import os
+from unipath import Path
 from decouple import config
 
 # todo implementar o sistema em mais de um idioma
@@ -14,9 +14,9 @@ MEMCACHED_SERVERS = config('MEMCACHED_SERVERS', default='localhost:11211')
 MEMCACHED_USERNAME = config('MEMCACHED_USERNAME', default='')
 MEMCACHED_PASSWORD = config('MEMCACHED_PASSWORD', default='')
 # BD Config
-SQLITE_BASEDIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'app.db')
+BASE_DIR = Path(__file__).parent
 SQLALCHEMY_TRACK_MODIFICATIONS = False
-SQLALCHEMY_DATABASE_URI = config('SQLALCHEMY_DATABASE_URI', default='sqlite:///' + SQLITE_BASEDIR)
+SQLALCHEMY_DATABASE_URI = config('SQLALCHEMY_DATABASE_URI', default='sqlite:///' + BASE_DIR.child('app.db'))
 # Set to 'False' or True to domain name resolution on email check when register a new account.
 CHECK_DELIVERABILITY = config('CHECK_DELIVERABILITY', default=True, cast=bool)
 
