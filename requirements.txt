@@ -6,3 +6,4 @@ Flask-SQLAlchemy==2.1
 bcrypt==2.0.0
 email_validator==1.0.0
 python-decouple==3.0
+newrelic
