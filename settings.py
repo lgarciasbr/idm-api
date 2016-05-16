@@ -24,7 +24,7 @@ CHECK_DELIVERABILITY = config('CHECK_DELIVERABILITY', default=True, cast=bool)
 
 # Project
 PROJECT_NAME = 'LG-IdM'
-PROJECT_DESCRIPTION = 'Studying Python and CI!'
+PROJECT_DESCRIPTION = 'LG - Identity Manager'
 
 # General Messages
 MSG_LOGIN = 'You were logged in!'
