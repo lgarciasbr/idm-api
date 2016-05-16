@@ -1,9 +1,8 @@
 import os
-import argparse
 import gunicorn
 from flask import Flask
 from database import db
-from flask.ext.script import Manager, Command
+from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from Account.controller import account_blueprint
 from Authentication.controller import authentication_blueprint

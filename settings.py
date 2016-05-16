@@ -2,7 +2,6 @@ from unipath import Path
 from decouple import config
 
 # todo implementar o sistema em mais de um idioma
-# todo implementar a biblioteca do Henrique Bastos para a configuracao .env
 # todo ALLOWED_HOSTS, Secret Key,
 # todo Verificar como buscar foto de perfil, igual os sites fazem hoje, voce cadastra e aparece sua foto.
 
@@ -10,13 +9,14 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 # Token Host - option: memcached, database
 TOKEN_HOST = config('TOKEN_HOST', default='database')
 # Memcahed
-MEMCACHED_SERVERS = config('MEMCACHED_SERVERS', default='localhost:11211')
+MEMCACHED_URL = config('MEMCACHED_URL', default='localhost:11211')
 MEMCACHED_USERNAME = config('MEMCACHED_USERNAME', default='')
 MEMCACHED_PASSWORD = config('MEMCACHED_PASSWORD', default='')
 # BD Config
 BASE_DIR = Path(__file__).parent
+DATABASE_URL = config('DATABASE_URL', default='sqlite:///' + BASE_DIR.child('app.db'))
 SQLALCHEMY_TRACK_MODIFICATIONS = False
-SQLALCHEMY_DATABASE_URI = config('SQLALCHEMY_DATABASE_URI', default='sqlite:///' + BASE_DIR.child('app.db'))
+SQLALCHEMY_DATABASE_URI = DATABASE_URL
 # Set to 'False' or True to domain name resolution on email check when register a new account.
 CHECK_DELIVERABILITY = config('CHECK_DELIVERABILITY', default=True, cast=bool)
 
