@@ -1,46 +1,42 @@
-import argparse
 import os
+import argparse
 import gunicorn
 from flask import Flask
 from database import db
+from flask.ext.script import Manager, Command
+from flask.ext.migrate import Migrate, MigrateCommand
 from Account.controller import account_blueprint
 from Authentication.controller import authentication_blueprint
 from Home.controller import home_blueprint
 from Errors.controller import error_blueprint
-from settings import BASE_DIR
 
 app = Flask(__name__)
 app.config.from_object('settings')
 
 db.init_app(app)
+migrate = Migrate(app, db)
 
 app.register_blueprint(authentication_blueprint)
 app.register_blueprint(account_blueprint)
 app.register_blueprint(home_blueprint)
 app.register_blueprint(error_blueprint)
 
-# todo resolver o problema de criacao do banco.
-# todo resolver o problema de upgrade do banco.
-if not os.path.isfile(BASE_DIR.child('app.db')):
-    try:
-        with app.app_context():
-            db.create_all()
-    except Exception:
-        pass
+manager = Manager(app)
+manager.add_command('db', MigrateCommand)
 
 
-def run_server():
-    app.run()
-
-
+@manager.command
 def test():
+    'Execute UnitTest.'
     import unittest
 
     tests = unittest.TestLoader().discover('Test')
     unittest.TextTestRunner(verbosity=2).run(tests)
 
 
+@manager.command
 def test_coverage():
+    'Execute UnitTest, than create a coverage page.'
     import coverage
     import unittest
 
@@ -60,20 +56,5 @@ def test_coverage():
     cov.html_report(directory=covdir)
     cov.erase()
 
-
 if __name__ == "__main__":
-    option_help = "Choose manage.py runserver or test or test_coverage"
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument("option", help=option_help, nargs='?')
-
-    args = parser.parse_args()
-
-    if args.option == 'runserver':
-        run_server()
-    elif args.option == 'test':
-        test()
-    elif args.option == 'test_coverage':
-        test_coverage()
-    else:
-        print(option_help)
+    manager.run()

@@ -6,6 +6,15 @@ from settings import MSG_LOGIN, MSG_LOGOUT, MSG_LOGIN_ERROR,\
     MSG_INVALID_TOKEN, MSN_400, EMAIL_TEST, PWD_TEST
 
 # todo Precisa fazer os testes com o token no banco e no Memcached.
+'''
+if not os.path.isfile(BASE_DIR.child('app.db')):
+    try:
+        with app.app_context():
+            db.create_all()
+    except Exception:
+        pass
+'''
+
 
 class AuthenticationSolution(unittest.TestCase):
 
