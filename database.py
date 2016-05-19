@@ -9,7 +9,7 @@ db = SQLAlchemy()
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True)
-    password = db.Column(db.String(80), unique=False)
+    password = db.Column(db.Binary, unique=False)
     created_at = db.Column(db.DateTime, nullable=False, default=func.now())
 
     def __init__(self, email, password):
