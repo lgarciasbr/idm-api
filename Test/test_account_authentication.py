@@ -1,5 +1,6 @@
 import json
 import unittest
+import time
 
 from manage import app
 from settings import MSG_LOGIN, MSG_LOGOUT, MSG_LOGIN_ERROR,\
@@ -141,7 +142,9 @@ class AuthenticationSolution(unittest.TestCase):
         if response_login.status_code == 200:
             # logout
             self.logout_v1(token)
+
             # Second Shot
+            time.sleep(1)
             response = self.logout_v1(token)
 
             self.assertEqual(response.status_code, 403)
