@@ -98,6 +98,6 @@ def get(header):
 
 # TODO CRIAR OS TESTES DO GET
 def get_ver_1():
-    return user_data.get()
+    return user_data.get(), 200
 
 # endregion

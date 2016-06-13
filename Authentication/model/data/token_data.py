@@ -6,6 +6,7 @@ client = bmemcached.Client(MEMCACHED_URL, MEMCACHED_USERNAME, MEMCACHED_PASSWORD
 
 
 #todo criar os unittests do memcached
+#todo melhorar o retorno de erro quando o memcahed esta fora do ar, so da problema com o logout.
 def get_token(token):
     if TOKEN_HOST == 'memcached':
         user_id_registered_token = client.get(token)

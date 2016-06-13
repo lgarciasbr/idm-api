@@ -19,6 +19,11 @@ class User(db.Model):
     def __repr__(self):
         return self.email
 
+    def export_data(self):
+        return {
+            'email': self.email
+        }
+
 
 class Token(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -32,3 +37,9 @@ class Token(db.Model):
 
     def __repr__(self):
         return self.token
+
+    def export_data(self):
+        return {
+            'token': self.token,
+            'user': self.user
+        }

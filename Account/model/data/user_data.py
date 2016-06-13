@@ -11,7 +11,7 @@ def get_first(email):
 
 
 def get():
-    return User.query
+    return User.query.export_data()
 
 '''
 class MyAdapter(DBAdapter):
