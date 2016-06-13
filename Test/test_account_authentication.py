@@ -39,7 +39,7 @@ class AuthenticationSolution(unittest.TestCase):
 
         data_json = json.dumps({'email': email, 'password': password})
 
-        return tester.post('/account', data=data_json, headers=header)
+        return tester.post('/accounts', data=data_json, headers=header)
 
     def test_register_not_assert_invalid_email(self):
         response = self.register_v1('not_email', PWD_TEST)

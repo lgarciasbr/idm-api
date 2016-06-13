@@ -2,10 +2,14 @@ from flask import request, Blueprint
 from Account import view
 from Account.model.service import account_service
 
-account_blueprint = Blueprint('account', __name__)
+account_blueprint = Blueprint('accounts', __name__)
 
 
-@account_blueprint.route('/account', methods=['POST'])
+def account_get_email(email):
+    return account_service.get_user_by_email(email)
+
+
+@account_blueprint.route('/accounts', methods=['POST'])
 def account_register():
     response = account_service.register(request.headers, request.json)
     http_code_status = response.get('http_code_status')
@@ -13,8 +17,16 @@ def account_register():
     return view.message_json(response), http_code_status
 
 
-def account_get_email(email):
-    return account_service.get_user_by_email(email)
+@account_blueprint.route('/accounts', methods=['GET'])
+def account_get():
+    response = account_service.get(request.headers)
+    return view.message_json(response), 200
+    '''
+    response = account_service.get(request.headers)
+    http_code_status = response.get('http_code_status')
+
+    return view.message_json(response), http_code_status
+    '''
 
 
 '''

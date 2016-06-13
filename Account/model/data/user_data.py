@@ -6,9 +6,12 @@ def register(email, password):
     db.session.commit()
 
 
-def get_user(email):
+def get_first(email):
     return User.query.filter_by(email=email).first()
 
+
+def get():
+    return User.query
 
 '''
 class MyAdapter(DBAdapter):
