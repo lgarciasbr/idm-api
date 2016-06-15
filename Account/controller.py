@@ -24,6 +24,8 @@ def account_get():
 
     return view.message_json(response), http_code_status
 
+# Todo Melhor solucao para json? http://marshmallow.readthedocs.io/en/latest/examples.html
+
 
 '''
 # Coloca a url do retorno no JSon, interessante para facilitar o retorno para o dev. Usar para a lista de usuarios.

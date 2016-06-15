@@ -1,5 +1,4 @@
 from database import db, User
-from lib.json import json
 
 
 def register(email, password):
@@ -11,7 +10,7 @@ def get_first(email):
     return User.query.filter_by(email=email).first()
 
 
-@json
+# todo http://marshmallow.readthedocs.io/en/latest/examples.html
 def get():
     return User.query
 

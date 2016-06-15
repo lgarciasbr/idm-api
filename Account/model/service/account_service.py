@@ -4,25 +4,6 @@ from email_validator import validate_email, EmailNotValidError
 import bcrypt
 
 
-from flask import url_for
-
-
-class ValidationError(ValueError):
-    pass
-
-
-def get_url(self):
-    return url_for('api.get_customer', id=self.id, _external=True)
-
-
-def import_data(self, data):
-    try:
-        self.email = data['email']
-    except KeyError as e:
-        raise ValidationError('Invalid: missing ' + e.args[0])
-    return self
-
-
 def get_user_by_email(email):
     return user_data.get_first(email)
 
@@ -89,6 +70,6 @@ def get(header):
 
 # TODO CRIAR OS TESTES DO GET
 def get_ver_1():
-    return {'message': user_data.get(), 'http_code_status': 200}
+    return user_data.get()
 
 # endregion
