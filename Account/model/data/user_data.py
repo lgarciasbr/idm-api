@@ -1,4 +1,5 @@
 from database import db, User
+from lib.json import json
 
 
 def register(email, password):
@@ -10,8 +11,9 @@ def get_first(email):
     return User.query.filter_by(email=email).first()
 
 
+@json
 def get():
-    return User.query.export_data()
+    return User.query
 
 '''
 class MyAdapter(DBAdapter):

@@ -15,15 +15,6 @@ def get_url(self):
     return url_for('api.get_customer', id=self.id, _external=True)
 
 
-def export_data(self):
-    return {
-        'self_url': self.get_url(),
-        'name': self.name,
-        'orders_url': url_for('api.get_customer_orders', id=self.id,
-                              _external=True)
-    }
-
-
 def import_data(self, data):
     try:
         self.email = data['email']
@@ -98,6 +89,6 @@ def get(header):
 
 # TODO CRIAR OS TESTES DO GET
 def get_ver_1():
-    return user_data.get(), 200
+    return {'message': user_data.get(), 'http_code_status': 200}
 
 # endregion

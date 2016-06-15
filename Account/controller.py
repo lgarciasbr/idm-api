@@ -20,13 +20,9 @@ def account_register():
 @account_blueprint.route('/accounts', methods=['GET'])
 def account_get():
     response = account_service.get(request.headers)
-    return view.message_json(response)
-    '''
-    response = account_service.get(request.headers)
     http_code_status = response.get('http_code_status')
 
     return view.message_json(response), http_code_status
-    '''
 
 
 '''

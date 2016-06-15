@@ -1,5 +1,6 @@
 import functools
 from flask import jsonify
+from database import db
 
 
 def json(f):

@@ -21,7 +21,8 @@ class User(db.Model):
 
     def export_data(self):
         return {
-            'email': self.email
+            'email': self.email,
+            'created_at': self.created_at
         }
 
 
