@@ -1,6 +1,7 @@
 from flask import request, Blueprint
 from Account import view
 from Account.model.service import account_service
+from flask import jsonify
 
 account_blueprint = Blueprint('accounts', __name__)
 
@@ -20,9 +21,12 @@ def account_register():
 @account_blueprint.route('/accounts', methods=['GET'])
 def account_get():
     response = account_service.get(request.headers)
-    http_code_status = response.get('http_code_status')
+    # http_code_status = response.get('http_code_status')
+    # return view.message_json(response.data), http_code_status
 
-    return view.message_json(response), http_code_status
+    return jsonify({'users': response.data})
+
+
 
 # Todo Melhor solucao para json? http://marshmallow.readthedocs.io/en/latest/examples.html
 

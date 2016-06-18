@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
 from sqlalchemy.orm import backref
+from marshmallow import Schema, fields, ValidationError, pre_load
 
 db = SQLAlchemy()
 
@@ -32,3 +33,12 @@ class Token(db.Model):
 
     def __repr__(self):
         return self.token
+
+
+# region Schema
+
+class UserSchema(Schema):
+    created_at = fields.DateTime(dump_only=True)
+    email = fields.Str()
+
+# endregion

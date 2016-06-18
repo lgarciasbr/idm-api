@@ -1,4 +1,4 @@
-from database import db, User
+from database import db, User, UserSchema
 
 
 def register(email, password):
@@ -10,9 +10,15 @@ def get_first(email):
     return User.query.filter_by(email=email).first()
 
 
+user_schema = UserSchema()
+users_schema = UserSchema(many=True)
+
+
 # todo http://marshmallow.readthedocs.io/en/latest/examples.html
 def get():
-    return User.query
+    users = User.query.all()
+    # Serialize the queryset
+    return users_schema.dump(users)
 
 '''
 class MyAdapter(DBAdapter):
