@@ -7,7 +7,7 @@ authentication_blueprint = Blueprint('authentication', __name__)
 
 # todo 2 steps verification - http://blog.miguelgrinberg.com/post/two-factor-authentication-with-flask
 
-@authentication_blueprint.route('/auth', methods=['POST'])
+@authentication_blueprint.route('/auth/', methods=['POST'])
 def auth_login():
     response = authentication_service.login(request.headers, request.json)
     http_code_status = response.get('http_code_status')
@@ -15,7 +15,7 @@ def auth_login():
     return view.message_json(response), http_code_status
 
 
-@authentication_blueprint.route('/auth', methods=['GET'])
+@authentication_blueprint.route('/auth/', methods=['GET'])
 def auth_is_valid():
     response = authentication_service.is_token_valid(request.headers)
     http_code_status = response.get('http_code_status')
@@ -23,7 +23,7 @@ def auth_is_valid():
     return view.message_json(response), http_code_status
 
 
-@authentication_blueprint.route('/auth', methods=['DELETE'])
+@authentication_blueprint.route('/auth/', methods=['DELETE'])
 def auth_logout():
     response = authentication_service.logout(request.headers)
     http_code_status = response.get('http_code_status')

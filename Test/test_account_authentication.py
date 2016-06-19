@@ -39,7 +39,7 @@ class AuthenticationSolution(unittest.TestCase):
 
         data_json = json.dumps({'email': email, 'password': password})
 
-        return tester.post('/accounts', data=data_json, headers=header)
+        return tester.post('/accounts/', data=data_json, headers=header)
 
     def test_register_not_assert_invalid_email(self):
         response = self.register_v1('not_email', PWD_TEST)
@@ -70,7 +70,7 @@ class AuthenticationSolution(unittest.TestCase):
 
         data_json = json.dumps({'email': email, 'password': password})
 
-        return tester.post('/auth', data=data_json, headers=header)
+        return tester.post('/auth/', data=data_json, headers=header)
 
     def test_login_assert(self):
         response = self.login_v1(EMAIL_TEST, PWD_TEST)
@@ -99,14 +99,14 @@ class AuthenticationSolution(unittest.TestCase):
     def test_login_not_assert_get(self):
         tester = app.test_client(self)
 
-        response = tester.get('/auth')
+        response = tester.get('/auth/')
 
         self.assertEqual(response.status_code, 400)
 
     def test_login_not_assert_post(self):
         tester = app.test_client(self)
 
-        response = tester.post('/auth')
+        response = tester.post('/auth/')
 
         self.assertEqual(response.status_code, 400)
         self.assertEqual(json.loads(response.data.decode('utf-8'))['message'], MSN_400)
@@ -120,7 +120,7 @@ class AuthenticationSolution(unittest.TestCase):
         header.append(('ver', '1'))
         header.append(('token', token))
 
-        return tester.delete('/auth', headers=header)
+        return tester.delete('/auth/', headers=header)
 
     def test_logout_assert(self):
         response_login = self.login_v1(EMAIL_TEST, PWD_TEST)
@@ -161,7 +161,7 @@ class AuthenticationSolution(unittest.TestCase):
     def test_logout_not_assert_no_header(self):
         tester = app.test_client(self)
 
-        response = tester.delete('/auth')
+        response = tester.delete('/auth/')
 
         self.assertEqual(response.status_code, 400)
         self.assertEqual(json.loads(response.data.decode('utf-8'))['message'], MSN_400)
@@ -169,7 +169,7 @@ class AuthenticationSolution(unittest.TestCase):
     def test_logout_not_assert_get(self):
         tester = app.test_client(self)
 
-        response = tester.get('/auth')
+        response = tester.get('/auth/')
 
         self.assertEqual(response.status_code, 400)
 

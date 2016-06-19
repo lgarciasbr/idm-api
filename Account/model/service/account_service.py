@@ -1,6 +1,7 @@
 from Account.model.data import user_data
 from settings import MSN_400, MSG_EMAIL_ALREADY_REGISTERED, MSG_ACCOUNT_SET, CHECK_EMAIL_DELIVERABILITY
 from email_validator import validate_email, EmailNotValidError
+from flask import abort
 import bcrypt
 
 
@@ -65,11 +66,11 @@ def get(header):
         pass
 
     # Bad Request
-    return {'message': MSN_400, 'http_code_status': 400}
+    abort(400)
 
 
 # TODO CRIAR OS TESTES DO GET
 def get_ver_1():
-    return user_data.get()
+    return {'message': user_data.get(), 'http_code_status': 200}
 
 # endregion

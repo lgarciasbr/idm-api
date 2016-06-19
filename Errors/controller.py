@@ -1,38 +1,38 @@
-from flask import Blueprint
-from Errors import view
-from settings import MSN_400, MSN_404, MSN_405, MSN_500
-
-error_blueprint = Blueprint('errors', __name__)
-
-# todo criar unittest
-@error_blueprint.errorhandler(400)
-def bad_request(error):
-    response = {'message': MSN_400}
-    http_code_status = 400
-
-    return view.message_json(response), http_code_status
+from flask import jsonify
+from Account.controller import account_blueprint as app
 
 
-@error_blueprint.app_errorhandler(404)
-def not_found(error):
-    response = {'message': MSN_404}
-    http_code_status = 404
-
-    return view.message_json(response), http_code_status
+class ValidationError(ValueError):
+    pass
 
 
-@error_blueprint.errorhandler(405)
-def not_allowed(error):
-    response = {'message': MSN_405}
-    http_code_status = 405
+@app.errorhandler(ValidationError)
+def bad_request(e):
+    response = jsonify({'status': 400, 'error': 'bad request',
+                        'message': e.args[0]})
+    response.status_code = 400
+    return response
 
-    return view.message_json(response), http_code_status
 
-'''
-@error_blueprint.errorhandler(500)
-def not_allowed(error):
-    response = {'message': MSN_500}
-    http_code_status = 500
+@app.app_errorhandler(404)  # this has to be an app-wide handler
+def not_found(e):
+    response = jsonify({'status': 404, 'error': 'not found',
+                        'message': 'invalid resource URI'})
+    response.status_code = 404
+    return response
 
-    return view.message_json(response), http_code_status
-'''
+
+@app.errorhandler(405)
+def method_not_supported(e):
+    response = jsonify({'status': 405, 'error': 'method not supported',
+                        'message': 'the method is not supported'})
+    response.status_code = 405
+    return response
+
+
+@app.app_errorhandler(500)  # this has to be an app-wide handler
+def internal_server_error(e):
+    response = jsonify({'status': 500, 'error': 'internal server error',
+                        'message': e.args[0]})
+    response.status_code = 500
+    return response

@@ -2,8 +2,9 @@ from flask import jsonify
 
 
 # todo implementar o retorno com xml
-def message_json(value):
-    if 'http_code_status' in value:
-        del value['http_code_status']
+def account_register(message):
+    return jsonify({'message': message})
 
-    return jsonify(value)
+
+def account_get(message):
+    return jsonify({'users': message.data})
