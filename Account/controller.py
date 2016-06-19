@@ -23,7 +23,6 @@ def account_get():
     response = account_service.get(request.headers)
     # http_code_status = response.get('http_code_status')
     # return view.message_json(response.data), http_code_status
-
     return jsonify({'users': response.data})
 
 

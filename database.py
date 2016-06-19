@@ -1,3 +1,4 @@
+from flask import url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
 from sqlalchemy.orm import backref
@@ -20,6 +21,10 @@ class User(db.Model):
     def __repr__(self):
         return self.email
 
+    @property
+    def url(self):
+        return url_for('accounts.account_get', id=self.id, _external=True)
+
 
 class Token(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -39,6 +44,7 @@ class Token(db.Model):
 
 class UserSchema(Schema):
     created_at = fields.DateTime(dump_only=True)
-    email = fields.Str()
+    email = fields.Email()
+    url = fields.Url(dump_only=True)
 
 # endregion

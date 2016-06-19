@@ -1,5 +1,8 @@
 from database import db, User, UserSchema
 
+user_schema = UserSchema()
+users_schema = UserSchema(many=True)
+
 
 def register(email, password):
     db.session.add(User(email, password))
@@ -10,11 +13,7 @@ def get_first(email):
     return User.query.filter_by(email=email).first()
 
 
-user_schema = UserSchema()
-users_schema = UserSchema(many=True)
-
-
-# todo http://marshmallow.readthedocs.io/en/latest/examples.html
+# todo unittest
 def get():
     users = User.query.all()
     # Serialize the queryset
