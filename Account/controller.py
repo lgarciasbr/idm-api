@@ -12,14 +12,16 @@ def account_get_email(email):
 @account_blueprint.route('/accounts/', methods=['POST'])
 def account_register():
     response = account_service.register(request.headers, request.json)
-    http_code_status = response.get('http_code_status')
-    message = response.get('message')
-    return view.account_register(message), http_code_status
+    return view.account_register(response)
 
 
 @account_blueprint.route('/accounts/', methods=['GET'])
-def account_get():
-    response = account_service.get(request.headers)
-    http_code_status = response.get('http_code_status')
-    message = response.get('message')
-    return view.account_get(message), http_code_status
+def accounts_get():
+    response = account_service.accounts_get(request.headers)
+    return view.accounts_get(response)
+
+
+@account_blueprint.route('/accounts/<int:pk>', methods=['GET'])
+def account_get(pk):
+    response = account_service.account_get(request.headers, pk)
+    return view.account_get(response)

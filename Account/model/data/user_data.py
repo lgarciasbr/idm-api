@@ -14,10 +14,18 @@ def get_first(email):
 
 
 # todo unittest
-def get():
+def accounts_get():
     users = User.query.all()
     # Serialize the queryset
     return users_schema.dump(users)
+
+
+def account_get(pk):
+    user = User.query.get(pk)
+    # Serialize the queryset
+    return user_schema.dump(user)
+
+# todo trocar de 'data' para 'integration'
 
 '''
 class MyAdapter(DBAdapter):

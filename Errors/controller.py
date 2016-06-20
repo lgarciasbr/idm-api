@@ -1,12 +1,9 @@
-from flask import jsonify
-from Account.controller import account_blueprint as app
+from flask import jsonify, current_app
 
 
-class ValidationError(ValueError):
-    pass
+# todo Os erros nao saem em JSON, esta o padrao do flask.
 
-
-@app.errorhandler(ValidationError)
+@current_app.errorhandler(400)
 def bad_request(e):
     response = jsonify({'status': 400, 'error': 'bad request',
                         'message': e.args[0]})
@@ -14,7 +11,7 @@ def bad_request(e):
     return response
 
 
-@app.app_errorhandler(404)  # this has to be an app-wide handler
+@current_app.app_errorhandler(404)  # this has to be an app-wide handler
 def not_found(e):
     response = jsonify({'status': 404, 'error': 'not found',
                         'message': 'invalid resource URI'})
@@ -22,7 +19,7 @@ def not_found(e):
     return response
 
 
-@app.errorhandler(405)
+@current_app.errorhandler(405)
 def method_not_supported(e):
     response = jsonify({'status': 405, 'error': 'method not supported',
                         'message': 'the method is not supported'})
@@ -30,7 +27,7 @@ def method_not_supported(e):
     return response
 
 
-@app.app_errorhandler(500)  # this has to be an app-wide handler
+@current_app.app_errorhandler(500)  # this has to be an app-wide handler
 def internal_server_error(e):
     response = jsonify({'status': 500, 'error': 'internal server error',
                         'message': e.args[0]})

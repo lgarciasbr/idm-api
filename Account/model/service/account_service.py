@@ -50,16 +50,16 @@ def register_ver_1(email, password):
 # endregion
 
 
-# region Get
+# region Accounts_Get
 
 
 # TODO Verificar se o token e valido.
 # TODO Verificar se ele pertence ao grupo de ADMIN
-def get(header):
+def accounts_get(header):
     try:
         if header['Content-Type'] == 'application/json':
             if header['ver'] == '1':
-                return get_ver_1()
+                return accounts_get_ver_1()
             # elif header['ver'] == '2':
             #    return get_ver_2()
     except Exception:
@@ -70,7 +70,34 @@ def get(header):
 
 
 # TODO CRIAR OS TESTES DO GET
-def get_ver_1():
-    return {'message': user_data.get(), 'http_code_status': 200}
+def accounts_get_ver_1():
+    return {'message': user_data.accounts_get(), 'http_code_status': 200}
+
+# endregion
+
+
+# region Account_Get
+
+
+# TODO Verificar se o token e valido.
+# TODO Verificar se ele pertence ao grupo de ADMIN
+def account_get(header, pk):
+    try:
+        if header['Content-Type'] == 'application/json':
+            if header['ver'] == '1':
+                return account_get_ver_1(pk)
+            # elif header['ver'] == '2':
+            #    return get_ver_2()
+    except Exception:
+        pass
+
+    # Bad Request
+    abort(400)
+
+
+# TODO CRIAR OS TESTES DO GET
+def account_get_ver_1(pk):
+    bla = user_data.account_get(pk)
+    return {'message': bla, 'http_code_status': 200}
 
 # endregion

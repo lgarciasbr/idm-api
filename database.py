@@ -23,7 +23,7 @@ class User(db.Model):
 
     @property
     def url(self):
-        return url_for('accounts.account_get', id=self.id, _external=True)
+        return url_for('accounts.accounts_get', id=self.id, _external=True)
 
 
 class Token(db.Model):
@@ -43,6 +43,7 @@ class Token(db.Model):
 # region Schema
 
 class UserSchema(Schema):
+    id = fields.Int(dump_only=True)
     created_at = fields.DateTime(dump_only=True)
     email = fields.Email()
     url = fields.Url(dump_only=True)
