@@ -23,7 +23,7 @@ class User(db.Model):
 
     @property
     def url(self):
-        return url_for('accounts.accounts_get', id=self.id, _external=True)
+        return url_for('accounts.account_get', pk=self.id, _external=True)
 
 
 class Token(db.Model):

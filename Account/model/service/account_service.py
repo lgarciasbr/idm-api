@@ -97,7 +97,7 @@ def account_get(header, pk):
 
 # TODO CRIAR OS TESTES DO GET
 def account_get_ver_1(pk):
-    bla = user_data.account_get(pk)
-    return {'message': bla, 'http_code_status': 200}
+    account = user_data.account_get(pk)
+    return {'message': account, 'http_code_status': 200}
 
 # endregion
