@@ -85,6 +85,7 @@ def account_get(header, pk):
     content_type = header.get('Content-Type')
     ver = header.get('ver')
 
+    # todo no heroku nao e content_type == ''
     if content_type == 'application/json' or content_type == '':
         # Use 'or ver is None' at the last version
         if ver == '1' or ver is None:
