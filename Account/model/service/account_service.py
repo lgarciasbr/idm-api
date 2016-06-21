@@ -97,7 +97,7 @@ def account_get(header, pk):
             abort(400, 'Invalid API version.')
     else:
         # Bad Request
-        abort(400, 'Expected Content-Type: application/json')
+        abort(400, 'Expected Content-Type: application/json ' + content_type)
 
 
 # TODO CRIAR OS TESTES DO GET
