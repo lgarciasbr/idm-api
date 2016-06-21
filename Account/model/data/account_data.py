@@ -10,18 +10,28 @@ def register(email, password):
 
 
 def get_first(email):
-    return User.query.filter_by(email=email).first()
+    try:
+        account = User.query.filter_by(email=email).first()
+    except:
+        return None
+    return account
 
 
 # todo unittest
 def accounts_get():
-    users = User.query.all()
+    try:
+        users = User.query.all()
+    except:
+        return None
     # Serialize the queryset
     return users_schema.dump(users)
 
 
 def account_get(pk):
-    user = User.query.get(pk)
+    try:
+        user = User.query.get(pk)
+    except:
+        return None
     # Serialize the queryset
     return user_schema.dump(user)
 

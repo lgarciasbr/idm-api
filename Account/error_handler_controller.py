@@ -9,6 +9,13 @@ def not_found(e):
     return response
 
 
+@account_blueprint.errorhandler(403)
+def forbidden(e):
+    response = error_handler_view.forbidden(e)
+
+    return response
+
+
 @account_blueprint.errorhandler(400)
 def bad_request(e):
     response = error_handler_view.bad_request(e)
