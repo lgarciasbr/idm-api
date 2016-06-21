@@ -10,22 +10,22 @@ authentication_blueprint = Blueprint('authentication', __name__)
 @authentication_blueprint.route('/auth/', methods=['POST'])
 def auth_login():
     response = authentication_service.login(request.headers, request.json)
-    http_code_status = response.get('http_code_status')
+    http_status_code = response.get('http_status_code')
 
-    return view.message_json(response), http_code_status
+    return view.message_json(response), http_status_code
 
 
 @authentication_blueprint.route('/auth/', methods=['GET'])
 def auth_is_valid():
     response = authentication_service.is_token_valid(request.headers)
-    http_code_status = response.get('http_code_status')
+    http_status_code = response.get('http_status_code')
 
-    return view.message_json(response), http_code_status
+    return view.message_json(response), http_status_code
 
 
 @authentication_blueprint.route('/auth/', methods=['DELETE'])
 def auth_logout():
     response = authentication_service.logout(request.headers)
-    http_code_status = response.get('http_code_status')
+    http_status_code = response.get('http_status_code')
 
-    return view.message_json(response), http_code_status
+    return view.message_json(response), http_status_code

@@ -4,7 +4,7 @@ from flask import Flask
 from database import db
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
-from Account.controller import account_blueprint
+from Account.account_controller import account_blueprint
 from Authentication.controller import authentication_blueprint
 from Home.controller import home_blueprint
 

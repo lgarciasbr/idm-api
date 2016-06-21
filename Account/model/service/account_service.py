@@ -22,7 +22,7 @@ def register(header, data):
         pass
 
     # Bad Request
-    return {'message': MSN_400, 'http_code_status': 400}
+    return {'message': MSN_400, 'http_status_code': 400}
 
 
 # TODO PRECISA CRIAR UMA SOLUCAO PARA REGRAS DE SENHA. Ex.: uma maiscula e etc. Olhar o AD para ver como funciona.
@@ -35,16 +35,16 @@ def register_ver_1(email, password):
         email = v["email"]
     except EmailNotValidError as e:
         # email is not valid, exception message is human-readable
-        return {'message': str(e), 'http_code_status': 403}
+        return {'message': str(e), 'http_status_code': 403}
 
     # if e-mail is not registered
     if not get_user_by_email(email):
         # register
         user_data.register(email, bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()))
 
-        return {'message': MSG_ACCOUNT_SET, 'http_code_status': 200}
+        return {'message': MSG_ACCOUNT_SET, 'http_status_code': 200}
     else:
-        return {'message': MSG_EMAIL_ALREADY_REGISTERED, 'http_code_status': 403}
+        return {'message': MSG_EMAIL_ALREADY_REGISTERED, 'http_status_code': 403}
 
 
 # endregion
@@ -71,7 +71,7 @@ def accounts_get(header):
 
 # TODO CRIAR OS TESTES DO GET
 def accounts_get_ver_1():
-    return {'message': user_data.accounts_get(), 'http_code_status': 200}
+    return {'message': user_data.accounts_get(), 'http_status_code': 200}
 
 # endregion
 
@@ -104,7 +104,7 @@ def account_get_ver_1(pk):
     account = user_data.account_get(pk)
 
     if len(account.data) != 0:
-        return {'message': account, 'http_code_status': 200}
+        return {'message': account, 'http_status_code': 200}
     else:
         abort(404)
 

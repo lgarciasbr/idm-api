@@ -4,7 +4,7 @@ from flask import jsonify
 
 
 def message_json(value):
-    if 'http_code_status' in value:
-        del value['http_code_status']
+    if 'http_status_code' in value:
+        del value['http_status_code']
 
     return jsonify(value)

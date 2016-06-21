@@ -1,5 +1,5 @@
 import bcrypt
-from Account import controller
+from Account import account_controller
 from Authentication.model.service import token_service
 from Authentication.model.service.token_service import get_token, delete_token
 from settings import MSG_LOGIN, MSG_LOGIN_ERROR, MSN_400, MSG_LOGOUT, MSG_INVALID_TOKEN, MSG_VALID_TOKEN, SECRET_KEY
@@ -46,21 +46,21 @@ def login(header, data):
         pass
 
     # Bad Request
-    return {'message': MSN_400, 'http_code_status': 400}
+    return {'message': MSN_400, 'http_status_code': 400}
 
 
 def login_ver_1(email, password):
 
-    user = controller.account_get_email(email)
+    user = account_controller.account_get_email(email)
 
     if user is not None and user.password == bcrypt.hashpw(password.encode('utf-8'), user.password):
         token = token_service.set_token(generate_auth_token(user), user)
         # Allowed
-        return {'message': MSG_LOGIN, 'token': token, 'http_code_status': 200}
+        return {'message': MSG_LOGIN, 'token': token, 'http_status_code': 200}
 
     else:
         # Forbidden
-        return {'message': MSG_LOGIN_ERROR, 'http_code_status': 403}
+        return {'message': MSG_LOGIN_ERROR, 'http_status_code': 403}
 
 
 def login_ver_2(username, password, ip):
@@ -82,7 +82,7 @@ def logout(header):
         pass
 
     # Bad Request
-    return {'message': MSN_400, 'http_code_status': 400}
+    return {'message': MSN_400, 'http_status_code': 400}
 
 
 def logout_ver_1(token):
@@ -91,10 +91,10 @@ def logout_ver_1(token):
     if user_id is not None:
         delete_token(token)
         # Logout
-        return {'message': MSG_LOGOUT, 'token': token, 'http_code_status': 200}
+        return {'message': MSG_LOGOUT, 'token': token, 'http_status_code': 200}
     else:
         # Forbidden
-        return {'message': MSG_INVALID_TOKEN, 'token': token, 'http_code_status': 403}
+        return {'message': MSG_INVALID_TOKEN, 'token': token, 'http_status_code': 403}
 
 
 def logout_ver_2(token, ip):
@@ -118,7 +118,7 @@ def is_token_valid(header):
         pass
 
     # Bad Request
-    return {'message': MSN_400, 'http_code_status': 400}
+    return {'message': MSN_400, 'http_status_code': 400}
 
 
 def is_token_valid_ver_1(token):
@@ -126,9 +126,9 @@ def is_token_valid_ver_1(token):
 
     if user_id is not None:
         # Allowed
-        return {'message': MSG_VALID_TOKEN, 'http_code_status': 200}
+        return {'message': MSG_VALID_TOKEN, 'http_status_code': 200}
     else:
         # Forbidden
-        return {'message': MSG_INVALID_TOKEN, 'token': token, 'http_code_status': 403}
+        return {'message': MSG_INVALID_TOKEN, 'token': token, 'http_status_code': 403}
 
 # endregion
