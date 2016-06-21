@@ -1,6 +1,7 @@
 from flask import request, Blueprint
 from Account import view
 from Account.model.service import account_service
+from flask import jsonify
 
 account_blueprint = Blueprint('accounts', __name__)
 
@@ -25,3 +26,19 @@ def accounts_get():
 def account_get(pk):
     response = account_service.account_get(request.headers, pk)
     return view.account_get(response)
+
+
+@account_blueprint.app_errorhandler(404)  # this has to be an app-wide handler
+def not_found(e):
+    response = jsonify({'status': 404, 'error': 'not found',
+                        'message': 'invalid resource URI'})
+    response.status_code = 404
+    return response
+
+
+@account_blueprint.errorhandler(400)
+def bad_request(e):
+    response = jsonify({'status': 400, 'error': 'bad request',
+                        'message': ''})
+    response.status_code = 400
+    return response

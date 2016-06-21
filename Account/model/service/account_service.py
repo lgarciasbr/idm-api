@@ -83,8 +83,11 @@ def accounts_get_ver_1():
 # TODO Verificar se ele pertence ao grupo de ADMIN
 def account_get(header, pk):
     try:
-        if header['Content-Type'] == 'application/json':
-            if header['ver'] == '1':
+        ver = header.get('ver')
+        content_type = header.get('Content_Type')
+
+        if content_type == 'application/json':
+            if ver == '1':
                 return account_get_ver_1(pk)
             # elif header['ver'] == '2':
             #    return get_ver_2()
@@ -98,6 +101,11 @@ def account_get(header, pk):
 # TODO CRIAR OS TESTES DO GET
 def account_get_ver_1(pk):
     account = user_data.account_get(pk)
-    return {'message': account, 'http_code_status': 200}
+
+    if len(account.data) != 0:
+        return {'message': account, 'http_code_status': 200}
+    else:
+        # return {'message': account, 'http_code_status': 404}
+        abort(404)
 
 # endregion
