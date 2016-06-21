@@ -86,7 +86,7 @@ def account_get(header, pk):
     ver = header.get('ver')
 
     if content_type == 'application/json' or content_type == '':
-        # Use None at the last version
+        # Use 'or ver is None' at the last version
         if ver == '1' or ver is None:
             return account_get_ver_1(pk)
         # elif header['ver'] == '2':
