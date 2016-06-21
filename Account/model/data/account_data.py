@@ -1,7 +1,7 @@
 from database import db, User, UserSchema
 
 user_schema = UserSchema()
-users_schema = UserSchema(many=True)
+users_schema = UserSchema(many=True, only=('email', 'url'))
 
 
 def register(email, password):
@@ -20,20 +20,20 @@ def get_first(email):
 # todo unittest
 def accounts_get():
     try:
-        users = User.query.all()
+        account = User.query.all()
     except:
         return None
     # Serialize the queryset
-    return users_schema.dump(users)
+    return users_schema.dump(account)
 
 
 def account_get(pk):
     try:
-        user = User.query.get(pk)
+        account = User.query.get(pk)
     except:
         return None
     # Serialize the queryset
-    return user_schema.dump(user)
+    return user_schema.dump(account)
 
 # todo trocar de 'data' para 'integration'
 
