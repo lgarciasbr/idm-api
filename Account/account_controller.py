@@ -10,7 +10,7 @@ def account_get_email(email):
 
 @account_blueprint.route('/accounts/', methods=['POST'])
 def account_register():
-    account = account_service.register(request.headers, request.json)
+    account = account_service.register(request.headers, request.get_json(force=True, silent=True))
     return account_view.account_register(account)
 
 
@@ -24,3 +24,4 @@ def accounts_get():
 def account_get(pk):
     account = account_service.account_get(request.headers, pk)
     return account_view.account_get(account)
+

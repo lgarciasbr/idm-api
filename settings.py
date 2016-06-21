@@ -45,6 +45,7 @@ MSN_405 = 'The method is not allowed!'
 MSN_500 = 'Sorry, we encountered an error while trying to fulfill your request.'
 MSN_INVALID_API_VER = 'Invalid API version.'
 MSN_EXPECTED_CONTENT_TYPE_JSON = 'Expected Content-Type: application/json'
+MSN_EXPECTED_JSON_DATA = 'No input data provided'
 
 # Test
 EMAIL_TEST = 'admin@admin.com'

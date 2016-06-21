@@ -46,6 +46,7 @@ class UserSchema(Schema):
     id = fields.Int(dump_only=True)
     created_at = fields.DateTime(dump_only=True)
     email = fields.Email()
+    # password = fields.
     url = fields.Url(dump_only=True)
 
 # endregion
