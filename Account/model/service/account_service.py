@@ -82,20 +82,21 @@ def accounts_get_ver_1():
 # TODO Verificar se o token e valido.
 # TODO Verificar se ele pertence ao grupo de ADMIN
 def account_get(header, pk):
-    try:
-        ver = header.get('ver')
-        content_type = header.get('Content_Type')
+    content_type = header.get('Content-Type')
+    ver = header.get('ver')
 
-        if content_type == 'application/json':
-            if ver == '1':
-                return account_get_ver_1(pk)
-            # elif header['ver'] == '2':
-            #    return get_ver_2()
-    except Exception:
-        pass
-
-    # Bad Request
-    abort(400)
+    if content_type == 'application/json' or content_type == '':
+        # Use None at the last version
+        if ver == '1' or ver is None:
+            return account_get_ver_1(pk)
+        # elif header['ver'] == '2':
+        #    return get_ver_2()
+        else:
+            # Bad Request
+            abort(400, 'Invalid API version.')
+    else:
+        # Bad Request
+        abort(400, 'Expected Content-Type: application/json')
 
 
 # TODO CRIAR OS TESTES DO GET
@@ -105,7 +106,6 @@ def account_get_ver_1(pk):
     if len(account.data) != 0:
         return {'message': account, 'http_code_status': 200}
     else:
-        # return {'message': account, 'http_code_status': 404}
         abort(404)
 
 # endregion

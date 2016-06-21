@@ -39,6 +39,6 @@ def not_found(e):
 @account_blueprint.errorhandler(400)
 def bad_request(e):
     response = jsonify({'status': 400, 'error': 'bad request',
-                        'message': ''})
+                        'message': e.description})
     response.status_code = 400
     return response
