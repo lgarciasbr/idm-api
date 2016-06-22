@@ -28,6 +28,10 @@ def register(header, data):
     if not data:
         abort(400, MSN_EXPECTED_JSON_DATA)
 
+    data2, errors = account_data.user_schema.load(data)
+    if errors:
+        abort(403, errors)
+
     ver = header.get('ver')
 
     # Use 'or ver is None' at the last version
