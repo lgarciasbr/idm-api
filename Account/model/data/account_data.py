@@ -1,6 +1,6 @@
 from database import db, User, UserSchema
 
-user_schema = UserSchema()
+user_schema = UserSchema(only=('email', 'url', 'created_at', 'id'))
 users_schema = UserSchema(many=True, only=('email', 'url'))
 
 

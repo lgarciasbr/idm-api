@@ -42,11 +42,16 @@ class Token(db.Model):
 
 # region Schema
 
+# Custom validator
+def must_not_be_blank(data):
+    if not data:
+        raise ValidationError('Data not provided.')
+
 class UserSchema(Schema):
     id = fields.Int(dump_only=True)
     created_at = fields.DateTime(dump_only=True)
-    email = fields.Email()
-    # password = fields.
+    email = fields.Email(required=True)
+    password = fields.String(required=True, validate=must_not_be_blank)
     url = fields.Url(dump_only=True)
 
 # endregion
