@@ -6,8 +6,11 @@ accounts_schema = AccountSchema(many=True, only=('email', 'url'))
 
 
 def register(email, password):
-    db.session.add(Account(email, password))
-    db.session.commit()
+    try:
+        db.session.add(Account(email, password))
+        db.session.commit()
+    except:
+        return None
 
 
 def get_first(email):

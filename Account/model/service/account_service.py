@@ -9,7 +9,7 @@ import bcrypt
 def check_header(header):
     content_type = header.get('Content-Type')
 
-    if content_type == 'application/json' or content_type == '' or content_type is None:
+    if content_type == 'application/json' or content_type == '' or not content_type:
         return True
     else:
         # Bad Request
@@ -25,8 +25,8 @@ def get_user_by_email(email):
 def register(header, data):
     check_header(header)
 
-    # if not data:
-    #    abort(400, MSN_EXPECTED_JSON_DATA)
+    if not data:
+        abort(400, MSN_EXPECTED_JSON_DATA)
 
     # Validate Schema
     account, errors = account_data.account_schema_post.load(data)
@@ -81,7 +81,7 @@ def accounts_get(header):
     ver = header.get('ver')
 
     # Use 'or ver is None' at the last version
-    if ver == '1' or ver is None:
+    if ver == '1' or not ver:
         return accounts_get_ver_1()
     # elif header['ver'] == '2':
     #    return get_ver_2()
@@ -108,7 +108,7 @@ def account_get(header, pk):
     ver = header.get('ver')
 
     # Use 'or ver is None' at the last version
-    if ver == '1' or ver is None:
+    if ver == '1' or not ver:
         return account_get_ver_1(pk)
     # elif header['ver'] == '2':
     #    return get_ver_2()
