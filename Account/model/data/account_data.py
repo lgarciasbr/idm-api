@@ -5,6 +5,7 @@ account_schema = AccountSchema(only=('email', 'url', 'created_at', 'id'))
 accounts_schema = AccountSchema(many=True, only=('email', 'url'))
 
 
+# todo unittest
 def register(email, password):
     try:
         db.session.add(Account(email, password))
@@ -21,7 +22,6 @@ def get_first(email):
     return account
 
 
-# todo unittest
 def accounts_get():
     try:
         account = Account.query.all()
