@@ -1,12 +1,11 @@
-import os
-import gunicorn
-from flask import Flask
-from database import db
-from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
+from flask.ext.script import Manager
+
+import os
 from Account.account_controller import account_blueprint
 from Authentication.controller import authentication_blueprint
-from Home.controller import home_blueprint
+from database import db
+from flask import Flask
 
 app = Flask(__name__)
 app.config.from_object('settings')
@@ -16,7 +15,6 @@ migrate = Migrate(app, db)
 
 app.register_blueprint(authentication_blueprint)
 app.register_blueprint(account_blueprint)
-app.register_blueprint(home_blueprint)
 
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)

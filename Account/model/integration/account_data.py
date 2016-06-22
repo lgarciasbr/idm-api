@@ -39,7 +39,7 @@ def account_get(pk):
     # Serialize the queryset
     return account_schema.dump(account)
 
-# todo trocar de 'data' para 'integration'
+# todo trocar de 'integration' para 'integration'
 
 '''
 class MyAdapter(DBAdapter):

@@ -41,7 +41,7 @@ def login(header, data):
             if header['ver'] == '1':
                 return login_ver_1(data['email'], data['password'])
             # elif header['ver'] == '2':
-            #    return login_ver_2(data['username'], data['password'], data['ip'])
+            #    return login_ver_2(integration['username'], integration['password'], integration['ip'])
     except Exception:
         pass
 
@@ -77,7 +77,7 @@ def logout(header):
             if header['ver'] == '1':
                 return logout_ver_1(header['token'])
             # elif header['ver'] == '2':
-            #    return logout_ver_1(data['username'], data['password'], data['ip'])
+            #    return logout_ver_1(integration['username'], integration['password'], integration['ip'])
     except Exception:
         pass
 
@@ -113,7 +113,7 @@ def is_token_valid(header):
             if header['ver'] == '1':
                 return is_token_valid_ver_1(header['token'])
             # elif header['ver'] == '2':
-            #    return is_token_valid_ver_1(data['username'], data['password'], data['ip'])
+            #    return is_token_valid_ver_1(integration['username'], integration['password'], integration['ip'])
     except Exception:
         pass
 
