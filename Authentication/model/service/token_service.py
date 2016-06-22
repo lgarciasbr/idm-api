@@ -6,8 +6,8 @@ def get_token(token):
     return token_data.get_token(token)
 
 
-def set_token(token, user):
-    return token_data.set_token(token, user)
+def set_token(token, account):
+    return token_data.set_token(token, account)
 
 
 def delete_token(token):

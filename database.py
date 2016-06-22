@@ -8,10 +8,10 @@ db = SQLAlchemy()
 
 
 # TODO Precisa testar para verificar se o sistema esta diferenciando maiuscula de minuscula.
-class User(db.Model):
+class Account(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=True)
-    password = db.Column(db.Binary, unique=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.Binary, unique=False, nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=func.now())
 
     def __init__(self, email, password):
@@ -29,12 +29,12 @@ class User(db.Model):
 class Token(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     token = db.Column(db.String(200), unique=False)
-    user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
-    user = db.relationship(User, backref=backref('tokens'))
+    account_id = db.Column(db.Integer, db.ForeignKey(Account.id), nullable=False)
+    account = db.relationship(Account, backref=backref('tokens'))
 
-    def __init__(self, token, user):
+    def __init__(self, token, account):
         self.token = token
-        self.user = user
+        self.account = account
 
     def __repr__(self):
         return self.token
@@ -47,11 +47,12 @@ def must_not_be_blank(data):
     if not data:
         raise ValidationError('Data not provided.')
 
-class UserSchema(Schema):
+
+class AccountSchema(Schema):
     id = fields.Int(dump_only=True)
-    created_at = fields.DateTime(dump_only=True)
-    email = fields.Email(required=True)
     password = fields.String(required=True, validate=must_not_be_blank)
+    email = fields.Email(required=True)
     url = fields.Url(dump_only=True)
+    created_at = fields.DateTime(dump_only=True)
 
 # endregion

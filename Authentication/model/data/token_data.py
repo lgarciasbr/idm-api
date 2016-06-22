@@ -9,25 +9,25 @@ client = bmemcached.Client(MEMCACHED_URL, MEMCACHED_USERNAME, MEMCACHED_PASSWORD
 #todo melhorar o retorno de erro quando o memcahed esta fora do ar, so da problema com o logout.
 def get_token(token):
     if TOKEN_HOST == 'memcached':
-        user_id_registered_token = client.get(token)
-        return user_id_registered_token
+        account_id_registered_token = client.get(token)
+        return account_id_registered_token
     elif TOKEN_HOST == 'database':
         registered_token = Token.query.filter_by(token=token).first()
 
         if registered_token is not None:
-            return registered_token.user_id
+            return registered_token.account_id
         else:
             return None
     else:
         pass
 
 
-def set_token(token, user):
+def set_token(token, account):
     if TOKEN_HOST == 'memcached':
-        bla = client.set(token, user.id)
+        client.set(token, account.id)
         return token
     elif TOKEN_HOST == 'database':
-        db.session.add(Token(token, user))
+        db.session.add(Token(token, account))
         db.session.commit()
         return token
 

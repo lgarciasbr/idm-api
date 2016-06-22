@@ -1,17 +1,18 @@
-from database import db, User, UserSchema
+from database import db, Account, AccountSchema
 
-user_schema = UserSchema(only=('email', 'url', 'created_at', 'id'))
-users_schema = UserSchema(many=True, only=('email', 'url'))
+account_schema_post = AccountSchema(only=('email', 'password'))
+account_schema = AccountSchema(only=('email', 'url', 'created_at', 'id'))
+accounts_schema = AccountSchema(many=True, only=('email', 'url'))
 
 
 def register(email, password):
-    db.session.add(User(email, password))
+    db.session.add(Account(email, password))
     db.session.commit()
 
 
 def get_first(email):
     try:
-        account = User.query.filter_by(email=email).first()
+        account = Account.query.filter_by(email=email).first()
     except:
         return None
     return account
@@ -20,20 +21,20 @@ def get_first(email):
 # todo unittest
 def accounts_get():
     try:
-        account = User.query.all()
+        account = Account.query.all()
     except:
         return None
     # Serialize the queryset
-    return users_schema.dump(account)
+    return accounts_schema.dump(account)
 
 
 def account_get(pk):
     try:
-        account = User.query.get(pk)
+        account = Account.query.get(pk)
     except:
         return None
     # Serialize the queryset
-    return user_schema.dump(account)
+    return account_schema.dump(account)
 
 # todo trocar de 'data' para 'integration'
 

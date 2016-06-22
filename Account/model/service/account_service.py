@@ -25,18 +25,19 @@ def get_user_by_email(email):
 def register(header, data):
     check_header(header)
 
-    if not data:
-        abort(400, MSN_EXPECTED_JSON_DATA)
+    # if not data:
+    #    abort(400, MSN_EXPECTED_JSON_DATA)
 
-    data2, errors = account_data.user_schema.load(data)
+    # Validate Schema
+    account, errors = account_data.account_schema_post.load(data)
     if errors:
-        abort(403, errors)
+        abort(400, errors)
 
     ver = header.get('ver')
 
     # Use 'or ver is None' at the last version
-    if ver == '1' or ver is None:
-        return register_ver_1(data["email"], data["password"])
+    if ver == '1' or not ver:
+        return register_ver_1(account["email"], account["password"])
     # elif header['ver'] == '2':
     #    return get_ver_2()
     else:
@@ -54,7 +55,7 @@ def register_ver_1(email, password):
         email = v["email"]
     except EmailNotValidError as e:
         # email is not valid, exception message is human-readable
-        abort(403, str(e))
+        abort(400, str(e))
 
     # if e-mail is not registered
     if not get_user_by_email(email):

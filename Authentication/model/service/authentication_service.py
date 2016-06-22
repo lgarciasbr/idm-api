@@ -17,18 +17,18 @@ def generate_auth_token(user, expiration=600):
 def verify_auth_token(token):
     s = Serializer(SECRET_KEY)
     try:
-        user_id = s.loads(token)
+        account_id = s.loads(token)
     except SignatureExpired:
         return None  # valid token, but expired
     except BadSignature:
         return None  # invalid token
 
-    user_id_registered_token = get_token(token)
+    account_id_registered_token = get_token(token)
 
-    if user_id_registered_token is None or user_id_registered_token != user_id:
+    if account_id_registered_token is None or account_id_registered_token != account_id:
         return None  # valid token, but different user
 
-    return user_id
+    return account_id
 
 # endregion
 
@@ -51,10 +51,10 @@ def login(header, data):
 
 def login_ver_1(email, password):
 
-    user = account_controller.account_get_email(email)
+    account = account_controller.account_get_email(email)
 
-    if user is not None and user.password == bcrypt.hashpw(password.encode('utf-8'), user.password):
-        token = token_service.set_token(generate_auth_token(user), user)
+    if account is not None and account.password == bcrypt.hashpw(password.encode('utf-8'), account.password):
+        token = token_service.set_token(generate_auth_token(account), account)
         # Allowed
         return {'message': MSG_LOGIN, 'token': token, 'http_status_code': 200}
 
