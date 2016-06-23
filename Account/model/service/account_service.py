@@ -16,8 +16,14 @@ def check_header(header):
         abort(400, MSN_EXPECTED_CONTENT_TYPE_JSON)
 
 
-def get_user_by_email(email):
-    return account_data.get_first(email)
+# todo deixar estas duas func genericas
+def get_account_by_email(email):
+    return account_data.get_account_by_email(email)
+
+
+def get_account_by_id(pk):
+    return account_data.get_account_by_email(pk)
+
 
 # region Register
 
@@ -58,11 +64,11 @@ def register_ver_1(email, password):
         abort(400, str(e))
 
     # if e-mail is not registered
-    if not get_user_by_email(email):
+    if not get_account_by_email(email):
         # register
-        account_data.register(email, bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()))
+        account_data.register_account(email, bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()))
 
-        return {'message': MSG_ACCOUNT_SET, 'http_status_code': 200}
+        return {'message': MSG_ACCOUNT_SET, 'http_status_code': 201}
     else:
         abort(403, MSG_EMAIL_ALREADY_REGISTERED)
 
@@ -92,7 +98,7 @@ def accounts_get(header):
 
 # TODO CRIAR OS TESTES DO GET
 def accounts_get_ver_1():
-    return {'message': account_data.accounts_get(), 'http_status_code': 200}
+    return {'message': account_data.get_accounts(), 'http_status_code': 200}
 
 # endregion
 
@@ -119,11 +125,44 @@ def account_get(header, pk):
 
 # TODO CRIAR OS TESTES DO GET
 def account_get_ver_1(pk):
-    account = account_data.account_get(pk)
+    account = account_data.get_account_by_id(pk)
 
     if len(account.data) != 0:
         return {'message': account, 'http_status_code': 200}
     else:
         abort(404)
+
+# endregion
+
+
+# region Delete
+
+
+def account_delete(header, pk):
+    check_header(header)
+
+    ver = header.get('ver')
+
+    # Use 'or ver is None' at the last version
+    if ver == '1' or not ver:
+        return account_delete_ver_1(pk)
+    # elif header['ver'] == '2':
+    #    return get_ver_2()
+    else:
+        # Bad Request
+        abort(400, MSN_INVALID_API_VER)
+
+
+# TODO PRECISA CRIAR UMA SOLUCAO PARA REGRAS DE SENHA. Ex.: uma maiscula e etc. Olhar o AD para ver como funciona.
+# TODO CRIAR OS TESTES DO REGISTER
+def account_delete_ver_1(pk):
+    account = account_data.get_account_by_id(pk)
+
+    if len(account.data) != 0:
+        account_data.delete_account(pk)
+        return {'message': account, 'http_status_code': 202}
+    else:
+        abort(404)
+
 
 # endregion

@@ -5,7 +5,7 @@ from Account.model.service import account_service
 
 
 def account_get_email(email):
-    return account_service.get_user_by_email(email)
+    return account_service.get_account_by_email(email)
 
 
 @account_blueprint.route('/accounts/', methods=['POST'])
@@ -25,3 +25,8 @@ def account_get(pk):
     account = account_service.account_get(request.headers, pk)
     return account_view.account_get(account)
 
+
+@account_blueprint.route('/accounts/<int:pk>', methods=['DELETE'])
+def account_delete(pk):
+    account = account_service.account_delete(request.headers, pk)
+    return account_view.account_delete(account)

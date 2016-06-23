@@ -1,12 +1,14 @@
 from database import db, Account, AccountSchema
 
 account_schema_post = AccountSchema(only=('email', 'password'))
-account_schema = AccountSchema(only=('email', 'url', 'created_at', 'id'))
-accounts_schema = AccountSchema(many=True, only=('email', 'url'))
-
+account_schema_get = AccountSchema(only=('email', 'url', 'created_at', 'id'))
+accounts_schema_get = AccountSchema(many=True, only=('email', 'url'))
 
 # todo unittest
-def register(email, password):
+# todo melhorar o uso do try expect
+
+
+def register_account(email, password):
     try:
         db.session.add(Account(email, password))
         db.session.commit()
@@ -14,7 +16,8 @@ def register(email, password):
         return None
 
 
-def get_first(email):
+# todo deixar estas duas func genericas
+def get_account_by_email(email):
     try:
         account = Account.query.filter_by(email=email).first()
     except:
@@ -22,24 +25,30 @@ def get_first(email):
     return account
 
 
-def accounts_get():
-    try:
-        account = Account.query.all()
-    except:
-        return None
-    # Serialize the queryset
-    return accounts_schema.dump(account)
-
-
-def account_get(pk):
+def get_account_by_id(pk):
     try:
         account = Account.query.get(pk)
     except:
         return None
     # Serialize the queryset
-    return account_schema.dump(account)
+    return account_schema_get.dump(account)
 
-# todo trocar de 'integration' para 'integration'
+
+def get_accounts():
+    try:
+        account = Account.query.all()
+    except:
+        return None
+    # Serialize the queryset
+    return accounts_schema_get.dump(account)
+
+
+def delete_account(pk):
+    try:
+        Account.query.filter_by(id=pk).delete()
+        db.session.commit()
+    except:
+        return None
 
 '''
 class MyAdapter(DBAdapter):
