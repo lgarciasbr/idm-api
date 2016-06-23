@@ -27,7 +27,7 @@ def get_account_password_by_email(email):
         account = Account.query.filter_by(email=email).first()
     except:
         return None
-    return account_password_schema_get.dump(account)
+    return account
 
 
 # todo deixar estas duas func genericas

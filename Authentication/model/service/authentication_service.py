@@ -52,9 +52,8 @@ def login(header, data):
 def login_ver_1(email, password):
 
     account = account_service.get_account_password_by_email(email)
-    account_password = account.data.get('password')
 
-    if len(account.data) != 0 and account_password == bcrypt.hashpw(password.encode('utf-8'), account_password.encode('utf-8')):
+    if not account and account.password == bcrypt.hashpw(password.encode('utf-8'), account.password):
         token = token_service.set_token(generate_auth_token(account), account)
         # Allowed
         return {'message': MSG_LOGIN, 'token': token, 'http_status_code': 200}
