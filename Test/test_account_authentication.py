@@ -4,7 +4,7 @@ import time
 
 from manage import app
 from settings import MSG_LOGIN, MSG_LOGOUT, MSG_LOGIN_ERROR,\
-    MSG_INVALID_TOKEN, MSN_400, EMAIL_TEST, PWD_TEST
+    MSG_INVALID_TOKEN, MSN_400, EMAIL_TEST, PWD_TEST, CHECK_EMAIL_DELIVERABILITY
 
 # todo Precisa fazer os testes com o token no banco e no Memcached.
 '''
@@ -44,18 +44,24 @@ class AuthenticationSolution(unittest.TestCase):
     def test_register_not_assert_invalid_email(self):
         response = self.register_v1('not_email', PWD_TEST)
 
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 400)
 
     def test_register_not_assert_invalid_domain(self):
         response = self.register_v1('admin@NotAValidDomain', PWD_TEST)
 
-        self.assertEqual(response.status_code, 403)
+        if CHECK_EMAIL_DELIVERABILITY:
+            self.assertEqual(response.status_code, 400)
+        else:
+            self.assertEqual(response.status_code, 200)
 
     def test_register_not_assert_invalid_domain(self):
         # I hope 'NotExistDomain1974.com' do not exist. ;-)
         response = self.register_v1('admin@NotExistDomain1974.com', PWD_TEST)
 
-        self.assertEqual(response.status_code, 403)
+        if CHECK_EMAIL_DELIVERABILITY:
+            self.assertEqual(response.status_code, 400)
+        else:
+            self.assertEqual(response.status_code, 200)
 
 
     # todo precisa fazer os testes nao passando todos os itens do header no login
