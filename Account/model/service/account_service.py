@@ -17,12 +17,12 @@ def check_header(header):
 
 
 # todo deixar estas duas func genericas
-def get_account_by_email(email):
-    return account_data.get_account_by_email(email)
+def get_account_password_by_email(email):
+    return account_data.get_account_password_by_email(email)
 
 
 def get_account_by_id(pk):
-    return account_data.get_account_by_email(pk)
+    return account_data.get_account_by_id(pk)
 
 
 # region Register
@@ -63,7 +63,7 @@ def register_ver_1(email, password):
         # email is not valid, exception message is human-readable
         abort(400, str(e))
 
-    account = get_account_by_email(email)
+    account = account_data.get_account_by_email(email)
 
     if len(account.data) == 0:
         # register

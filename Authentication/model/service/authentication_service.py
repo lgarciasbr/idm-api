@@ -1,5 +1,5 @@
 import bcrypt
-from Account import account_controller
+from Account.model.service import account_service
 from Authentication.model.service import token_service
 from Authentication.model.service.token_service import get_token, delete_token
 from settings import MSG_LOGIN, MSG_LOGIN_ERROR, MSN_400, MSG_LOGOUT, MSG_INVALID_TOKEN, MSG_VALID_TOKEN, SECRET_KEY
@@ -51,9 +51,10 @@ def login(header, data):
 
 def login_ver_1(email, password):
 
-    account = account_controller.account_get_email(email)
+    account = account_service.get_account_password_by_email(email)
+    account_password = account.data.get('password')
 
-    if account is not None and account.password == bcrypt.hashpw(password.encode('utf-8'), account.password):
+    if len(account.data) != 0 and account_password == bcrypt.hashpw(password.encode('utf-8'), account_password.encode('utf-8')):
         token = token_service.set_token(generate_auth_token(account), account)
         # Allowed
         return {'message': MSG_LOGIN, 'token': token, 'http_status_code': 200}

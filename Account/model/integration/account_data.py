@@ -3,6 +3,7 @@ from database import db, Account, AccountSchema
 account_schema_post = AccountSchema(only=('email', 'password'))
 account_schema_put = AccountSchema(only=('password', 'new_password'))
 account_schema_get = AccountSchema(only=('email', 'url', 'created_at', 'id'))
+account_password_schema_get = AccountSchema(only=('email', 'password'))
 accounts_schema_get = AccountSchema(many=True, only=('email', 'url'))
 
 # todo unittest
@@ -13,9 +14,20 @@ def register_account(email, password):
     try:
         db.session.add(Account(email, password))
         db.session.commit()
-        return get_account_by_email(email)
+
+        account = Account.query.filter_by(email=email).first()
+
+        return account_schema_get.dump(account)
     except:
         return None
+
+
+def get_account_password_by_email(email):
+    try:
+        account = Account.query.filter_by(email=email).first()
+    except:
+        return None
+    return account_password_schema_get.dump(account)
 
 
 # todo deixar estas duas func genericas
