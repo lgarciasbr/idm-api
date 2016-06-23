@@ -1,6 +1,7 @@
 from database import db, Account, AccountSchema
 
 account_schema_post = AccountSchema(only=('email', 'password'))
+account_schema_put = AccountSchema(only=('password', 'new_password'))
 account_schema_get = AccountSchema(only=('email', 'url', 'created_at', 'id'))
 accounts_schema_get = AccountSchema(many=True, only=('email', 'url'))
 
@@ -12,6 +13,7 @@ def register_account(email, password):
     try:
         db.session.add(Account(email, password))
         db.session.commit()
+        return get_account_by_email(email)
     except:
         return None
 
@@ -22,7 +24,7 @@ def get_account_by_email(email):
         account = Account.query.filter_by(email=email).first()
     except:
         return None
-    return account
+    return account_schema_get.dump(account)
 
 
 def get_account_by_id(pk):
@@ -36,19 +38,20 @@ def get_account_by_id(pk):
 
 def get_accounts():
     try:
-        account = Account.query.all()
+        accounts = Account.query.all()
     except:
         return None
     # Serialize the queryset
-    return accounts_schema_get.dump(account)
+    return accounts_schema_get.dump(accounts)
 
 
 def delete_account(pk):
     try:
         Account.query.filter_by(id=pk).delete()
         db.session.commit()
+        return True
     except:
-        return None
+        return False
 
 '''
 class MyAdapter(DBAdapter):

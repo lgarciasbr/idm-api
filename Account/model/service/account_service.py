@@ -28,7 +28,7 @@ def get_account_by_id(pk):
 # region Register
 
 
-def register(header, data):
+def account_register(header, data):
     check_header(header)
 
     if not data:
@@ -63,12 +63,13 @@ def register_ver_1(email, password):
         # email is not valid, exception message is human-readable
         abort(400, str(e))
 
-    # if e-mail is not registered
-    if not get_account_by_email(email):
-        # register
-        account_data.register_account(email, bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()))
+    account = get_account_by_email(email)
 
-        return {'message': MSG_ACCOUNT_SET, 'http_status_code': 201}
+    if len(account.data) == 0:
+        # register
+        account = account_data.register_account(email, bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()))
+
+        return {'message': MSG_ACCOUNT_SET, 'account': account, 'http_status_code': 201}
     else:
         abort(403, MSG_EMAIL_ALREADY_REGISTERED)
 

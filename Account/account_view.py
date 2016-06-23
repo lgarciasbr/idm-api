@@ -5,8 +5,9 @@ from flask import jsonify
 def account_register(account):
     http_status_code = account.get('http_status_code')
     message = account.get('message')
+    account_created = account.get('account')
     
-    response = jsonify({'status_code': http_status_code, 'message': message})
+    response = jsonify({'status_code': http_status_code, 'message': message, 'account': account_created.data})
     response.status_code = http_status_code
 
     return response

@@ -10,7 +10,13 @@ def account_get_email(email):
 
 @account_blueprint.route('/accounts/', methods=['POST'])
 def account_register():
-    account = account_service.register(request.headers, request.get_json(force=True, silent=True))
+    account = account_service.account_register(request.headers, request.get_json(force=True, silent=True))
+    return account_view.account_register(account)
+
+
+@account_blueprint.route('/accounts/<int:pk>', methods=['PUT'])
+def account_change_password(pk):
+    account = account_service.account_change_password(request.headers, request.get_json(force=True, silent=True), pk)
     return account_view.account_register(account)
 
 
