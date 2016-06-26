@@ -1,4 +1,4 @@
-from database import db, Account, AccountSchema
+from idManager.model.database.db_model import db, Account, AccountSchema
 
 account_schema_post = AccountSchema(only=('email', 'password'))
 account_schema_put = AccountSchema(only=('password', 'new_password'))

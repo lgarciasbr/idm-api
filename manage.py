@@ -1,10 +1,10 @@
+import os
+
+from flask import Flask
 from flask.ext.migrate import Migrate, MigrateCommand
 from flask.ext.script import Manager
-
-import os
-from idManager.account_controller import id_manager_blueprint
-from database import db
-from flask import Flask
+from idManager import id_manager_blueprint
+from idManager.model.database.db_model import db
 
 app = Flask(__name__)
 app.config.from_object('settings')
@@ -22,7 +22,7 @@ def test():
     'Execute UnitTest.'
     import unittest
 
-    tests = unittest.TestLoader().discover('Test')
+    tests = unittest.TestLoader().discover('test')
     unittest.TextTestRunner(verbosity=2).run(tests)
 
 
@@ -37,7 +37,7 @@ def test_coverage():
         include={'idManager/*'}
     )
     cov.start()
-    tests = unittest.TestLoader().discover('Test')
+    tests = unittest.TestLoader().discover('test')
     unittest.TextTestRunner(verbosity=2).run(tests)
     cov.stop()
     cov.save()
