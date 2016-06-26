@@ -8,23 +8,17 @@ from . import id_manager_blueprint
 
 @id_manager_blueprint.route('/auth/', methods=['POST'])
 def auth_login():
-    response = authentication_service.login(request.headers, request.json)
-    http_status_code = response.get('http_status_code')
-
-    return authentication_view.message_json(response), http_status_code
+    auth = authentication_service.auth_login(request.headers, request.get_json(force=True, silent=True))
+    return authentication_view.auth_login(auth)
 
 
 @id_manager_blueprint.route('/auth/', methods=['GET'])
 def auth_is_valid():
-    response = authentication_service.is_token_valid(request.headers)
-    http_status_code = response.get('http_status_code')
-
-    return authentication_view.message_json(response), http_status_code
+    auth = authentication_service.auth_is_valid(request.headers)
+    return authentication_view.auth_is_valid(auth)
 
 
 @id_manager_blueprint.route('/auth/', methods=['DELETE'])
 def auth_logout():
-    response = authentication_service.logout(request.headers)
-    http_status_code = response.get('http_status_code')
-
-    return authentication_view.message_json(response), http_status_code
+    auth = authentication_service.auth_logout(request.headers)
+    return authentication_view.auth_logout(auth)

@@ -5,6 +5,8 @@ from idManager.model.integration import account_data
 from idManager.settings import MSG_EMAIL_ALREADY_REGISTERED, MSG_ACCOUNT_SET, CHECK_EMAIL_DELIVERABILITY, MSN_INVALID_API_VER, \
     MSN_EXPECTED_CONTENT_TYPE_JSON, MSN_EXPECTED_JSON_DATA
 
+account_schema_post = account_data.account_schema_post
+
 
 def check_header(header):
     content_type = header.get('Content-Type')
@@ -17,12 +19,16 @@ def check_header(header):
 
 
 # todo deixar estas duas func genericas
-def get_account_password_by_email(email):
-    return account_data.get_account_password_by_email(email)
+def get_account(email):
+    return account_data.get_account(email)
 
 
 def get_account_by_id(pk):
     return account_data.get_account_by_id(pk)
+
+
+def get_account(email):
+    return account_data.get_account(email)
 
 
 # region Register
@@ -35,7 +41,7 @@ def account_register(header, data):
         abort(400, MSN_EXPECTED_JSON_DATA)
 
     # Validate Schema
-    account, errors = account_data.account_schema_post.load(data)
+    account, errors = account_schema_post.load(data)
     if errors:
         abort(400, errors)
 

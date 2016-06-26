@@ -1,63 +1,53 @@
 import bcrypt
+from flask import abort
 from idManager.model.service import account_service
 from idManager.model.service import token_service
-from idManager.model.service.token_service import get_token, delete_token
-from idManager.settings import MSG_LOGIN, MSG_LOGIN_ERROR, MSN_400, MSG_LOGOUT, MSG_INVALID_TOKEN, MSG_VALID_TOKEN, SECRET_KEY
-from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
-
-# region Token
+from idManager.settings import MSG_LOGIN, MSG_LOGIN_ERROR, MSN_400, MSG_LOGOUT, MSG_INVALID_TOKEN, MSG_VALID_TOKEN, \
+    MSN_EXPECTED_CONTENT_TYPE_JSON, MSN_EXPECTED_JSON_DATA, MSN_INVALID_API_VER
 
 
-# todo Implementar o timeout do login, precisa pensar nas regras.
-def generate_auth_token(user, expiration=600):
-    s = Serializer(SECRET_KEY, expires_in=expiration)
-    return (s.dumps(user.id)).decode('ascii')
+def check_header(header):
+    content_type = header.get('Content-Type')
 
+    if content_type == 'application/json' or content_type == '' or not content_type:
+        return True
+    else:
+        # Bad Request
+        abort(400, MSN_EXPECTED_CONTENT_TYPE_JSON)
 
-def verify_auth_token(token):
-    s = Serializer(SECRET_KEY)
-    try:
-        account_id = s.loads(token)
-    except SignatureExpired:
-        return None  # valid token, but expired
-    except BadSignature:
-        return None  # invalid token
-
-    account_id_registered_token = get_token(token)
-
-    if account_id_registered_token is None or account_id_registered_token != account_id:
-        return None  # valid token, but different user
-
-    return account_id
-
-# endregion
 
 # region LOGIN
+def auth_login(header, data):
+    check_header(header)
+
+    if not data:
+        abort(400, MSN_EXPECTED_JSON_DATA)
+
+    # Validate Schema
+    account, errors = account_service.account_schema_post.load(data)
+    if errors:
+        abort(400, errors)
+
+    ver = header.get('ver')
+
+    # Use 'or ver is None' at the last version
+    if ver == '1' or not ver:
+        return auth_login_ver_1(account["email"], account["password"])
+    # elif header['ver'] == '2':
+    #    return get_ver_2(username, password, ip)
+    else:
+        # Bad Request
+        abort(400, MSN_INVALID_API_VER)
 
 
-def login(header, data):
-    try:
-        if header['Content-Type'] == 'application/json':
-            if header['ver'] == '1':
-                return login_ver_1(data['email'], data['password'])
-            # elif header['ver'] == '2':
-            #    return login_ver_2(integration['username'], integration['password'], integration['ip'])
-    except Exception:
-        pass
+def auth_login_ver_1(email, password):
 
-    # Bad Request
-    return {'message': MSN_400, 'http_status_code': 400}
-
-
-def login_ver_1(email, password):
-
-    account = account_service.get_account_password_by_email(email)
+    account = account_service.get_account(email)
 
     if account.password == bcrypt.hashpw(password.encode('utf-8'), account.password):
-        token = token_service.set_token(generate_auth_token(account), account)
+        token = token_service.set_token(token_service.generate_token(account), account)
         # Allowed
         return {'message': MSG_LOGIN, 'token': token, 'http_status_code': 200}
-
     else:
         # Forbidden
         return {'message': MSG_LOGIN_ERROR, 'http_status_code': 403}
@@ -68,33 +58,38 @@ def login_ver_2(username, password, ip):
 
 # endregion
 
+
 # region LOGOUT
+def auth_logout(header):
+    check_header(header)
+
+    ver = header.get('ver')
+    token = header.get('token')
+
+    # Use 'or ver is None' at the last version
+    if ver == '1' or not ver:
+        return auth_logout_ver_1(token)
+    # elif header['ver'] == '2':
+    #    return auth_logout()
+    else:
+        # Bad Request
+        abort(400, MSN_INVALID_API_VER)
 
 
-def logout(header):
-    try:
-        if header['Content-Type'] == 'application/json':
-            if header['ver'] == '1':
-                return logout_ver_1(header['token'])
-            # elif header['ver'] == '2':
-            #    return logout_ver_1(integration['username'], integration['password'], integration['ip'])
-    except Exception:
-        pass
+def auth_logout_ver_1(token):
+    if token is not None:
+        user_id = token_service.verify_token(token)
 
-    # Bad Request
-    return {'message': MSN_400, 'http_status_code': 400}
-
-
-def logout_ver_1(token):
-    user_id = verify_auth_token(token)
-
-    if user_id is not None:
-        delete_token(token)
-        # Logout
-        return {'message': MSG_LOGOUT, 'token': token, 'http_status_code': 200}
+        if user_id is not None:
+            token_service.delete_token(token)
+            # Logout
+            return {'message': MSG_LOGOUT, 'token': token, 'http_status_code': 200}
+        else:
+            # Forbidden
+            return {'message': MSG_INVALID_TOKEN, 'token': token, 'http_status_code': 403}
     else:
         # Forbidden
-        return {'message': MSG_INVALID_TOKEN, 'token': token, 'http_status_code': 403}
+        return {'message': MSG_INVALID_TOKEN, 'token': token, 'http_status_code': 400}
 
 
 def logout_ver_2(token, ip):
@@ -102,33 +97,38 @@ def logout_ver_2(token, ip):
 
 # endregion
 
+
 # region Is token valid?
-
-
 # todo Criar test para o is_valid_token
 # todo Com o timeout do login implementado o is_valid_token pode fazer um refresh no timeout.
-def is_token_valid(header):
-    try:
-        if header['Content-Type'] == 'application/json':
-            if header['ver'] == '1':
-                return is_token_valid_ver_1(header['token'])
-            # elif header['ver'] == '2':
-            #    return is_token_valid_ver_1(integration['username'], integration['password'], integration['ip'])
-    except Exception:
-        pass
+def auth_is_valid(header):
+    check_header(header)
 
-    # Bad Request
-    return {'message': MSN_400, 'http_status_code': 400}
+    ver = header.get('ver')
+    token = header.get('token')
+
+    # Use 'or ver is None' at the last version
+    if ver == '1' or not ver:
+        return auth_is_valid_ver_1(token)
+    # elif header['ver'] == '2':
+    #    return auth_logout()
+    else:
+        # Bad Request
+        abort(400, MSN_INVALID_API_VER)
 
 
-def is_token_valid_ver_1(token):
-    user_id = verify_auth_token(token)
+def auth_is_valid_ver_1(token):
+    if token is not None:
+        user_id = token_service.verify_token(token)
 
-    if user_id is not None:
-        # Allowed
-        return {'message': MSG_VALID_TOKEN, 'http_status_code': 200}
+        if user_id is not None:
+            # Allowed
+            return {'message': MSG_VALID_TOKEN, 'http_status_code': 200}
+        else:
+            # Forbidden
+            return {'message': MSG_INVALID_TOKEN, 'token': token, 'http_status_code': 403}
     else:
         # Forbidden
-        return {'message': MSG_INVALID_TOKEN, 'token': token, 'http_status_code': 403}
+        return {'message': MSG_INVALID_TOKEN, 'token': token, 'http_status_code': 400}
 
 # endregion

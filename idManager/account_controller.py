@@ -4,10 +4,6 @@ from idManager.view import account_view
 from . import id_manager_blueprint
 
 
-def account_get_email(email):
-    return account_service.get_account_by_email(email)
-
-
 @id_manager_blueprint.route('/accounts/', methods=['POST'])
 def account_register():
     account = account_service.account_register(request.headers, request.get_json(force=True, silent=True))

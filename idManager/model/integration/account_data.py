@@ -22,7 +22,7 @@ def register_account(email, password):
         return None
 
 
-def get_account_password_by_email(email):
+def get_account(email):
     try:
         account = Account.query.filter_by(email=email).first()
     except:

@@ -28,7 +28,6 @@ def account_get(account):
     message = account.get('message')
 
     response = jsonify({'status_code': http_status_code, 'account': message.data})
-
     response.status_code = http_status_code
 
     return response
@@ -39,7 +38,6 @@ def account_delete(account):
     message = account.get('message')
 
     response = jsonify({'status_code': http_status_code, 'account': message.data})
-
     response.status_code = http_status_code
 
     return response
