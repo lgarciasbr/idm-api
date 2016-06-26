@@ -1,7 +1,7 @@
 from flask import request
-from . import id_manager_blueprint
-from idManager import account_view
 from idManager.model.service import account_service
+from idManager.view import account_view
+from . import id_manager_blueprint
 
 
 def account_get_email(email):

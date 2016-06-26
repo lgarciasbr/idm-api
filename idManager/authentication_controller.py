@@ -1,7 +1,7 @@
-from idManager.model.service import authentication_service
-from idManager import authentication_view
-from . import id_manager_blueprint
 from flask import request
+from idManager.model.service import authentication_service
+from idManager.view import authentication_view
+from . import id_manager_blueprint
 
 
 # todo 2 steps verification - http://blog.miguelgrinberg.com/post/two-factor-authentication-with-flask

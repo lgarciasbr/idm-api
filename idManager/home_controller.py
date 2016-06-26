@@ -1,5 +1,5 @@
+from idManager.view import home_view
 from . import id_manager_blueprint
-from idManager import home_view
 
 
 @id_manager_blueprint.route('/')

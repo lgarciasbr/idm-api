@@ -1,5 +1,5 @@
+from idManager.view import error_handler_view
 from . import id_manager_blueprint
-from idManager import error_handler_view
 
 
 @id_manager_blueprint.app_errorhandler(404)
