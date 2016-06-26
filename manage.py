@@ -2,19 +2,16 @@ from flask.ext.migrate import Migrate, MigrateCommand
 from flask.ext.script import Manager
 
 import os
-from Account.account_controller import account_blueprint
-from Authentication.controller import authentication_blueprint
+from idManager.account_controller import id_manager_blueprint
 from database import db
 from flask import Flask
 
 app = Flask(__name__)
 app.config.from_object('settings')
+app.register_blueprint(id_manager_blueprint)
 
 db.init_app(app)
 migrate = Migrate(app, db)
-
-app.register_blueprint(authentication_blueprint)
-app.register_blueprint(account_blueprint)
 
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
@@ -37,7 +34,7 @@ def test_coverage():
 
     cov = coverage.coverage(
         branch=True,
-        include={'Authentication/*', 'Account/*', 'Home/*'}
+        include={'idManager/*'}
     )
     cov.start()
     tests = unittest.TestLoader().discover('Test')

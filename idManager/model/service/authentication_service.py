@@ -1,7 +1,7 @@
 import bcrypt
-from Account.model.service import account_service
-from Authentication.model.service import token_service
-from Authentication.model.service.token_service import get_token, delete_token
+from idManager.model.service import account_service
+from idManager.model.service import token_service
+from idManager.model.service.token_service import get_token, delete_token
 from settings import MSG_LOGIN, MSG_LOGIN_ERROR, MSN_400, MSG_LOGOUT, MSG_INVALID_TOKEN, MSG_VALID_TOKEN, SECRET_KEY
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
 
@@ -53,7 +53,7 @@ def login_ver_1(email, password):
 
     account = account_service.get_account_password_by_email(email)
 
-    if not account and account.password == bcrypt.hashpw(password.encode('utf-8'), account.password):
+    if account.password == bcrypt.hashpw(password.encode('utf-8'), account.password):
         token = token_service.set_token(generate_auth_token(account), account)
         # Allowed
         return {'message': MSG_LOGIN, 'token': token, 'http_status_code': 200}

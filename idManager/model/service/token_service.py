@@ -1,4 +1,4 @@
-from Authentication.model.data import token_data
+from idManager.model.integration import token_data
 
 
 #todo preprar unittest do token
