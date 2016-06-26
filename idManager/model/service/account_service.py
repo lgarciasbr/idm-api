@@ -3,7 +3,7 @@ from email_validator import validate_email, EmailNotValidError
 from flask import abort
 from idManager.model.integration import account_data
 from idManager.settings import MSG_EMAIL_ALREADY_REGISTERED, MSG_ACCOUNT_SET, CHECK_EMAIL_DELIVERABILITY, MSN_INVALID_API_VER, \
-    MSN_EXPECTED_CONTENT_TYPE_JSON, MSN_EXPECTED_JSON_DATA
+    MSN_EXPECTED_CONTENT_TYPE_JSON, MSN_EXPECTED_JSON_DATA, MSG_ACCOUNT_DELETED
 
 account_schema_post = account_data.account_schema_post
 
@@ -167,7 +167,7 @@ def account_delete_ver_1(pk):
 
     if len(account.data) != 0:
         account_data.delete_account(pk)
-        return {'message': account, 'http_status_code': 202}
+        return {'message': MSG_ACCOUNT_DELETED, 'account': account, 'http_status_code': 202}
     else:
         abort(404)
 
