@@ -12,6 +12,7 @@ app.register_blueprint(id_manager_blueprint)
 
 db.init_app(app)
 migrate = Migrate(app, db)
+migrate.directory = './idManager/model/database/migrations'
 
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
