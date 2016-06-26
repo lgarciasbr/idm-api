@@ -298,7 +298,7 @@
     </object>
     <object type="LMREQUEST" id="z125">
         <attribute name="uuid" type="string">EB8C25E5-C753-4AE9-BDA0-0CDB0C737241</attribute>
-        <attribute name="url" type="string">http://127.0.0.1:5000/</attribute>
+        <attribute name="url" type="string">https://lgidm.herokuapp.com</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>

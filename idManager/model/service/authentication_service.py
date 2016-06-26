@@ -123,7 +123,7 @@ def auth_is_valid_ver_1(token):
 
         if user_id is not None:
             # Allowed
-            return {'message': MSG_VALID_TOKEN, 'http_status_code': 200}
+            return {'message': MSG_VALID_TOKEN, 'token': token, 'http_status_code': 200}
         else:
             # Forbidden
             return {'message': MSG_INVALID_TOKEN, 'token': token, 'http_status_code': 403}
