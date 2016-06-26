@@ -3,7 +3,6 @@ from idManager.model.database.db_model import db, Account, AccountSchema
 account_schema_post = AccountSchema(only=('email', 'password'))
 account_schema_put = AccountSchema(only=('password', 'new_password'))
 account_schema_get = AccountSchema(only=('email', 'url', 'created_at', 'id'))
-account_password_schema_get = AccountSchema(only=('email', 'password'))
 accounts_schema_get = AccountSchema(many=True, only=('email', 'url'))
 
 # todo unittest
@@ -30,7 +29,7 @@ def get_account(email):
     return account
 
 
-# todo deixar estas duas func genericas
+# todo deixar estas duas func genericas: by_email e by_id
 def get_account_by_email(email):
     try:
         account = Account.query.filter_by(email=email).first()
@@ -59,6 +58,7 @@ def get_accounts():
 
 def delete_account(pk):
     try:
+        # todo apagar todas as sessões antes.
         Account.query.filter_by(id=pk).delete()
         db.session.commit()
         return True

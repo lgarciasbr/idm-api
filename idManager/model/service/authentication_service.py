@@ -44,7 +44,7 @@ def auth_login_ver_1(email, password):
 
     account = account_service.get_account(email)
 
-    if account.password == bcrypt.hashpw(password.encode('utf-8'), account.password):
+    if account is not None and account.password == bcrypt.hashpw(password.encode('utf-8'), account.password):
         token = token_service.set_token(token_service.generate_token(account), account)
         # Allowed
         return {'message': MSG_LOGIN, 'token': token, 'http_status_code': 200}

@@ -165,9 +165,12 @@ def account_delete(header, pk):
 def account_delete_ver_1(pk):
     account = account_data.get_account_by_id(pk)
 
-    if len(account.data) != 0:
-        account_data.delete_account(pk)
-        return {'message': MSG_ACCOUNT_DELETED, 'account': account, 'http_status_code': 202}
+    if account is not None and len(account.data) != 0:
+        if account_data.delete_account(pk):
+            return {'message': MSG_ACCOUNT_DELETED, 'account': account, 'http_status_code': 202}
+        else:
+            # todo criar view para este caso: The 409 (Conflict) status code indicates that the request could not be completed due to a conflict with the current state of the target resource.
+            abort(409)
     else:
         abort(404)
 
