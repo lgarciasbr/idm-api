@@ -1,9 +1,9 @@
-from idManager.model.integration import account_data
-from settings import MSG_EMAIL_ALREADY_REGISTERED, MSG_ACCOUNT_SET, CHECK_EMAIL_DELIVERABILITY, MSN_INVALID_API_VER, \
-    MSN_EXPECTED_CONTENT_TYPE_JSON, MSN_EXPECTED_JSON_DATA
+import bcrypt
 from email_validator import validate_email, EmailNotValidError
 from flask import abort
-import bcrypt
+from idManager.model.integration import account_data
+from idManager.settings import MSG_EMAIL_ALREADY_REGISTERED, MSG_ACCOUNT_SET, CHECK_EMAIL_DELIVERABILITY, MSN_INVALID_API_VER, \
+    MSN_EXPECTED_CONTENT_TYPE_JSON, MSN_EXPECTED_JSON_DATA
 
 
 def check_header(header):

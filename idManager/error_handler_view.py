@@ -1,5 +1,5 @@
 from flask import jsonify
-from settings import MSN_400, MSN_403, MSN_404
+from idManager.settings import MSN_400, MSN_403, MSN_404
 
 
 def not_found(e):

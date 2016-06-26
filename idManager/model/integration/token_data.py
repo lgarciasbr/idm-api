@@ -1,6 +1,6 @@
 import bmemcached
 from idManager.model.database.db_model import db, Token
-from settings import TOKEN_HOST, MEMCACHED_URL, MEMCACHED_USERNAME, MEMCACHED_PASSWORD
+from idManager.settings import TOKEN_HOST, MEMCACHED_URL, MEMCACHED_USERNAME, MEMCACHED_PASSWORD
 
 client = bmemcached.Client(MEMCACHED_URL, MEMCACHED_USERNAME, MEMCACHED_PASSWORD)
 

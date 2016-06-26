@@ -1,8 +1,8 @@
 import json
 import unittest
 
+from idManager.settings import PROJECT_NAME, PROJECT_DESCRIPTION
 from manage import app
-from settings import PROJECT_NAME, PROJECT_DESCRIPTION
 
 
 class HomeSolution(unittest.TestCase):

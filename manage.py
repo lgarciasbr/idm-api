@@ -7,7 +7,7 @@ from idManager import id_manager_blueprint
 from idManager.model.database.db_model import db
 
 app = Flask(__name__)
-app.config.from_object('settings')
+app.config.from_object('idManager.settings')
 app.register_blueprint(id_manager_blueprint)
 
 db.init_app(app)

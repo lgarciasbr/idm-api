@@ -1,5 +1,5 @@
 from flask import jsonify
-from settings import PROJECT_NAME, PROJECT_DESCRIPTION
+from idManager.settings import PROJECT_NAME, PROJECT_DESCRIPTION
 
 
 def home():
