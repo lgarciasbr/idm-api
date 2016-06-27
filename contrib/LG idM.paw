@@ -65,7 +65,7 @@
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Default Environment</attribute>
         <relationship name="domain" type="0/1" destination="LMENVIRONMENTDOMAIN" idrefs="z105"></relationship>
-        <relationship name="variablesvalues" type="0/0" destination="LMENVIRONMENTVARIABLEVALUE" idrefs="z129 z128 z131"></relationship>
+        <relationship name="variablesvalues" type="0/0" destination="LMENVIRONMENTVARIABLEVALUE" idrefs="z128 z129"></relationship>
     </object>
     <object type="LMENVIRONMENTVARIABLE" id="z103">
         <attribute name="uuid" type="string">096967C9-6355-402D-8364-232634386C96</attribute>
@@ -86,7 +86,7 @@
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Default Domain</attribute>
         <relationship name="environments" type="0/0" destination="LMENVIRONMENT" idrefs="z102"></relationship>
-        <relationship name="variables" type="0/0" destination="LMENVIRONMENTVARIABLE" idrefs="z130 z103 z104"></relationship>
+        <relationship name="variables" type="0/0" destination="LMENVIRONMENTVARIABLE" idrefs="z103 z104"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z106">
         <attribute name="value" type="string">1</attribute>
@@ -341,18 +341,6 @@
         <relationship name="environment" type="1/1" destination="LMENVIRONMENT" idrefs="z102"></relationship>
         <relationship name="variable" type="1/1" destination="LMENVIRONMENTVARIABLE" idrefs="z104"></relationship>
     </object>
-    <object type="LMENVIRONMENTVARIABLE" id="z130">
-        <attribute name="uuid" type="string">E025F27B-3D4D-4F2A-8B35-8693081DDF51</attribute>
-        <attribute name="order" type="int64">2</attribute>
-        <attribute name="name" type="string"></attribute>
-        <relationship name="domain" type="0/1" destination="LMENVIRONMENTDOMAIN" idrefs="z105"></relationship>
-        <relationship name="values" type="0/0" destination="LMENVIRONMENTVARIABLEVALUE" idrefs="z131"></relationship>
-    </object>
-    <object type="LMENVIRONMENTVARIABLEVALUE" id="z131">
-        <attribute name="value" type="string"></attribute>
-        <relationship name="environment" type="1/1" destination="LMENVIRONMENT" idrefs="z102"></relationship>
-        <relationship name="variable" type="1/1" destination="LMENVIRONMENTVARIABLE" idrefs="z130"></relationship>
-    </object>
     <object type="LMKEYVALUE" id="z137">
         <attribute name="value" type="string">application/json</attribute>
         <attribute name="order" type="int64">1</attribute>
@@ -537,7 +525,7 @@
     </object>
     <object type="LMREQUESTGROUP" id="z153">
         <attribute name="uuid" type="string">AEAA0103-76A6-4B37-B836-D98DCAEC596A</attribute>
-        <attribute name="order" type="int64">1</attribute>
+        <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Local</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z121"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM" idrefs="z151 z150 z165 z172 z145 z190 z156 z193"></relationship>
@@ -557,7 +545,7 @@
     </object>
     <object type="LMREQUESTGROUP" id="z155">
         <attribute name="uuid" type="string">D5841097-65C3-4F91-BE94-5CA398B5786B</attribute>
-        <attribute name="order" type="int64">0</attribute>
+        <attribute name="order" type="int64">1</attribute>
         <attribute name="name" type="string">Heroku</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z121"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM" idrefs="z122 z139 z125 z124 z183 z123 z126 z159"></relationship>
