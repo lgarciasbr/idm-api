@@ -134,7 +134,7 @@ def account_get(header, pk):
 def account_get_ver_1(pk):
     account = account_data.get_account_by_id(pk)
 
-    if len(account.data) != 0:
+    if account is not None and len(account.data) != 0:
         return {'message': account, 'http_status_code': 200}
     else:
         abort(404)

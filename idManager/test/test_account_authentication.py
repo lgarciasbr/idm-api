@@ -1,20 +1,9 @@
 import json
 import time
 import unittest
-
 from idManager.settings import MSG_LOGIN, MSG_LOGOUT, MSG_LOGIN_ERROR,\
     MSG_INVALID_TOKEN, MSN_400, EMAIL_TEST, PWD_TEST, CHECK_EMAIL_DELIVERABILITY
-from manage import app
-
-# todo Precisa fazer os testes com o token no banco e no Memcached.
-'''
-if not os.path.isfile(BASE_DIR.child('app.db')):
-    try:
-        with app.app_context():
-            db.create_all()
-    except Exception:
-        pass
-'''
+from manage import app, db
 
 
 class AuthenticationSolution(unittest.TestCase):
@@ -22,6 +11,9 @@ class AuthenticationSolution(unittest.TestCase):
     def setUp(self):
         # Register an user for test purpose.
         self.register_v1(EMAIL_TEST, PWD_TEST)
+
+    def tearDown(self):
+        pass
 
     # def tearDown(self):
         # todo remover o usuario criado para o teste.
