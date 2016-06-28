@@ -24,9 +24,15 @@ def register_account(email, password):
 def get_account(email):
     try:
         account = Account.query.filter_by(email=email).first()
+
+        password = None
+
+        if account:
+            password = account.password
+
     except:
         return None
-    return account
+    return password
 
 
 # todo deixar estas duas func genericas: by_email e by_id
