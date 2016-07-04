@@ -3,7 +3,7 @@ from idManager.model.database.db_model import db, Account, AccountSchema
 account_schema_post = AccountSchema(only=('email', 'password'))
 account_schema_put = AccountSchema(only=('password', 'new_password'))
 account_schema_get = AccountSchema(only=('email', 'url', 'created_at', 'id'))
-accounts_schema_get = AccountSchema(many=True, only=('email', 'url'))
+accounts_schema_get = AccountSchema(many=True, only=('email', 'url', 'id'))
 
 # todo unittest
 # todo melhorar o uso do try expect
