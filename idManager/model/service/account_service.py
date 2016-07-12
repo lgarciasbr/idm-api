@@ -7,6 +7,7 @@ from idManager.settings import MSG_EMAIL_ALREADY_REGISTERED, MSG_ACCOUNT_SET, CH
 
 account_schema_post = account_data.account_schema_post
 
+# todo retornar a versao da api que foi chamada.
 
 def check_header(header):
     content_type = header.get('Content-Type')

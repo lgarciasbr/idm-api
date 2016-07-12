@@ -121,7 +121,7 @@ class AuthenticationSolution(unittest.TestCase):
     def test_logout_assert(self):
         response_login = self.login_v1(EMAIL_TEST, PWD_TEST)
 
-        token = json.loads(response_login.data.decode('utf-8'))['token']
+        token = json.loads(response_login.data.decode('utf-8'))['auth']['_token']
 
         if response_login.status_code == 200:
             # logout
@@ -133,7 +133,7 @@ class AuthenticationSolution(unittest.TestCase):
     def test_logout_assert_second_shot(self):
         response_login = self.login_v1(EMAIL_TEST, PWD_TEST)
 
-        token = json.loads(response_login.data.decode('utf-8'))['token']
+        token = json.loads(response_login.data.decode('utf-8'))['auth']['_token']
 
         if response_login.status_code == 200:
             # logout
@@ -151,7 +151,7 @@ class AuthenticationSolution(unittest.TestCase):
 
         self.assertEqual(response.status_code, 403)
         self.assertEqual(json.loads(response.data.decode('utf-8'))['message'], MSG_INVALID_TOKEN)
-        self.assertEqual(json.loads(response.data.decode('utf-8'))['token'], 'error')
+        self.assertEqual(json.loads(response.data.decode('utf-8'))['auth']['_token'], 'error')
 
     def test_logout_not_assert_no_header(self):
         tester = app.test_client(self)

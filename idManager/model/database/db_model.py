@@ -7,6 +7,7 @@ from marshmallow import Schema, fields, ValidationError, pre_load
 db = SQLAlchemy()
 
 
+# todo implementar version do registro, comeca com 1 e adiciona 1 a cada update
 # TODO Precisa testar para verificar se o sistema esta diferenciando maiuscula de minuscula.
 class Account(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -49,12 +50,16 @@ def must_not_be_blank(data):
 
 
 class AccountSchema(Schema):
-    id = fields.Int(dump_only=True)
+    id = fields.Int(dump_only=True, dump_to='_id')
     password = fields.String(required=True, validate=must_not_be_blank)
     # new_password is used at change_password api method
     new_password = fields.String(required=True, validate=must_not_be_blank)
     email = fields.Email(required=True)
-    url = fields.Url(dump_only=True)
-    created_at = fields.DateTime(dump_only=True)
+    url = fields.Url(dump_only=True, dump_to='_url')
+    created_at = fields.DateTime(dump_only=True, dump_to='_created_at')
+
+
+class TokenSchema(Schema):
+    token = fields.String(dump_to='_token')
 
 # endregion

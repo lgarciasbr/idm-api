@@ -2,7 +2,7 @@ import bcrypt
 from flask import abort
 from idManager.model.service import account_service
 from idManager.model.service import token_service
-from idManager.settings import MSG_LOGIN, MSG_LOGIN_ERROR, MSN_400, MSG_LOGOUT, MSG_INVALID_TOKEN, MSG_VALID_TOKEN, \
+from idManager.settings import MSG_LOGIN, MSG_LOGIN_ERROR, MSG_LOGOUT, MSG_INVALID_TOKEN, MSG_VALID_TOKEN, \
     MSN_EXPECTED_CONTENT_TYPE_JSON, MSN_EXPECTED_JSON_DATA, MSN_INVALID_API_VER
 
 
@@ -45,16 +45,13 @@ def auth_login_ver_1(email, password):
     account = account_service.get_account(email)
 
     if account is not None and account.password == bcrypt.hashpw(password.encode('utf-8'), account.password):
-        token = token_service.set_token(token_service.generate_token(account), account)
+        token = token_service.set_token(account)
         # Allowed
-        return {'message': MSG_LOGIN, 'token': token, 'http_status_code': 200}
+        return {'message': MSG_LOGIN, 'auth': token, 'http_status_code': 200}
     else:
         # Forbidden
         return {'message': MSG_LOGIN_ERROR, 'http_status_code': 403}
 
-
-def login_ver_2(username, password, ip):
-    pass
 
 # endregion
 

@@ -139,7 +139,7 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z123"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z111">
-        <attribute name="value" type="string">[{"data":{"request":"FE087F71-FD44-415C-8FEC-E5A5C450B9B2","keyPath":["token"],"format":1},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
+        <attribute name="value" type="string">[{"data":{"request":"FE087F71-FD44-415C-8FEC-E5A5C450B9B2","keyPath":["auth._token"],"format":1},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">token</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -229,7 +229,7 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z122"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z120">
-        <attribute name="value" type="string">[{"data":{"request":"FE087F71-FD44-415C-8FEC-E5A5C450B9B2","keyPath":["token"],"format":1},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
+        <attribute name="value" type="string">[{"data":{"request":"FE087F71-FD44-415C-8FEC-E5A5C450B9B2","keyPath":["auth._token"],"format":1},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">token</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -387,7 +387,7 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z139"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z141">
-        <attribute name="value" type="string">[{"data":{"request":"FE087F71-FD44-415C-8FEC-E5A5C450B9B2","keyPath":["token"],"format":1},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
+        <attribute name="value" type="string">[{"data":{"request":"FE087F71-FD44-415C-8FEC-E5A5C450B9B2","keyPath":["auth._token"],"format":1},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">token</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -591,7 +591,7 @@
     </object>
     <object type="LMREQUEST" id="z159">
         <attribute name="uuid" type="string">8BC4465D-2CD4-4BE1-B3F5-86333A4D8CD1</attribute>
-        <attribute name="url" type="string">["https:\\/\\/lgidm.herokuapp.com\\/accounts\\/",{"data":{"request":"29AA4FC0-A031-4739-B482-5471765B32BE","keyPath":["account.id"],"format":1},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
+        <attribute name="url" type="string">["https:\\/\\/lgidm.herokuapp.com\\/accounts\\/",{"data":{"request":"29AA4FC0-A031-4739-B482-5471765B32BE","keyPath":["account._id"],"format":1},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>
@@ -602,7 +602,7 @@
         <attribute name="name" type="string">Get User</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z155"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
-        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z171 z164 z168 z175"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z175 z164 z168 z171"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z160">
         <attribute name="value" type="string">1</attribute>
@@ -615,7 +615,7 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z165"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z161">
-        <attribute name="value" type="string">[{"data":{"request":"3B8C8928-6265-49A5-A885-9867D6CE2296","keyPath":["token"],"format":1},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
+        <attribute name="value" type="string">[{"data":{"request":"3B8C8928-6265-49A5-A885-9867D6CE2296","keyPath":["auth._token"],"format":1},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">token</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -660,7 +660,7 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z172"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z168">
-        <attribute name="value" type="string">[{"data":{"request":"FE087F71-FD44-415C-8FEC-E5A5C450B9B2","keyPath":["token"],"format":1},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
+        <attribute name="value" type="string">[{"data":{"request":"FE087F71-FD44-415C-8FEC-E5A5C450B9B2","keyPath":["auth._token"],"format":1},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">token</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -745,7 +745,7 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z165"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z178">
-        <attribute name="value" type="string">[{"data":{"request":"3B8C8928-6265-49A5-A885-9867D6CE2296","keyPath":["token"],"format":1},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
+        <attribute name="value" type="string">[{"data":{"request":"3B8C8928-6265-49A5-A885-9867D6CE2296","keyPath":["auth._token"],"format":1},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">token</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -775,7 +775,7 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z183"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z181">
-        <attribute name="value" type="string">[{"data":{"request":"FE087F71-FD44-415C-8FEC-E5A5C450B9B2","keyPath":["token"],"format":1},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
+        <attribute name="value" type="string">[{"data":{"request":"FE087F71-FD44-415C-8FEC-E5A5C450B9B2","keyPath":["auth._token"],"format":1},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">token</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -796,7 +796,7 @@
     </object>
     <object type="LMREQUEST" id="z183">
         <attribute name="uuid" type="string">14F0BE6D-B2F6-41A0-91FF-EA7CE6AEC38C</attribute>
-        <attribute name="url" type="string">["https:\\/\\/lgidm.herokuapp.com\\/accounts\\/",{"data":{"request":"29AA4FC0-A031-4739-B482-5471765B32BE","keyPath":["account.id"],"format":0},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
+        <attribute name="url" type="string">["https:\\/\\/lgidm.herokuapp.com\\/accounts\\/",{"data":{"request":"29AA4FC0-A031-4739-B482-5471765B32BE","keyPath":["account._id"],"format":0},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>
@@ -807,7 +807,7 @@
         <attribute name="name" type="string">Delete User</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z155"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
-        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z180 z181 z179 z182"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z179 z181 z180 z182"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z184">
         <attribute name="value" type="string"></attribute>
@@ -830,7 +830,7 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z193"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z186">
-        <attribute name="value" type="string">[{"data":{"request":"3B8C8928-6265-49A5-A885-9867D6CE2296","keyPath":["token"],"format":1},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
+        <attribute name="value" type="string">[{"data":{"request":"3B8C8928-6265-49A5-A885-9867D6CE2296","keyPath":["auth._token"],"format":1},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">token</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -871,7 +871,7 @@
     </object>
     <object type="LMREQUEST" id="z190">
         <attribute name="uuid" type="string">BA311FF2-03F2-459B-A21E-56C535712CE9</attribute>
-        <attribute name="url" type="string">["http:\\/\\/127.0.0.1:5000\\/accounts\\/",{"data":{"request":"CA56A994-B002-4AE8-9B15-3B9FC1EEA620","keyPath":["account.id"],"format":1},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
+        <attribute name="url" type="string">["http:\\/\\/127.0.0.1:5000\\/accounts\\/",{"data":{"request":"CA56A994-B002-4AE8-9B15-3B9FC1EEA620","keyPath":["account._id"],"format":1},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>
@@ -882,10 +882,10 @@
         <attribute name="name" type="string">Get User</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z153"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
-        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z188 z187 z189 z191"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z189 z187 z188 z191"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z191">
-        <attribute name="value" type="string">[{"data":{"request":"3B8C8928-6265-49A5-A885-9867D6CE2296","keyPath":["token"],"format":1},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
+        <attribute name="value" type="string">[{"data":{"request":"3B8C8928-6265-49A5-A885-9867D6CE2296","keyPath":["auth._token"],"format":1},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">token</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -906,7 +906,7 @@
     </object>
     <object type="LMREQUEST" id="z193">
         <attribute name="uuid" type="string">74364578-B6E3-4C09-B814-6DC6CFE3B7A3</attribute>
-        <attribute name="url" type="string">["http:\\/\\/127.0.0.1:5000\\/accounts\\/",{"data":{"request":"CA56A994-B002-4AE8-9B15-3B9FC1EEA620","keyPath":["account.id"],"format":0},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
+        <attribute name="url" type="string">["http:\\/\\/127.0.0.1:5000\\/accounts\\/",{"data":{"request":"CA56A994-B002-4AE8-9B15-3B9FC1EEA620","keyPath":["account._id"],"format":0},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>
@@ -917,6 +917,6 @@
         <attribute name="name" type="string">Delete User</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z153"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
-        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z192 z185 z186 z184"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z186 z185 z184 z192"></relationship>
     </object>
 </database>
