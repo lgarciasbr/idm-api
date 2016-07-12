@@ -58,4 +58,8 @@ class AccountSchema(Schema):
     url = fields.Url(dump_only=True, dump_to='_url')
     created_at = fields.DateTime(dump_only=True, dump_to='_created_at')
 
+
+class TokenSchema(Schema):
+    token = fields.String(dump_to='_token')
+
 # endregion

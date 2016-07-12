@@ -27,15 +27,15 @@ def verify_token(token):
     return account_id
 
 
-#todo preparar unittest do token
-def get_token(token):
-    return token_data.get_token(token)
-
-
 def set_token(account, expiration=600):
     token = generate_token(account, expiration)
 
     return token_data.set_token(token, account)
+
+
+#todo preparar unittest do token
+def get_token(token):
+    return token_data.get_token(token)
 
 
 def delete_token(token):
