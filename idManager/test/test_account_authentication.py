@@ -151,7 +151,6 @@ class AuthenticationSolution(unittest.TestCase):
 
         self.assertEqual(response.status_code, 403)
         self.assertEqual(json.loads(response.data.decode('utf-8'))['message'], MSG_INVALID_TOKEN)
-        self.assertEqual(json.loads(response.data.decode('utf-8'))['auth']['_token'], 'error')
 
     def test_logout_not_assert_no_header(self):
         tester = app.test_client(self)

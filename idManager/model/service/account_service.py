@@ -7,7 +7,6 @@ from idManager.settings import MSG_EMAIL_ALREADY_REGISTERED, MSG_ACCOUNT_SET, CH
 
 account_schema_post = account_data.account_schema_post
 
-# todo retornar a versao da api que foi chamada.
 
 def check_header(header):
     content_type = header.get('Content-Type')
@@ -112,8 +111,6 @@ def accounts_get_ver_1():
 
 
 # region Account_Get
-
-
 # TODO Verificar se o token e valido.
 # TODO Verificar se ele pertence ao grupo de ADMIN ou se ele e ele mesmo.
 def account_get(header, pk):
@@ -177,3 +174,6 @@ def account_delete_ver_1(pk):
 
 
 # endregion
+
+
+# todo retornar a versao da api que foi chamada.
