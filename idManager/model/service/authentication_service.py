@@ -89,9 +89,6 @@ def auth_logout_ver_1(token):
         return {'message': MSG_INVALID_TOKEN, 'token': token, 'http_status_code': 400}
 
 
-def logout_ver_2(token, ip):
-    pass
-
 # endregion
 
 

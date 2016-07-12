@@ -23,7 +23,7 @@ def test():
     'Execute UnitTest.'
     import unittest
 
-    tests = unittest.TestLoader().discover('test')
+    tests = unittest.TestLoader().discover('idManager/test')
     unittest.TextTestRunner(verbosity=2).run(tests)
 
 
