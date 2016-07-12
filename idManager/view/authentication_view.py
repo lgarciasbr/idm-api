@@ -32,3 +32,6 @@ def auth_logout(auth):
     response.status_code = http_status_code
 
     return response
+
+
+# todo auth_is_valid e o auth_logout nao pode formatar os dados como esta, precisa vir do model.data

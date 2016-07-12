@@ -51,7 +51,6 @@ def auth_login_ver_1(email, password):
     else:
         # Forbidden
         abort(403, MSG_LOGIN_ERROR)
-        # return {'message': MSG_LOGIN_ERROR, 'http_status_code': 403}
 
 
 # endregion
@@ -85,11 +84,9 @@ def auth_logout_ver_1(token):
         else:
             # Forbidden
             abort(403, MSG_INVALID_TOKEN)
-            # return {'message': MSG_INVALID_TOKEN, 'token': token, 'http_status_code': 403}
     else:
         # Forbidden
         abort(400, MSG_INVALID_TOKEN)
-        # return {'message': MSG_INVALID_TOKEN, 'token': token, 'http_status_code': 400}
 
 
 # endregion
@@ -124,10 +121,8 @@ def auth_is_valid_ver_1(token):
         else:
             # Forbidden
             abort(403, MSG_INVALID_TOKEN)
-            # return {'message': MSG_INVALID_TOKEN, 'token': token, 'http_status_code': 403}
     else:
         # Forbidden
         abort(400, MSG_INVALID_TOKEN)
-        # return {'message': MSG_INVALID_TOKEN, 'token': token, 'http_status_code': 400}
 
 # endregion
