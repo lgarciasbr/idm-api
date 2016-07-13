@@ -73,9 +73,15 @@ def register_ver_1(email, password):
 
     if len(account.data) == 0:
         # register
-        account = account_data.register_account(email, bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()))
+        account_created = account_data.register_account(email, bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()))
 
-        return {'message': MSG_ACCOUNT_SET, 'account': account, 'http_status_code': 201}
+        if account_created:
+            account = account_data.get_account_by_email(email)
+
+            return {'message': MSG_ACCOUNT_SET, 'account': account, 'http_status_code': 201}
+        else:
+            abort(500)
+
     else:
         abort(403, MSG_EMAIL_ALREADY_REGISTERED)
 

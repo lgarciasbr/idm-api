@@ -10,12 +10,9 @@ def register_account(email, password):
     try:
         db.session.add(Account(email, password))
         db.session.commit()
-
-        account = Account.query.filter_by(email=email).first()
-
-        return account_schema_get.dump(account)
+        return True
     except:
-        return None
+        return False
 
 
 def get_account(email):
