@@ -7,7 +7,10 @@ def set_token(account, expiration=600):
     s = Serializer(SECRET_KEY, expires_in=expiration)
     token = (s.dumps(account.id)).decode('ascii')
 
-    return token_data.set_token(token, account)
+    if token_data.set_token(token, account):
+        return token
+    else:
+        return None
 
 
 def get_token(token):
@@ -19,16 +22,16 @@ def verify_token(token):
     try:
         account_id = s.loads(token)
     except SignatureExpired:
-        return None  # valid token, but expired
+        return False  # valid token, but expired
     except BadSignature:
-        return None  # invalid token
+        return False  # invalid token
 
-    account_id_registered_token = get_token(token)
+    registered_token = get_token(token)
 
-    if account_id_registered_token is None or account_id_registered_token != account_id:
-        return None  # valid token, but different user
-
-    return account_id
+    if registered_token is None or registered_token.account_id != account_id:
+        return False  # valid token, but different user
+    else:
+        return True
 
 
 def delete_token(token):

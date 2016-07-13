@@ -71,11 +71,9 @@ def register_ver_1(email, password):
 
     account = account_data.get_account_by_email(email)
 
-    if len(account.data) == 0:
+    if account is None and len(account.data) == 0:
         # register
-        account_created = account_data.register_account(email, bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()))
-
-        if account_created:
+        if account_data.register_account(email, bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())):
             account = account_data.get_account_by_email(email)
 
             return {'message': MSG_ACCOUNT_SET, 'account': account, 'http_status_code': 201}
@@ -147,8 +145,6 @@ def account_get_ver_1(pk):
 
 
 # region Delete
-
-
 def account_delete(header, pk):
     check_header(header)
 
@@ -173,8 +169,7 @@ def account_delete_ver_1(pk):
         if account_data.delete_account(pk):
             return {'message': MSG_ACCOUNT_DELETED, 'account': account, 'http_status_code': 202}
         else:
-            # todo criar view para este caso: The 409 (Conflict) status code indicates that the request could not be completed due to a conflict with the current state of the target resource.
-            abort(409)
+            abort(500)
     else:
         abort(404)
 

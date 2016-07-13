@@ -47,7 +47,7 @@ def auth_login_ver_1(email, password):
     if account is not None and account.password == bcrypt.hashpw(password.encode('utf-8'), account.password):
         token = token_service.set_token(account)
         # Allowed
-        return {'message': MSG_LOGIN, 'auth': token, 'http_status_code': 200}
+        return {'message': MSG_LOGIN, 'token': token, 'http_status_code': 200}
     else:
         # Forbidden
         abort(403, MSG_LOGIN_ERROR)
@@ -75,9 +75,7 @@ def auth_logout(header):
 
 def auth_logout_ver_1(token):
     if token is not None:
-        user_id = token_service.verify_token(token)
-
-        if user_id is not None:
+        if token_service.verify_token(token):
             token_service.delete_token(token)
             # Logout
             return {'message': MSG_LOGOUT, 'token': token, 'http_status_code': 200}
@@ -113,9 +111,7 @@ def auth_is_valid(header):
 
 def auth_is_valid_ver_1(token):
     if token is not None:
-        user_id = token_service.verify_token(token)
-
-        if user_id is not None:
+        if token_service.verify_token(token):
             # Allowed
             return {'message': MSG_VALID_TOKEN, 'token': token, 'http_status_code': 200}
         else:

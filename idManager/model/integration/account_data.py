@@ -10,6 +10,7 @@ def register_account(email, password):
     try:
         db.session.add(Account(email, password))
         db.session.commit()
+
         return True
     except:
         return False
@@ -26,27 +27,31 @@ def get_account(email):
 def get_account_by_email(email):
     try:
         account = Account.query.filter_by(email=email).first()
+
+        # Serialize the queryset
+        return account_schema_get.dump(account)
     except:
         return None
-    return account_schema_get.dump(account)
 
 
 def get_account_by_id(pk):
     try:
         account = Account.query.get(pk)
+
+        # Serialize the queryset
+        return account_schema_get.dump(account)
     except:
         return None
-    # Serialize the queryset
-    return account_schema_get.dump(account)
 
 
 def get_accounts():
     try:
         accounts = Account.query.all()
+
+        # Serialize the queryset
+        return accounts_schema_get.dump(accounts)
     except:
         return None
-    # Serialize the queryset
-    return accounts_schema_get.dump(accounts)
 
 
 def delete_account(pk):
@@ -54,6 +59,7 @@ def delete_account(pk):
         # todo apagar todas as sessões antes.
         Account.query.filter_by(id=pk).delete()
         db.session.commit()
+
         return True
     except:
         return False
