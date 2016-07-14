@@ -71,7 +71,7 @@ def register_ver_1(email, password):
 
     account = account_data.get_account_by_email(email)
 
-    if account is None and len(account.data) == 0:
+    if len(account.data) == 0:
         # register
         if account_data.register_account(email, bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())):
             account = account_data.get_account_by_email(email)
@@ -88,8 +88,6 @@ def register_ver_1(email, password):
 
 
 # region Accounts_Get
-
-
 # TODO Verificar se o token e valido.
 # TODO Verificar se ele pertence ao grupo de ADMIN
 def accounts_get(header):
@@ -162,10 +160,11 @@ def account_delete(header, pk):
 
 # TODO PRECISA CRIAR UMA SOLUCAO PARA REGRAS DE SENHA. Ex.: uma maiscula e etc. Olhar o AD para ver como funciona.
 # TODO CRIAR OS TESTES DO REGISTER
+# TODO Precisa apagar todas as sessoes do usuario antes de apagar o usuario.
 def account_delete_ver_1(pk):
     account = account_data.get_account_by_id(pk)
 
-    if account is not None and len(account.data) != 0:
+    if len(account.data) != 0:
         if account_data.delete_account(pk):
             return {'message': MSG_ACCOUNT_DELETED, 'account': account, 'http_status_code': 202}
         else:
