@@ -9,16 +9,16 @@ from . import id_manager_blueprint
 @id_manager_blueprint.route('/auth/', methods=['POST'])
 def auth_login():
     auth = authentication_service.auth_login(request.headers, request.get_json(force=True, silent=True))
-    return authentication_view.auth_login(auth)
+    return authentication_view.auth_login(auth), auth.get('http_status_code')
 
 
 @id_manager_blueprint.route('/auth/', methods=['GET'])
 def auth_is_valid():
     auth = authentication_service.auth_is_valid(request.headers)
-    return authentication_view.auth_is_valid(auth)
+    return authentication_view.auth_is_valid(auth), auth.get('http_status_code')
 
 
 @id_manager_blueprint.route('/auth/', methods=['DELETE'])
 def auth_logout():
     auth = authentication_service.auth_logout(request.headers)
-    return authentication_view.auth_logout(auth)
+    return authentication_view.auth_logout(auth), auth.get('http_status_code')

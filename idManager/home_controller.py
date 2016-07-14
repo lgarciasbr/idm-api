@@ -4,4 +4,7 @@ from . import id_manager_blueprint
 
 @id_manager_blueprint.route('/')
 def home():
-    return home_view.home()
+    response = home_view.home()
+    response.status_code = 200
+
+    return response
