@@ -32,8 +32,6 @@ def get_account(email):
 
 
 # region Register
-
-
 def account_register(header, data):
     check_header(header)
 
@@ -71,7 +69,7 @@ def register_ver_1(email, password):
 
     account = account_data.get_account_by_email(email)
 
-    if len(account.data) == 0:
+    if account is None or len(account.data) == 0:
         # register
         if account_data.register_account(email, bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())):
             account = account_data.get_account_by_email(email)
@@ -164,7 +162,7 @@ def account_delete(header, pk):
 def account_delete_ver_1(pk):
     account = account_data.get_account_by_id(pk)
 
-    if len(account.data) != 0:
+    if account is not None or len(account.data) != 0:
         if account_data.delete_account(pk):
             return {'message': MSG_ACCOUNT_DELETED, 'account': account, 'http_status_code': 202}
         else:
