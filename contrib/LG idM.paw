@@ -5,7 +5,7 @@
     <databaseInfo>
         <version>134481920</version>
         <UUID>E11DCD9F-CF13-4D9B-A84D-0A4D615B2E6F</UUID>
-        <nextObjectID>198</nextObjectID>
+        <nextObjectID>204</nextObjectID>
         <metadata>
             <plist version="1.0">
                 <dict>
@@ -280,6 +280,7 @@
         <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z120 z106 z110 z114"></relationship>
     </object>
     <object type="LMREQUEST" id="z124">
+        <attribute name="notes" type="string"></attribute>
         <attribute name="clientcertificate" type="string">[{"data":{"mode":0},"identifier":"com.luckymarmot.CertificateDynamicValue"}]</attribute>
         <attribute name="uuid" type="string">29AA4FC0-A031-4739-B482-5471765B32BE</attribute>
         <attribute name="url" type="string">https://lgidm.herokuapp.com/accounts/</attribute>
@@ -294,7 +295,7 @@
         <attribute name="name" type="string">Register</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z155"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
-        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z117 z109 z113"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z113 z117 z109"></relationship>
     </object>
     <object type="LMREQUEST" id="z125">
         <attribute name="uuid" type="string">EB8C25E5-C753-4AE9-BDA0-0CDB0C737241</attribute>
@@ -417,7 +418,7 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z145"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z144">
-        <attribute name="value" type="string">[{"data":{"request":"3B8C8928-6265-49A5-A885-9867D6CE2296","keyPath":["token"],"format":1},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
+        <attribute name="value" type="string">[{"data":{"request":"3B8C8928-6265-49A5-A885-9867D6CE2296","keyPath":["auth._token"],"format":1},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">token</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -427,6 +428,7 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z145"></relationship>
     </object>
     <object type="LMREQUEST" id="z145">
+        <attribute name="notes" type="string"></attribute>
         <attribute name="uuid" type="string">20F90589-DD15-4852-AC8B-0B36B6339E46</attribute>
         <attribute name="url" type="string">http://127.0.0.1:5000/accounts/</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
@@ -940,6 +942,9 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z196"></relationship>
     </object>
     <object type="LMREQUEST" id="z196">
+        <attribute name="notes" type="string">## Tests
+
+assertEqual(exchange.responseStatusCode, 403, 'Status code')</attribute>
         <attribute name="uuid" type="string">873C8943-1BE7-4DD9-8117-E53E540F76FC</attribute>
         <attribute name="url" type="string">http://127.0.0.1:5000/auth/</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
@@ -973,5 +978,41 @@
         <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
         <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z196"></relationship>
+    </object>
+    <object type="LMREQUESTGROUP" id="z202">
+        <attribute name="uuid" type="string">92432D9E-C761-4F12-9AFA-28AD993525D6</attribute>
+        <attribute name="order" type="int64">3</attribute>
+        <attribute name="name" type="string">Testing</attribute>
+        <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
+        <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM" idrefs="z204"></relationship>
+        <relationship name="bodyparameters" type="0/0" destination="LMKEYVALUE"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE"></relationship>
+        <relationship name="urlparameters" type="0/0" destination="LMKEYVALUE"></relationship>
+    </object>
+    <object type="LMKEYVALUE" id="z203">
+        <attribute name="value" type="string"></attribute>
+        <attribute name="order" type="int64">0</attribute>
+        <attribute name="name" type="string"></attribute>
+        <attribute name="enabled" type="bool">1</attribute>
+        <relationship name="groupforbodyparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z204"></relationship>
+    </object>
+    <object type="LMREQUEST" id="z204">
+        <attribute name="uuid" type="string">373049D6-3562-49A7-A9A2-169A4BC05251</attribute>
+        <attribute name="url" type="string">[{"data":{"script":["function evaluate(context){\\nreturn (function (context) {\\n    const tick = '\\\\u{2705}'\\n    const cross = '\\\\u{274C}'\\n    const groupIcon = '\\\\u{1F4E6}'\\n    const skipIcon = '\\\\u{1F648}'\\n\\n    var requests_failed = 0\\n    var requests_skipped = 0\\n    var requests_succeeded = 0\\n    var assertions_failed = 0\\n    var assertions_succeeded = 0\\n    var testContext = null\\n    var reportRequest = null\\n\\n    class TestRequest {\\n        constructor(request, nesting) {\\n            this.request = request\\n            this.nesting = nesting\\n            this.failed = false\\n        }\\n\\n        test() {\\n            var rthis = this\\n            function assert(cond, msg) {\\n                rthis.assert(cond, msg)\\n            }\\n\\n            function assertEqual(a, b, msg) {\\n                rthis.assertEqual(a, b, msg)\\n            }\\n\\n            var request = this.request\\n            var exchange = request.getLastExchange();\\n            var testCode = this.getTestCode()\\n            if (exchange) {\\n                console.log(' '.repeat(this.nesting -1 ) + 'Testing request: ' + request.name + ' \\\\u{1F551} ' + exchange.downloadTime + ' ms')\\n            } else {\\n                console.log(' '.repeat(this.nesting -1 ) + 'Testing request: ' + request.name)\\n            }\\n            \\n\\n            if (!testCode || testCode === null) {\\n                this.skip('skipped no test code found')\\n                return\\n            }\\n\\n            if (!exchange) {\\n                this.skip('skipped no exchange found')\\n                return\\n            }\\n\\n            try {\\n                eval(testCode)\\n            } catch (e) {\\n                this.logError('\\\\u{1F6E0} Failed to run tests: ' + e)\\n                requests_failed += 1\\n                return\\n            }\\n            \\n            if (this.failed) {\\n                requests_failed += 1   \\n            } else {\\n                requests_succeeded += 1\\n            }\\n\\n        }\\n\\n        skip(message) {\\n            requests_skipped += 1\\n            this.log(message || 'skipped')\\n        }\\n\\n        getTestCode() {\\n            var des = this.request.description\\n            if (!des) {\\n                return null\\n            }\\n            des = des.split(\\/\\\\#+\\\\s*TESTS\\\\s*\\\\#*\\\\s*\\\\n\\/im)\\n            if (des.length \u3e00 1) {\\n                return des[1]\\n            }\\n            return null\\n        }\\n\\n        assertEqual(testValue, expectedValue, message) {\\n            this.assert(testValue === expectedValue, message || 'Expected ' + expectedValue + ' but got ' + testValue)\\n        }\\n\\n        assert(cond, message) {\\n            if (!cond) {\\n                this.logError(message || 'Assertion Failed')\\n                assertions_failed += 1\\n                this.failed = true\\n            } else {\\n                assertions_succeeded += 1\\n            }\\n        }\\n\\n        log(message) {\\n            console.log(' '.repeat(this.nesting*4) + ' [' +this.request.name+ '] ' + message)\\n        }\\n\\n        logError(message) {\\n            console.error(' '.repeat(this.nesting*4) + ' [' +this.request.name+ '] ' + message)\\n        }\\n\\n    }\\n\\n    class TestTree {\\n        constructor(items, nesting) {\\n            this.items = items\\n            this.nesting = nesting\\n        }\\n\\n        test() {\\n            for (var item of this.items) {\\n                if (typeof item.url !== 'string' ) {\\n                    this.testGroup(item)\\n                } else {\\n                    this.testRequest(item)\\n                }\\n            }\\n        }\\n\\n        log(message) {\\n            console.log(' '.repeat(this.nesting*4) + message)\\n        }\\n\\n        logError(message) {\\n            console.error(' '.repeat(this.nesting*4) + message)\\n        }\\n\\n        testGroup(group) {\\n            var subTree = new TestTree(group.getChildren(), this.nesting + 1)\\n            this.log(groupIcon + '[' + group.name + ']')\\n            subTree.test()\\n        }\\n\\n        testRequest(request) {\\n            if (request === reportRequest) {\\n                return\\n            }\\n            var r = new TestRequest(request, this.nesting + 1)\\n            r.test()\\n        }\\n    }\\n\\n\\n    function evaluate(context){\\n        if (context.runtimeInfo.task != 'requestSend') { return 'Send this request to run tests your project'}\\n        testContext = context\\n        reportRequest = context.getCurrentRequest();\\n\\n        console.log('------------------ RUNNINT TESTS ------------------')\\n        var t = new TestTree(context.getRootRequestTreeItems(), 0)\\n        t.test()\\n        const newLine = '\\\\n\\\\t  '\\n\\n        console.log('------------------ TESTS SUMMARY ------------------')\\n        var report\\n        if (requests_failed === 0) {\\n            report = newLine + tick + 'All '+ requests_succeeded + ' requests passed.' + newLine +  skipIcon + requests_skipped + ' requests skipped.'\\n            console.log(report)\\n            console.log('------------------ FINISHED TESTS ------------------')\\n            return 'http:\\/\\/httpbin.org\\/status\\/200'\\n        }  else {\\n            const newLine = '\\\\n\\\\t     '\\n            report = newLine + cross + ' '+ requests_failed + ' requests failed.' + newLine + tick  + ' '+ requests_succeeded + ' requests passed.' + newLine +  skipIcon + ' '+ requests_skipped + ' requests skipped.'\\n            report += newLine + assertions_failed + ' of ' + (assertions_failed + assertions_succeeded) + ' assertions failed.'\\n            console.error(report)\\n            console.log('------------------ FINISHED TESTS ------------------')\\n            return 'http:\\/\\/httpbin.org\\/status\\/500'\\n        }\\n    }\\n    return evaluate(context);\\n}\\n)(context); }"]},"identifier":"com.luckymarmot.CustomDynamicValue"}]</attribute>
+        <attribute name="storecookies" type="bool">1</attribute>
+        <attribute name="sendcookies" type="bool">1</attribute>
+        <attribute name="redirectmethod" type="bool">0</attribute>
+        <attribute name="redirectauthorization" type="bool">0</attribute>
+        <attribute name="method" type="string">GET</attribute>
+        <attribute name="followredirects" type="bool">0</attribute>
+        <attribute name="order" type="int64">0</attribute>
+        <attribute name="notes" type="string"></attribute>
+        <attribute name="name" type="string">Report</attribute>
+        <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z202"></relationship>
+        <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z203"></relationship>
     </object>
 </database>
