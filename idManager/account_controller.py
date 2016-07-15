@@ -19,7 +19,7 @@ def account_change_password(pk):
 @id_manager_blueprint.route('/accounts/', methods=['GET'])
 def accounts_get():
     accounts = account_service.accounts_get(request.headers)
-    return account_view.accounts_get(accounts), account.get('http_status_code')
+    return account_view.accounts_get(accounts), accounts.get('http_status_code')
 
 
 @id_manager_blueprint.route('/accounts/<int:pk>', methods=['GET'])
