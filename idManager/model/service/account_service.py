@@ -27,10 +27,6 @@ def get_account_by_id(pk):
     return account_data.get_account_by_id(pk)
 
 
-def get_account(email):
-    return account_data.get_account(email)
-
-
 # region Register
 def account_register(header, data):
     check_header(header)
@@ -47,7 +43,7 @@ def account_register(header, data):
 
     # Use 'or ver is None' at the last version
     if ver == '1' or not ver:
-        return register_ver_1(account["email"], account["password"])
+        return account_register_ver_1(account["email"], account["password"])
     # elif header['ver'] == '2':
     #    return get_ver_2()
     else:
@@ -57,7 +53,8 @@ def account_register(header, data):
 
 # TODO PRECISA CRIAR UMA SOLUCAO PARA REGRAS DE SENHA. Ex.: uma maiscula e etc. Olhar o AD para ver como funciona.
 # TODO CRIAR OS TESTES DO REGISTER
-def register_ver_1(email, password):
+# TODO COLOCAR O SCRETKEY NA EQUACAO PARA SENHA
+def account_register_ver_1(email, password):
     try:
         # e-mail validation and get info
         v = validate_email(email, check_deliverability=CHECK_EMAIL_DELIVERABILITY)
@@ -156,8 +153,6 @@ def account_delete(header, pk):
         abort(400, MSN_INVALID_API_VER)
 
 
-# TODO PRECISA CRIAR UMA SOLUCAO PARA REGRAS DE SENHA. Ex.: uma maiscula e etc. Olhar o AD para ver como funciona.
-# TODO CRIAR OS TESTES DO REGISTER
 # TODO Precisa apagar todas as sessoes do usuario antes de apagar o usuario.
 def account_delete_ver_1(pk):
     account = account_data.get_account_by_id(pk)
