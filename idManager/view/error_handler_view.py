@@ -3,21 +3,24 @@ from idManager.settings import MSN_400, MSN_403, MSN_404
 
 
 def not_found(e):
-    response = jsonify({'status_code': 404, 'error': MSN_404,
-                        'message': e.description})
+    view = jsonify({'status_code': 404,
+                    'error': MSN_404,
+                    'message': e.description})
 
-    return response
+    return view
 
 
 def forbidden(e):
-    response = jsonify({'status_code': 403, 'error': MSN_403,
-                        'message': e.description})
+    view = jsonify({'status_code': 403,
+                    'error': MSN_403,
+                    'message': e.description})
 
-    return response
+    return view
 
 
 def bad_request(e):
-    response = jsonify({'status_code': 400, 'error': MSN_400,
-                        'message': e.description})
+    view = jsonify({'status_code': 400,
+                    'error': MSN_400,
+                    'message': e.description})
 
-    return response
+    return view

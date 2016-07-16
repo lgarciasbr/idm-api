@@ -2,10 +2,17 @@ import bcrypt
 from email_validator import validate_email, EmailNotValidError
 from flask import abort
 from idManager.model.integration import account_data
+from idManager.model.database.db_schema import AccountSchema
 from idManager.settings import MSG_EMAIL_ALREADY_REGISTERED, MSG_ACCOUNT_SET, CHECK_EMAIL_DELIVERABILITY, MSN_INVALID_API_VER, \
     MSN_EXPECTED_CONTENT_TYPE_JSON, MSN_EXPECTED_JSON_DATA, MSG_ACCOUNT_DELETED
 
-account_schema_post = account_data.account_schema_post
+# region Schema
+register_account_schema = AccountSchema(only=('email', 'password'))
+change_account_password_schema = AccountSchema(only=('password', 'new_password'))
+get_account_schema = AccountSchema(only=('email', 'url', 'created_at', 'id'))
+get_accounts_schema = AccountSchema(many=True, only=('email', 'url'))
+
+# endregion
 
 
 def check_header(header):
@@ -18,16 +25,19 @@ def check_header(header):
         abort(400, MSN_EXPECTED_CONTENT_TYPE_JSON)
 
 
-# todo deixar estas duas func genericas
-def get_account(email):
-    return account_data.get_account(email)
+# TODO Precisa testar para verificar se o sistema esta diferenciando maiuscula de minuscula.
+# TODO PRECISA CRIAR UMA SOLUCAO PARA REGRAS DE SENHA. Ex.: uma maiscula e etc. Olhar o AD para ver como funciona.
+# TODO COLOCAR O SCRETKEY NA EQUACAO PARA SENHA??
+def validate_account_password(email, password):
+    account = account_data.get_account_by_email(email)
+
+    if account is not None and account.password == bcrypt.hashpw(password.encode('utf-8'), account.password):
+        return True, account
+    else:
+        return False, None
 
 
-def get_account_by_id(pk):
-    return account_data.get_account_by_id(pk)
-
-
-# region Register
+# region Register_Account
 def account_register(header, data):
     check_header(header)
 
@@ -35,7 +45,7 @@ def account_register(header, data):
         abort(400, MSN_EXPECTED_JSON_DATA)
 
     # Validate Schema
-    account, errors = account_schema_post.load(data)
+    account, errors = register_account_schema.load(data)
     if errors:
         abort(400, errors)
 
@@ -51,9 +61,6 @@ def account_register(header, data):
         abort(400, MSN_INVALID_API_VER)
 
 
-# TODO PRECISA CRIAR UMA SOLUCAO PARA REGRAS DE SENHA. Ex.: uma maiscula e etc. Olhar o AD para ver como funciona.
-# TODO CRIAR OS TESTES DO REGISTER
-# TODO COLOCAR O SCRETKEY NA EQUACAO PARA SENHA
 def account_register_ver_1(email, password):
     try:
         # e-mail validation and get info
@@ -66,12 +73,15 @@ def account_register_ver_1(email, password):
 
     account = account_data.get_account_by_email(email)
 
-    if account is None or len(account.data) == 0:
-        # register
-        if account_data.register_account(email, bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())):
+    if account is None:
+        crypt_pwd = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+        if account_data.register_account(email, crypt_pwd):
             account = account_data.get_account_by_email(email)
 
-            return {'message': MSG_ACCOUNT_SET, 'account': account, 'http_status_code': 201}
+            return {'message': MSG_ACCOUNT_SET,
+                    'account': get_account_schema.dump(account),
+                    'http_status_code': 201}
         else:
             abort(500)
 
@@ -82,17 +92,17 @@ def account_register_ver_1(email, password):
 # endregion
 
 
-# region Accounts_Get
+# region Get_Accounts
 # TODO Verificar se o token e valido.
 # TODO Verificar se ele pertence ao grupo de ADMIN
-def accounts_get(header):
+def get_accounts(header):
     check_header(header)
 
     ver = header.get('ver')
 
     # Use 'or ver is None' at the last version
     if ver == '1' or not ver:
-        return accounts_get_ver_1()
+        return get_accounts_ver_1()
     # elif header['ver'] == '2':
     #    return get_ver_2()
     else:
@@ -101,23 +111,25 @@ def accounts_get(header):
 
 
 # TODO CRIAR OS TESTES DO GET
-def accounts_get_ver_1():
-    return {'message': account_data.get_accounts(), 'http_status_code': 200}
+def get_accounts_ver_1():
+    accounts = account_data.get_accounts()
+    return {'accounts': get_accounts_schema.dump(accounts),
+            'http_status_code': 200}
 
 # endregion
 
 
-# region Account_Get
+# region Get_Account_By_Id
 # TODO Verificar se o token e valido.
 # TODO Verificar se ele pertence ao grupo de ADMIN ou se ele e ele mesmo.
-def account_get(header, pk):
+def get_account_by_id(header, pk):
     check_header(header)
 
     ver = header.get('ver')
 
     # Use 'or ver is None' at the last version
     if ver == '1' or not ver:
-        return account_get_ver_1(pk)
+        return get_account_by_id_ver_1(pk)
     # elif header['ver'] == '2':
     #    return get_ver_2()
     else:
@@ -126,26 +138,27 @@ def account_get(header, pk):
 
 
 # TODO CRIAR OS TESTES DO GET
-def account_get_ver_1(pk):
+def get_account_by_id_ver_1(pk):
     account = account_data.get_account_by_id(pk)
 
-    if account is not None and len(account.data) != 0:
-        return {'message': account, 'http_status_code': 200}
+    if account is not None:
+        return {'account': get_account_schema.dump(account),
+                'http_status_code': 200}
     else:
         abort(404)
 
 # endregion
 
 
-# region Delete
-def account_delete(header, pk):
+# region Delete_Account_By_Id
+def delete_account_by_id(header, pk):
     check_header(header)
 
     ver = header.get('ver')
 
     # Use 'or ver is None' at the last version
     if ver == '1' or not ver:
-        return account_delete_ver_1(pk)
+        return delete_account_by_id_ver_1(pk)
     # elif header['ver'] == '2':
     #    return get_ver_2()
     else:
@@ -154,17 +167,18 @@ def account_delete(header, pk):
 
 
 # TODO Precisa apagar todas as sessoes do usuario antes de apagar o usuario.
-def account_delete_ver_1(pk):
+def delete_account_by_id_ver_1(pk):
     account = account_data.get_account_by_id(pk)
 
-    if account is not None or len(account.data) != 0:
-        if account_data.delete_account(pk):
-            return {'message': MSG_ACCOUNT_DELETED, 'account': account, 'http_status_code': 202}
+    if account is not None:
+        if account_data.delete_account_by_id(pk):
+            return {'message': MSG_ACCOUNT_DELETED,
+                    'account': get_account_schema.dump(account),
+                    'http_status_code': 202}
         else:
             abort(500)
     else:
         abort(404)
-
 
 # endregion
 

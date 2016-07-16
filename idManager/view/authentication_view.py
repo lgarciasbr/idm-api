@@ -6,9 +6,9 @@ def auth_login(auth):
     message = auth.get('message')
     token = auth.get('token')
 
-    response = jsonify({'status_code': http_status_code, 'message': message, 'auth': {'_token': token}})
+    view = jsonify({'status_code': http_status_code, 'message': message, 'auth': {'_token': token}})
 
-    return response
+    return view
 
 
 def auth_is_valid(auth):
@@ -16,9 +16,9 @@ def auth_is_valid(auth):
     message = auth.get('message')
     token = auth.get('token')
 
-    response = jsonify({'status_code': http_status_code, 'message': message, 'auth': {'_token': token}})
+    view = jsonify({'status_code': http_status_code, 'message': message, 'auth': {'_token': token}})
 
-    return response
+    return view
 
 
 def auth_logout(auth):
@@ -26,6 +26,6 @@ def auth_logout(auth):
     message = auth.get('message')
     token = auth.get('token')
 
-    response = jsonify({'status_code': http_status_code, 'message': message, 'auth': {'_token': token}})
+    view = jsonify({'status_code': http_status_code, 'message': message, 'auth': {'_token': token}})
 
-    return response
+    return view

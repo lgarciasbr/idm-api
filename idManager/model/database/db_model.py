@@ -2,13 +2,11 @@ from flask import url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
 from sqlalchemy.orm import backref
-from marshmallow import Schema, fields, ValidationError, pre_load
 
 db = SQLAlchemy()
 
 
 # todo implementar version do registro, comeca com 1 e adiciona 1 a cada update
-# TODO Precisa testar para verificar se o sistema esta diferenciando maiuscula de minuscula.
 class Account(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -24,7 +22,7 @@ class Account(db.Model):
 
     @property
     def url(self):
-        return url_for('accounts.account_get', pk=self.id, _external=True)
+        return url_for('accounts.get_account_by_id', pk=self.id, _external=True)
 
 
 class Token(db.Model):
@@ -39,23 +37,3 @@ class Token(db.Model):
 
     def __repr__(self):
         return self.token
-
-
-# region Schema
-
-# Custom validator
-def must_not_be_blank(data):
-    if not data:
-        raise ValidationError('Data not provided.')
-
-
-class AccountSchema(Schema):
-    id = fields.Int(dump_only=True, dump_to='_id')
-    password = fields.String(required=True, validate=must_not_be_blank)
-    # new_password is used at change_password api method
-    new_password = fields.String(required=True, validate=must_not_be_blank)
-    email = fields.Email(required=True)
-    url = fields.Url(dump_only=True, dump_to='_url')
-    created_at = fields.DateTime(dump_only=True, dump_to='_created_at')
-
-# endregion

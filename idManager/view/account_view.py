@@ -1,40 +1,35 @@
 from flask import jsonify
 
 
-# todo implementar o retorno com xml
-def account_register(account):
+def register_account(account):
     http_status_code = account.get('http_status_code')
     message = account.get('message')
     account_created = account.get('account')
-    
-    response = jsonify({'status_code': http_status_code, 'message': message, 'account': account_created.data})
+    view = jsonify({'status_code': http_status_code, 'message': message, 'account': account_created.data})
 
-    return response
+    return view
 
 
-def accounts_get(accounts):
+def get_accounts(accounts):
     http_status_code = accounts.get('http_status_code')
-    message = accounts.get('message')
+    accounts = accounts.get('accounts')
+    view = jsonify({'status_code': http_status_code, 'accounts': accounts.data})
 
-    response = jsonify({'status_code': http_status_code, 'accounts': message.data})
-
-    return response
+    return view
 
 
-def account_get(account):
+def get_account_by_id(account):
     http_status_code = account.get('http_status_code')
-    message = account.get('message')
+    account = account.get('account')
+    view = jsonify({'status_code': http_status_code, 'account': account.data})
 
-    response = jsonify({'status_code': http_status_code, 'account': message.data})
-
-    return response
+    return view
 
 
-def account_delete(account):
+def delete_account(account):
     http_status_code = account.get('http_status_code')
     message = account.get('message')
     account_deleted = account.get('account')
+    view = jsonify({'status_code': http_status_code, 'message': message, 'account': account_deleted.data})
 
-    response = jsonify({'status_code': http_status_code, 'message': message, 'account': account_deleted.data})
-
-    return response
+    return view

@@ -20,7 +20,7 @@ manager.add_command('db', MigrateCommand)
 
 @manager.command
 def test():
-    'Execute UnitTest.'
+    """Execute UnitTest."""
     import unittest
 
     tests = unittest.TestLoader().discover('idManager/test')
@@ -29,7 +29,7 @@ def test():
 
 @manager.command
 def test_coverage():
-    'Execute UnitTest, than create a coverage page.'
+    """Execute UnitTest, than create a coverage page."""
     import coverage
     import unittest
 

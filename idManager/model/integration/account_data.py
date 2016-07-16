@@ -1,9 +1,4 @@
-from idManager.model.database.db_model import db, Account, AccountSchema
-
-account_schema_post = AccountSchema(only=('email', 'password'))
-account_schema_put = AccountSchema(only=('password', 'new_password'))
-account_schema_get = AccountSchema(only=('email', 'url', 'created_at', 'id'))
-accounts_schema_get = AccountSchema(many=True, only=('email', 'url', 'id'))
+from idManager.model.database.db_model import db, Account
 
 
 def register_account(email, password):
@@ -16,47 +11,30 @@ def register_account(email, password):
         return False
 
 
-def get_account(email):
-    try:
-        account = Account.query.filter_by(email=email).first()
-    except:
-        return None
-    return account
-
-
 def get_account_by_email(email):
     try:
-        account = Account.query.filter_by(email=email).first()
-
-        # Serialize the queryset
-        return account_schema_get.dump(account)
+        return Account.query.filter_by(email=email).first()
     except:
         return None
 
 
 def get_account_by_id(pk):
     try:
-        account = Account.query.get(pk)
-
-        # Serialize the queryset
-        return account_schema_get.dump(account)
+        return Account.query.get(pk)
     except:
         return None
 
 
 def get_accounts():
     try:
-        accounts = Account.query.all()
-
-        # Serialize the queryset
-        return accounts_schema_get.dump(accounts)
+        return Account.query.all()
     except:
         return None
 
 
-def delete_account(pk):
+# todo apagar todas as sessões antes.
+def delete_account_by_id(pk):
     try:
-        # todo apagar todas as sessões antes.
         Account.query.filter_by(id=pk).delete()
         db.session.commit()
 
@@ -64,7 +42,5 @@ def delete_account(pk):
     except:
         return False
 
-
-# todo unittest
 # todo melhorar o uso do try expect
 # todo deixar estas duas func genericas: by_email e by_id
