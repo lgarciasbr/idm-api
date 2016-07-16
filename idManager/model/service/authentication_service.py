@@ -1,4 +1,3 @@
-import bcrypt
 from flask import abort
 from idManager.model.service import account_service
 from idManager.model.service import token_service

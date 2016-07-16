@@ -7,7 +7,8 @@ from decouple import config
 
 SECRET_KEY = config('SECRET_KEY', default='lg-idm')
 DEBUG = config('DEBUG', default=False, cast=bool)
-# Token Host - option: memcached, database
+# todo ElasticSearch
+# Token Host - option: elasticsearch, database
 TOKEN_HOST = config('TOKEN_HOST', default='database')
 # Memcahed
 MEMCACHED_URL = config('MEMCACHED_URL', default='localhost:11211')
@@ -37,6 +38,7 @@ MSG_INVALID_SERIALIZATION = 'Unknown serialization format.'
 MSG_EMAIL_ALREADY_REGISTERED = 'E-mail is already registered.'
 MSG_ACCOUNT_SET = 'Account set!'
 MSG_ACCOUNT_DELETED = 'Account permanently deleted!'
+MSG_ACCOUNT_PWD_CHANGED = 'Account password changed!'
 
 # Error
 MSN_400 = 'Bad Request'

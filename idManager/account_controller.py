@@ -12,7 +12,7 @@ def register_account():
 
 @id_manager_blueprint.route('/accounts/<int:pk>', methods=['PUT'])
 def change_account_password(pk):
-    account = account_service.account_change_password(request.headers, request.get_json(force=True, silent=True), pk)
+    account = account_service.change_account_password(request.headers, request.get_json(force=True, silent=True), pk)
     return account_view.account_change_password(account), account.get('http_status_code')
 
 

@@ -6,7 +6,6 @@ Flask-Script==2.0.5
 Flask-SQLAlchemy==2.1
 psycopg2==2.6.1
 marshmallow==2.7.3
-python-binary-memcached==0.24.6
 bcrypt==2.0.0
 itsdangerous==0.24
 email_validator==1.0.0

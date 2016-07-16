@@ -10,6 +10,15 @@ def register_account(account):
     return view
 
 
+def account_change_password(account):
+    http_status_code = account.get('http_status_code')
+    message = account.get('message')
+    account_changed_password = account.get('account')
+    view = jsonify({'status_code': http_status_code, 'message': message, 'account': account_changed_password.data})
+
+    return view
+
+
 def get_accounts(accounts):
     http_status_code = accounts.get('http_status_code')
     accounts = accounts.get('accounts')

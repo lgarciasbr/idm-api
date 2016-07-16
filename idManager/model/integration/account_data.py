@@ -32,7 +32,17 @@ def get_accounts():
         return None
 
 
-# todo apagar todas as sessões antes.
+def change_account_password(pk, new_password):
+    try:
+        account = Account.query.get(pk)
+        account.password = new_password
+        db.session.commit()
+
+        return True
+    except:
+        return False
+
+
 def delete_account_by_id(pk):
     try:
         Account.query.filter_by(id=pk).delete()
@@ -42,5 +52,11 @@ def delete_account_by_id(pk):
     except:
         return False
 
+
 # todo melhorar o uso do try expect
 # todo deixar estas duas func genericas: by_email e by_id
+
+'''
+user.no_of_logins += 1
+session.commit()
+'''
