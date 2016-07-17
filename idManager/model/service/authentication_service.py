@@ -1,5 +1,6 @@
 from flask import abort
 from idManager.model.service import account_service
+from idManager.model.decorator import auth_decorator
 from idManager.model.service import token_service
 from idManager.settings import MSG_LOGIN, MSG_LOGIN_ERROR, MSG_LOGOUT, MSG_INVALID_TOKEN, MSG_VALID_TOKEN, \
     MSN_EXPECTED_CONTENT_TYPE_JSON, MSN_EXPECTED_JSON_DATA, MSN_INVALID_API_VER
@@ -57,6 +58,7 @@ def auth_login_ver_1(email, password):
 
 
 # region LOGOUT
+@auth_decorator.validate
 def auth_logout(header):
     check_header(header)
 
@@ -74,27 +76,18 @@ def auth_logout(header):
 
 
 def auth_logout_ver_1(token):
-    if token is not None:
-        if token_service.verify_token(token):
-            token_service.delete_token(token)
-            # Logout
-            return {'message': MSG_LOGOUT,
-                    'token': token,
-                    'http_status_code': 200}
-        else:
-            # Forbidden
-            abort(403, MSG_INVALID_TOKEN)
-    else:
-        # Forbidden
-        abort(400, MSG_INVALID_TOKEN)
-
-
+        token_service.delete_token(token)
+        # Logout
+        return {'message': MSG_LOGOUT,
+                'token': token,
+                'http_status_code': 200}
 # endregion
 
 
 # region Is token valid?
 # todo Criar test para o is_valid_token
 # todo Com o timeout do login implementado o is_valid_token pode fazer um refresh no timeout.
+@auth_decorator.validate
 def auth_is_valid(header):
     check_header(header)
 
@@ -112,17 +105,9 @@ def auth_is_valid(header):
 
 
 def auth_is_valid_ver_1(token):
-    if token is not None:
-        if token_service.verify_token(token):
             # Allowed
             return {'message': MSG_VALID_TOKEN,
                     'token': token,
                     'http_status_code': 200}
-        else:
-            # Forbidden
-            abort(403, MSG_INVALID_TOKEN)
-    else:
-        # Forbidden
-        abort(400)
 
 # endregion

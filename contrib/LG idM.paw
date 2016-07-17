@@ -954,7 +954,7 @@ assertEqual(exchange.responseStatusCode, 403, 'Status code')</attribute>
         <attribute name="method" type="string">GET</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
         <attribute name="order" type="int64">11</attribute>
-        <attribute name="name" type="string">Is this token valid? SecondShot</attribute>
+        <attribute name="name" type="string">Is this token valid? (wrong token)</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z153"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
         <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z195 z198 z194 z197"></relationship>

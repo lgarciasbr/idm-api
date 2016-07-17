@@ -199,6 +199,7 @@ def get_account_by_id_ver_1(pk):
 
 
 # TODO Precisa apagar todas as sessoes do usuario antes de apagar o usuario.
+# TODO Se nao for o admin pedir senha
 # region Delete_Account_By_Id
 @auth_decorator.validate
 def delete_account_by_id(header, pk):
