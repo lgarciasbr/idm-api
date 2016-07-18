@@ -2,6 +2,7 @@ from flask import request
 from idManager.model.service import account_service
 from idManager.view import account_view
 from . import id_manager_blueprint
+from idManager.model.decorator import headers
 
 
 @id_manager_blueprint.route('/accounts/', methods=['POST'])
@@ -16,10 +17,18 @@ def change_account_password(pk):
     return account_view.account_change_password(account), account.get('http_status_code')
 
 
+@headers.add_response_headers
 @id_manager_blueprint.route('/accounts/', methods=['GET'])
 def get_accounts():
     accounts = account_service.get_accounts(request.headers)
-    return account_view.get_accounts(accounts), accounts.get('http_status_code')
+
+    response = account_view.get_accounts(accounts)
+    response.status_code = accounts.get('http_status_code')
+    response.headers = {'ver': '1', 'Content-Type': 'application/json'}
+
+    return response
+
+    # return account_view.get_accounts(accounts), accounts.get('http_status_code'), {'ver': '1'}
 
 
 @id_manager_blueprint.route('/accounts/<int:pk>', methods=['GET'])
