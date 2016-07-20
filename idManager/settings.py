@@ -8,7 +8,7 @@ from decouple import config
 SECRET_KEY = config('SECRET_KEY', default='lg-idm')
 DEBUG = config('DEBUG', default=False, cast=bool)
 # todo ElasticSearch
-# Token Host - option: elasticsearch, database
+# Token Host - option: elasticsearch or redis, database
 TOKEN_HOST = config('TOKEN_HOST', default='database')
 # Memcahed
 MEMCACHED_URL = config('MEMCACHED_URL', default='localhost:11211')
