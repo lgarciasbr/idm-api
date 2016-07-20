@@ -9,7 +9,9 @@
 3. Ative o virtualenv.
 4. Instale as dependências.
 5. Configure a instância com o .env
-6. Execute os testes.
+6. Configure o banco de dados.
+7. Execute os testes.
+8. Run!
 
 
 ```console
@@ -18,7 +20,10 @@ cd lg-idm
 python -m venv .lg-idm
 source .lg-idm/bin/activate
 pip install -r requirements-dev.txt
+cp contrib/env-sample .env
+python manage.py db update
 python manage.py test
+python manage.py runserver
 ```
 
 ## Como fazer o deploy?
