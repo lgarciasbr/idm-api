@@ -6,20 +6,8 @@ from idManager.settings import MSG_LOGIN, MSG_LOGIN_ERROR, MSG_LOGOUT, MSG_INVAL
     MSN_EXPECTED_CONTENT_TYPE_JSON, MSN_EXPECTED_JSON_DATA, MSN_INVALID_API_VER
 
 
-def check_header(header):
-    content_type = header.get('Content-Type')
-
-    if content_type == 'application/json' or content_type == '' or not content_type:
-        return True
-    else:
-        # Bad Request
-        abort(400, MSN_EXPECTED_CONTENT_TYPE_JSON)
-
-
 # region LOGIN
 def auth_login(header, data):
-    check_header(header)
-
     if not data:
         abort(400, MSN_EXPECTED_JSON_DATA)
 
@@ -60,8 +48,6 @@ def auth_login_ver_1(email, password):
 # region LOGOUT
 @auth_decorator.validate
 def auth_logout(header):
-    check_header(header)
-
     ver = header.get('ver')
     token = header.get('token')
 
@@ -89,8 +75,6 @@ def auth_logout_ver_1(token):
 # todo Com o timeout do login implementado o is_valid_token pode fazer um refresh no timeout.
 @auth_decorator.validate
 def auth_is_valid(header):
-    check_header(header)
-
     ver = header.get('ver')
     token = header.get('token')
 

@@ -39,6 +39,7 @@ MSG_EMAIL_ALREADY_REGISTERED = 'E-mail is already registered.'
 MSG_ACCOUNT_SET = 'Account set!'
 MSG_ACCOUNT_DELETED = 'Account permanently deleted!'
 MSG_ACCOUNT_PWD_CHANGED = 'Account password changed!'
+MSG_NEWEST_VERSION = 'The newest version!'
 
 # Error
 MSN_400 = 'Bad Request'

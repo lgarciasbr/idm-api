@@ -441,7 +441,7 @@
         <attribute name="name" type="string">Get Users</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z153"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
-        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z144 z146 z142 z143"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z142 z144 z143 z146"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z146">
         <attribute name="value" type="string">application/json</attribute>

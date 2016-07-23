@@ -1,19 +1,51 @@
-from flask import make_response
-import functools
+from flask import make_response, request, abort
+from idManager.settings import MSN_EXPECTED_CONTENT_TYPE_JSON, MSG_NEWEST_VERSION
+from functools import wraps
 
 
 def add_response_headers(f):
-    @functools.wraps(f)
-    def wrapped(*args, **kwargs):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        content_type = request.headers.get('Content-Type')
+        ver = request.headers.get('ver')
 
-        result = make_response(f(*args, **kwargs))
+        if content_type == 'application/json' or content_type == '' or not content_type:
+            if ver == '' or not ver:
+                ver = MSG_NEWEST_VERSION
 
-        headers = {'ver': '1', 'Content-Type': 'application/json'}
+            response = make_response(f(*args, **kwargs))
 
-        h = result.headers
-        for header, value in headers.items():
-            h[header] = value
+            header = response.headers
 
-        return result
+            header['ver'] = ver
+            header['Content-Type'] = 'application/json'
 
-    return wrapped
+            return response
+        else:
+            # Bad Request
+            abort(400, MSN_EXPECTED_CONTENT_TYPE_JSON)
+
+    return wrapper
+
+
+'''
+def validate_json(*expected_args):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            json_object = request.get_json()
+            for expected_arg in expected_args:
+                if expected_arg not in json_object:
+                    abort(400)
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
+
+@app.route('/grade', methods=['POST'])
+@validate_json('student_id')
+def update_grade():
+    json_data = request.get_json()
+    print(json_data)
+    # update database
+    return "success!"
+'''
