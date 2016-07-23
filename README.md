@@ -9,7 +9,7 @@
 3. Ative o virtualenv.
 4. Instale as dependências.
 5. Configure a instância com o .env
-6. Configure o banco de dados.
+6. Crie as tabelas do banco de dados.
 7. Execute os testes.
 8. Run!
 
