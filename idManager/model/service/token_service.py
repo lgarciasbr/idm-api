@@ -41,6 +41,3 @@ def delete_token(token):
 def delete_token_by_account_id(pk):
     return token_data.delete_token_by_account_id(pk)
 
-
-# todo Implementar o timeout do login, precisa pensar nas regras.
-# todo preparar unittest do token

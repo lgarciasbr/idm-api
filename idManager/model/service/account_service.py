@@ -110,7 +110,7 @@ def change_account_password_ver_1(pk, password, new_password):
 
     if account is not None:
         # Verify if this password belongs to this account
-        valid_pwd = validate_account_password(account.email, password)
+        valid_pwd, account = validate_account_password(account.email, password)
 
         if valid_pwd:
             account_data.change_account_password(pk, crypt_pwd(new_password))
@@ -125,7 +125,6 @@ def change_account_password_ver_1(pk, password, new_password):
 # endregion
 
 
-# TODO Verificar se o token e valido.
 # TODO Verificar se ele pertence ao grupo de ADMIN
 # region Get_Accounts
 @auth_decorator.validate
@@ -142,7 +141,6 @@ def get_accounts(header):
         abort(400, MSN_INVALID_API_VER)
 
 
-# TODO CRIAR OS TESTES DO GET
 def get_accounts_ver_1():
     accounts = account_data.get_accounts()
     return {'accounts': get_accounts_schema.dump(accounts),
@@ -150,7 +148,6 @@ def get_accounts_ver_1():
 # endregion
 
 
-# TODO Verificar se o token e valido.
 # TODO Verificar se ele pertence ao grupo de ADMIN ou se ele e ele mesmo.
 # region Get_Account_By_Id
 @auth_decorator.validate
@@ -179,7 +176,6 @@ def get_account_by_id_ver_1(pk):
 # endregion
 
 
-# TODO Precisa apagar todas as sessoes do usuario antes de apagar o usuario.
 # TODO Se nao for o admin pedir senha
 # region Delete_Account_By_Id
 @auth_decorator.validate

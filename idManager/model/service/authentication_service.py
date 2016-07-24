@@ -71,7 +71,6 @@ def auth_logout_ver_1(token):
 
 
 # region Is token valid?
-# todo Criar test para o is_valid_token
 # todo Com o timeout do login implementado o is_valid_token pode fazer um refresh no timeout.
 @auth_decorator.validate
 def auth_is_valid(header):
