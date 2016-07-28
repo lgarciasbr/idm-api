@@ -5,6 +5,20 @@ from idManager.settings import MSG_LOGIN, MSG_LOGOUT, MSG_LOGIN_ERROR,\
     MSG_INVALID_TOKEN, MSN_400, EMAIL_TEST, PWD_TEST, CHECK_EMAIL_DELIVERABILITY
 from manage import app, db
 
+'''
+- Authentication
+auth_login
+auth_is_valid
+auth_logout
+
+- Account
+register_account
+change_account_password
+get_accounts
+get_account_by_id
+delete_account_by_id
+'''
+
 
 class AuthenticationSolution(unittest.TestCase):
 
