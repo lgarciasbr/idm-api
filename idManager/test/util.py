@@ -1,6 +1,7 @@
 from flask import request as requests, jsonify as json
 
 
+# region Home
 def about():
     # Welcome
     # GET http://127.0.0.1:5000/
@@ -9,189 +10,197 @@ def about():
         response = requests.get(
             url="http://127.0.0.1:5000/",
         )
-        print('Welcome')
+        print('about')
         print('Response HTTP Status Code: {status_code}'.format(
             status_code=response.status_code))
         print('Response HTTP Response Body: {content}'.format(
             content=response.content))
+
+        return response
+
     except requests.exceptions.RequestException:
-        print('Welcome - HTTP Request failed')
+        print('about - HTTP Request failed!')
+        return None
+# endregion
 
 
-def register_account(ver, content_type, email, password):
+# region Account
+def register_account(header, data):
     # Register
     # POST http://127.0.0.1:5000/accounts/
 
     try:
         response = requests.post(
             url="http://127.0.0.1:5000/accounts/",
-            headers={
-                "ver": ver,
-                "Content-Type": content_type,
-            },
-            data=json.dumps({
-                "email": email,
-                "password": password
-            })
+            headers=header,
+            data=json.dumps(data)
         )
-        print('Register')
+        print('register_account')
         print('Response HTTP Status Code: {status_code}'.format(
             status_code=response.status_code))
         print('Response HTTP Response Body: {content}'.format(
             content=response.content))
+
+        return response
+
     except requests.exceptions.RequestException:
-        print('Register - HTTP Request failed')
+        print('register_account - HTTP Request failed!')
+        return None
 
 
-def send_request():
+def delete_account_by_id(pk, header):
     # Delete User
     # DELETE http://127.0.0.1:5000/accounts/38
 
     try:
         response = requests.delete(
-            url="http://127.0.0.1:5000/accounts/38",
-            headers={
-                "token": "eyJhbGciOiJIUzI1NiIsImlhdCI6MTQ2OTM2NjUxNiwiZXhwIjoxNDY5MzY3MTE2fQ.Mzg.Mcsl7BSyUq5xw7BqIDR8bQsD0suR8y4jKvHbf9xwyYU",
-                "ver": "1",
-                "Content-Type": "application/json",
-            },
+            url="http://127.0.0.1:5000/accounts/" + pk,
+            headers=header
         )
+        print('delete_account_by_id')
         print('Response HTTP Status Code: {status_code}'.format(
             status_code=response.status_code))
         print('Response HTTP Response Body: {content}'.format(
             content=response.content))
+
+        return response
+
     except requests.exceptions.RequestException:
-        print('HTTP Request failed')
+        print('delete_account_by_id - HTTP Request failed!')
+        return None
 
 
-def send_request():
-    # Login
-    # POST http://127.0.0.1:5000/auth/
-
-    try:
-        response = requests.post(
-            url="http://127.0.0.1:5000/auth/",
-            headers={
-                "ver": "1",
-                "Content-Type": "application/json",
-            },
-            data=json.dumps({
-                "email": "sunshine.carreiro@freemail.de",
-                "password": "default"
-            })
-        )
-        print('Response HTTP Status Code: {status_code}'.format(
-            status_code=response.status_code))
-        print('Response HTTP Response Body: {content}'.format(
-            content=response.content))
-    except requests.exceptions.RequestException:
-        print('HTTP Request failed')
-
-
-def send_request():
+def change_account_password(pk, header, data):
     # Change Password
     # PUT http://127.0.0.1:5000/accounts/38
 
     try:
         response = requests.put(
-            url="http://127.0.0.1:5000/accounts/38",
-            headers={
-                "token": "eyJhbGciOiJIUzI1NiIsImlhdCI6MTQ2OTM2NjUwOCwiZXhwIjoxNDY5MzY3MTA4fQ.Mzg.F9mEKe1dzn5jJxl8VhpfoLUTtO3ICk6CcBQqeF3D3Ag",
-                "ver": "1",
-                "Content-Type": "application/json",
-            },
-            data=json.dumps({
-                "new_password": "default8",
-                "password": "default"
-            })
+            url="http://127.0.0.1:5000/accounts/" + pk,
+            headers=header,
+            data=json.dumps(data)
         )
+        print('change_account_password')
         print('Response HTTP Status Code: {status_code}'.format(
             status_code=response.status_code))
         print('Response HTTP Response Body: {content}'.format(
             content=response.content))
+
+        return response
+
     except requests.exceptions.RequestException:
-        print('HTTP Request failed')
+        print('change_account_password - HTTP Request failed!')
+        return None
 
 
-def send_request():
+def get_accounts(header):
     # Get Users
     # GET http://127.0.0.1:5000/accounts/
 
     try:
         response = requests.get(
             url="http://127.0.0.1:5000/accounts/",
-            headers={
-                "token": "eyJhbGciOiJIUzI1NiIsImlhdCI6MTQ2OTM2NjUwOCwiZXhwIjoxNDY5MzY3MTA4fQ.Mzg.F9mEKe1dzn5jJxl8VhpfoLUTtO3ICk6CcBQqeF3D3Ag",
-                "ver": "1",
-                "Content-Type": "application/json",
-            },
+            headers=header
         )
+        print('get_accounts')
         print('Response HTTP Status Code: {status_code}'.format(
             status_code=response.status_code))
         print('Response HTTP Response Body: {content}'.format(
             content=response.content))
+
+        return response
+
     except requests.exceptions.RequestException:
-        print('HTTP Request failed')
+        print('get_accounts - HTTP Request failed!')
+        return None
 
 
-def send_request():
+def get_account_by_id(pk, header):
     # Get User
     # GET http://127.0.0.1:5000/accounts/38
 
     try:
         response = requests.get(
-            url="http://127.0.0.1:5000/accounts/38",
-            headers={
-                "token": "eyJhbGciOiJIUzI1NiIsImlhdCI6MTQ2OTM2NjUwOCwiZXhwIjoxNDY5MzY3MTA4fQ.Mzg.F9mEKe1dzn5jJxl8VhpfoLUTtO3ICk6CcBQqeF3D3Ag",
-                "ver": "1",
-                "Content-Type": "application/json",
-            },
+            url="http://127.0.0.1:5000/accounts/" + pk,
+            headers=header
+        )
+        print('get_account_by_id')
+        print('Response HTTP Status Code: {status_code}'.format(
+            status_code=response.status_code))
+        print('Response HTTP Response Body: {content}'.format(
+            content=response.content))
+
+        return response
+
+    except requests.exceptions.RequestException:
+        print('get_account_by_id - HTTP Request failed!')
+        return None
+# endregion
+
+
+# region Auth
+def auth_login(header, data):
+    # Login
+    # POST http://127.0.0.1:5000/auth/
+
+    try:
+        response = requests.post(
+            url="http://127.0.0.1:5000/auth/",
+            headers=header,
+            data=json.dumps(data)
         )
         print('Response HTTP Status Code: {status_code}'.format(
             status_code=response.status_code))
         print('Response HTTP Response Body: {content}'.format(
             content=response.content))
+
+        return response
+
     except requests.exceptions.RequestException:
-        print('HTTP Request failed')
+        print('auth_login - HTTP Request failed!')
+        return None
 
 
-def send_request():
+def auth_is_valid(header):
     # Is this token valid?
     # GET http://127.0.0.1:5000/auth/
 
     try:
         response = requests.get(
             url="http://127.0.0.1:5000/auth/",
-            headers={
-                "token": "eyJhbGciOiJIUzI1NiIsImlhdCI6MTQ2OTM2NjUwOCwiZXhwIjoxNDY5MzY3MTA4fQ.Mzg.F9mEKe1dzn5jJxl8VhpfoLUTtO3ICk6CcBQqeF3D3Ag",
-                "ver": "1",
-                "Content-Type": "application/json",
-            },
+            headers=header,
         )
+        print('auth_is_valid')
         print('Response HTTP Status Code: {status_code}'.format(
             status_code=response.status_code))
         print('Response HTTP Response Body: {content}'.format(
             content=response.content))
+
+        return response
+
     except requests.exceptions.RequestException:
-        print('HTTP Request failed')
+        print('auth_is_valid - HTTP Request failed!')
+        return None
 
 
-def send_request():
+def auth_logout(header):
     # Logout
     # DELETE http://127.0.0.1:5000/auth/
 
     try:
         response = requests.delete(
             url="http://127.0.0.1:5000/auth/",
-            headers={
-                "token": "eyJhbGciOiJIUzI1NiIsImlhdCI6MTQ2OTM2NjUwOCwiZXhwIjoxNDY5MzY3MTA4fQ.Mzg.F9mEKe1dzn5jJxl8VhpfoLUTtO3ICk6CcBQqeF3D3Ag",
-                "ver": "1",
-                "Content-Type": "application/json",
-            },
+            headers=header,
         )
+        print('auth_logout')
         print('Response HTTP Status Code: {status_code}'.format(
             status_code=response.status_code))
         print('Response HTTP Response Body: {content}'.format(
             content=response.content))
+
+        return response
+
     except requests.exceptions.RequestException:
-        print('HTTP Request failed')
+        print('auth_logout - HTTP Request failed!')
+        return None
+# endregion
