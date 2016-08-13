@@ -1,29 +1,62 @@
 import json
-import unittest
-
-from idManager.settings import PROJECT_NAME, PROJECT_DESCRIPTION
-from manage import app
+import pytest
+from idManager.test import records
 
 
-class HomeSolution(unittest.TestCase):
-    # Welcome
-    def test_welcome_assert(self):
-        tester = app.test_client(self)
+@pytest.mark.parametrize(("header", "data", "expected"), [
+    (records.header_empty, records.data_empty, 200),
+    (records.header_empty_content_type, records.data_empty, 200),
+    (records.header_content_type, records.data_empty, 200),
+    (records.header_invalid_content_type, records.data_empty, 400),
+])
+def test_about_get(client, header, data, expected):
+    response = client.get('/',
+                          headers=header,
+                          data=json.dumps(data))
 
-        response = tester.get('/')
+    # response.data.decode('utf-8'))['description'], PROJECT_DESCRIPTION)
+    # response.data.decode('utf-8'))['project'], PROJECT_NAME)
 
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(json.loads(response.data.decode('utf-8'))['description'], PROJECT_DESCRIPTION)
-        self.assertEqual(json.loads(response.data.decode('utf-8'))['project'], PROJECT_NAME)
+    assert response.status_code == expected
 
-    # todo Verificar se nao existem outros testes como 403 que podem ser feitos.
-    # Error
-    def test_error_404_assert(self):
-        tester = app.test_client(self)
 
-        response = tester.get('/pnf')
+@pytest.mark.parametrize(("header", "data", "expected"), [
+    (records.header_empty, records.data_empty, 405),
+    (records.header_empty_content_type, records.data_empty, 405),
+    (records.header_content_type, records.data_empty, 405),
+    (records.header_invalid_content_type, records.data_empty, 405),
+])
+def test_about_post(client, header, data, expected):
+    response = client.post('/',
+                           headers=header,
+                           data=json.dumps(data))
 
-        self.assertEqual(response.status_code, 404)
+    assert response.status_code == expected
 
-if __name__ == '__main__':
-    unittest.main()
+
+@pytest.mark.parametrize(("header", "data", "expected"), [
+    (records.header_empty, records.data_empty, 405),
+    (records.header_empty_content_type, records.data_empty, 405),
+    (records.header_content_type, records.data_empty, 405),
+    (records.header_invalid_content_type, records.data_empty, 405),
+])
+def test_about_put(client, header, data, expected):
+    response = client.put('/',
+                          headers=header,
+                          data=json.dumps(data))
+
+    assert response.status_code == expected
+
+
+@pytest.mark.parametrize(("header", "data", "expected"), [
+    (records.header_empty, records.data_empty, 405),
+    (records.header_empty_content_type, records.data_empty, 405),
+    (records.header_content_type, records.data_empty, 405),
+    (records.header_invalid_content_type, records.data_empty, 405),
+])
+def test_about_delete(client, header, data, expected):
+    response = client.delete('/',
+                             headers=header,
+                             data=json.dumps(data))
+
+    assert response.status_code == expected

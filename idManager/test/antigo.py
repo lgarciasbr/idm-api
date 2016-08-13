@@ -5,24 +5,6 @@ from idManager.settings import MSG_LOGIN, MSG_LOGOUT, MSG_LOGIN_ERROR,\
     MSG_INVALID_TOKEN, EMAIL_TEST, PWD_TEST, CHECK_EMAIL_DELIVERABILITY
 from manage import app
 
-'''
-- Home
-about
-
-- Authentication
-auth_login
-auth_is_valid
-auth_logout
-
-- Account
-register_account
-change_account_password
-get_accounts
-get_account_by_id
-delete_account_by_id
-'''
-
-
 class AuthenticationSolution(unittest.TestCase):
 
     def setUp(self):
@@ -36,8 +18,6 @@ class AuthenticationSolution(unittest.TestCase):
         # todo remover o usuario criado para o teste.
         # todo sera que nao devo apagar o banco criado?
 
-    # todo precisa fazer os testes nao passando todos os itens do header no registro.
-    # todo precisa fazer os testes nao passando o login e depois a senha e os dois.
     # Account
     # Register
     def register_v1(self, email, password):
@@ -49,25 +29,6 @@ class AuthenticationSolution(unittest.TestCase):
         data_json = json.dumps({'email': email, 'password': password})
 
         return tester.post('/accounts/', data=data_json, headers=header)
-
-    def test_register_not_assert_invalid_email(self):
-        response = self.register_v1('not_email', PWD_TEST)
-
-        self.assertEqual(response.status_code, 400)
-
-    def test_register_not_assert_invalid_domain(self):
-        # I hope 'NotExistDomain1974.com' do not exist. ;-)
-        response = self.register_v1('admin@NotExistDomain1974.com', PWD_TEST)
-
-        if CHECK_EMAIL_DELIVERABILITY:
-            self.assertEqual(response.status_code, 400)
-        else:
-            self.assertEqual(response.status_code, 201)
-
-    def test_register_assert(self):
-        response = self.register_v1(EMAIL_TEST, PWD_TEST)
-
-        self.assertEqual(response.status_code, 200)
 
 
     # todo precisa fazer os testes nao passando todos os itens do header no login

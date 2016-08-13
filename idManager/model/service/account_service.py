@@ -121,7 +121,6 @@ def change_account_password_ver_1(pk, password, new_password):
             abort(403)
     else:
         abort(404)
-
 # endregion
 
 

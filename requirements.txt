@@ -1,5 +1,4 @@
 gunicorn==19.3.0
-newrelic
 flask==0.10.1
 Flask-Migrate==1.8.0
 Flask-Script==2.0.5
@@ -12,3 +11,4 @@ email_validator==1.0.0
 python-decouple==3.0
 unipath==1.1
 coverage==4.0.2
+pytest==2.9.2

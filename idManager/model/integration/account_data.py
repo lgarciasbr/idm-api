@@ -55,8 +55,3 @@ def delete_account_by_id(pk):
 
 # todo melhorar o uso do try expect
 # todo deixar estas duas func genericas: by_email e by_id
-
-'''
-user.no_of_logins += 1
-session.commit()
-'''

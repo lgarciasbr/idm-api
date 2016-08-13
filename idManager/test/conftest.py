@@ -1,15 +1,30 @@
+import pytest
+from manage import create_app
+
+
+@pytest.fixture(scope='session')
+def app():
+    app = create_app('idManager.settings')
+    return app
+
+
+@pytest.fixture(scope='function')
+def client(app):
+    return app.test_client()
+
+
 '''
 from sqlalchemy.engine import create_engine
 from sqlalchemy.orm.session import Session
 
-from your.package import Base  # This is your declarative base class
+from idManager.model.database.db_model import db as Base # This is your declarative base class
 
 
 def setup_module():
     global transaction, connection, engine
 
     # Connect to the database and create the schema within a transaction
-    engine = create_engine('postgresql:///yourdb')
+    engine = create_engine('postgresql://postgres:Scr33nN3t@localhost:5432/lgidm_test')
     connection = engine.connect()
     transaction = connection.begin()
     Base.metadata.create_all(connection)

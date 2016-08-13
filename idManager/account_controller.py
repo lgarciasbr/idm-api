@@ -24,13 +24,10 @@ def change_account_password(pk):
 def get_accounts():
     accounts = account_service.get_accounts(request.headers)
 
-    response = account_view.get_accounts(accounts)
+    response = account_view.get_accounts(**accounts)
     response.status_code = accounts.get('http_status_code')
-    # response.headers = {'ver': '1', 'Content-Type': 'application/json'}
 
     return response
-
-    # return account_view.get_accounts(accounts), accounts.get('http_status_code')
 
 
 @id_manager_blueprint.route('/accounts/<int:pk>', methods=['GET'])
