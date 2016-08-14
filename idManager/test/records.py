@@ -1,5 +1,6 @@
-from idManager.settings import EMAIL_TEST, PWD_TEST
+from .util import generate_random_email
 
+PWD_TEST = 'default'
 
 # region Header variables
 header_empty = {}
@@ -33,7 +34,7 @@ header_content_type_invalid_ver = {'Content-Type': 'application/json',
 # region Data Body variable
 data_empty = {}
 
-data_email_pwd = {'email': EMAIL_TEST,
+data_email_pwd = {'email': generate_random_email(),
                   'password': PWD_TEST}
 
 # I hope 'NotExistDomain1974.com' do not exist. ;-)
@@ -48,8 +49,8 @@ data_empty_email_pwd = {'email': '',
 data_invalid_email_pwd = {'email': 'invalid e-mail',
                           'password': PWD_TEST}
 
-data_email_empty_pwd = {'email': EMAIL_TEST,
+data_email_empty_pwd = {'email': generate_random_email(),
                         'password': ''}
 
-data_email_no_pwd = {'email': EMAIL_TEST}
+data_email_no_pwd = {'email': generate_random_email()}
 # endregion
