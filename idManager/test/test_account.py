@@ -23,7 +23,7 @@ delete_account_by_id
     (records.header_content_type_empty_ver(), records.data_email_pwd(), False, 201),
     (records.header_invalid_content_type_ver(), records.data_email_pwd(), False, 400),
     (records.header_content_type_invalid_ver(), records.data_email_pwd(), False, 400),
-    (records.header_content_type_ver(), records.data_deliverability_email_pwd(), True, 403),  # 400
+    (records.header_content_type_ver(), records.data_deliverability_email_pwd(), True, 400),
     (records.header_content_type_ver(), records.data_email_pwd(), False, 201),
     (records.header_content_type_ver(), records.data_empty(), False, 400),
     (records.header_content_type_ver(), records.data_no_email_pwd(), False, 400),
@@ -61,15 +61,7 @@ def test_register_a_registered_account(client):
 
 
 def test_delete_account_by_id(client):
-    headers = records.header_content_type_ver()
-    data = records.data_email_pwd()
-
-    response_register = client.post('/accounts/',
-                                    headers=headers,
-                                    data=json.dumps(data)
-                                    )
-
-    pk = json.loads(response_register.data.decode('utf-8'))['account']['_id']
+    headers, pk = records.header_content_type_ver_token(client)
 
     response_delete = client.delete('/accounts/' + str(pk),
                                     headers=headers)
