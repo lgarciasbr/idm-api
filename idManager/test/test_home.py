@@ -14,8 +14,7 @@ def test_about_get(client, header, data, expected):
                           headers=header,
                           data=json.dumps(data))
 
-    # response.data.decode('utf-8'))['description'], PROJECT_DESCRIPTION)
-    # response.data.decode('utf-8'))['project'], PROJECT_NAME)
+    # json.loads(response.data.decode('utf-8'))['description']
 
     assert response.status_code == expected
 

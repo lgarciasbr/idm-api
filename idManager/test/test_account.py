@@ -69,9 +69,12 @@ def test_delete_account_by_id(client):
                                     data=json.dumps(data)
                                     )
 
-    response_delete = client.delete('/accounts/' + pk,
+    pk = json.loads(response_register.data.decode('utf-8'))['account']['_id']
+
+    response_delete = client.delete('/accounts/' + str(pk),
                                     headers=headers)
 
+    assert response_delete.status_code == 202
 
 
 def change_account_password(pk, header, data):
