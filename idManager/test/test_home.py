@@ -4,10 +4,10 @@ from idManager.test import records
 
 
 @pytest.mark.parametrize(("header", "data", "expected"), [
-    (records.header_empty, records.data_empty, 200),
-    (records.header_empty_content_type, records.data_empty, 200),
-    (records.header_content_type, records.data_empty, 200),
-    (records.header_invalid_content_type, records.data_empty, 400),
+    (records.header_empty(), records.data_empty(), 200),
+    (records.header_empty_content_type(), records.data_empty(), 200),
+    (records.header_content_type(), records.data_empty(), 200),
+    (records.header_invalid_content_type(), records.data_empty(), 400),
 ])
 def test_about_get(client, header, data, expected):
     response = client.get('/',
@@ -21,10 +21,10 @@ def test_about_get(client, header, data, expected):
 
 
 @pytest.mark.parametrize(("header", "data", "expected"), [
-    (records.header_empty, records.data_empty, 405),
-    (records.header_empty_content_type, records.data_empty, 405),
-    (records.header_content_type, records.data_empty, 405),
-    (records.header_invalid_content_type, records.data_empty, 405),
+    (records.header_empty(), records.data_empty(), 405),
+    (records.header_empty_content_type(), records.data_empty(), 405),
+    (records.header_content_type(), records.data_empty(), 405),
+    (records.header_invalid_content_type(), records.data_empty(), 405),
 ])
 def test_about_post(client, header, data, expected):
     response = client.post('/',
@@ -35,10 +35,10 @@ def test_about_post(client, header, data, expected):
 
 
 @pytest.mark.parametrize(("header", "data", "expected"), [
-    (records.header_empty, records.data_empty, 405),
-    (records.header_empty_content_type, records.data_empty, 405),
-    (records.header_content_type, records.data_empty, 405),
-    (records.header_invalid_content_type, records.data_empty, 405),
+    (records.header_empty(), records.data_empty(), 405),
+    (records.header_empty_content_type(), records.data_empty(), 405),
+    (records.header_content_type(), records.data_empty(), 405),
+    (records.header_invalid_content_type(), records.data_empty(), 405),
 ])
 def test_about_put(client, header, data, expected):
     response = client.put('/',
@@ -49,10 +49,10 @@ def test_about_put(client, header, data, expected):
 
 
 @pytest.mark.parametrize(("header", "data", "expected"), [
-    (records.header_empty, records.data_empty, 405),
-    (records.header_empty_content_type, records.data_empty, 405),
-    (records.header_content_type, records.data_empty, 405),
-    (records.header_invalid_content_type, records.data_empty, 405),
+    (records.header_empty(), records.data_empty(), 405),
+    (records.header_empty_content_type(), records.data_empty(), 405),
+    (records.header_content_type(), records.data_empty(), 405),
+    (records.header_invalid_content_type(), records.data_empty(), 405),
 ])
 def test_about_delete(client, header, data, expected):
     response = client.delete('/',

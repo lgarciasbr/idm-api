@@ -16,22 +16,21 @@ delete_account_by_id
 # todo Precisa tratar o banco de dados / limpar os dados ou criar um e-mail diferente a cada vez.
 # todo Precisa resolver o teste do deliverability do e-mail.
 @pytest.mark.parametrize(("header", "data", "deliverability", "expected"), [
-    (records.header_empty, records.data_email_pwd, False, 201),
-    (records.header_no_content_type_ver, records.data_email_pwd, False, 201),
-    (records.header_content_type_no_ver, records.data_email_pwd, False, 201),
-    (records.header_empty_content_type_ver, records.data_email_pwd, False, 201),
-    (records.header_content_type_empty_ver, records.data_email_pwd, False, 201),
-    (records.header_invalid_content_type_ver, records.data_email_pwd, False, 400),
-    (records.header_content_type_invalid_ver, records.data_email_pwd, False, 400),
-    (records.header_content_type_ver, records.data_deliverability_email_pwd, True, 403),  # 400
-    (records.header_content_type_ver, records.data_email_pwd, False, 201),
-    (records.header_content_type_ver, records.data_email_pwd, False, 403),  # 403, how?
-    (records.header_content_type_ver, records.data_empty, False, 400),
-    (records.header_content_type_ver, records.data_no_email_pwd, False, 400),
-    (records.header_content_type_ver, records.data_empty_email_pwd, False, 400),
-    (records.header_content_type_ver, records.data_invalid_email_pwd, False, 400),
-    (records.header_content_type_ver, records.data_email_no_pwd, False, 400),
-    (records.header_content_type_ver, records.data_email_empty_pwd, False, 400),
+    (records.header_empty(), records.data_email_pwd(), False, 201),
+    (records.header_no_content_type_ver(), records.data_email_pwd(), False, 201),
+    (records.header_content_type_no_ver(), records.data_email_pwd(), False, 201),
+    (records.header_empty_content_type_ver(), records.data_email_pwd(), False, 201),
+    (records.header_content_type_empty_ver(), records.data_email_pwd(), False, 201),
+    (records.header_invalid_content_type_ver(), records.data_email_pwd(), False, 400),
+    (records.header_content_type_invalid_ver(), records.data_email_pwd(), False, 400),
+    (records.header_content_type_ver(), records.data_deliverability_email_pwd(), True, 403),  # 400
+    (records.header_content_type_ver(), records.data_email_pwd(), False, 201),
+    (records.header_content_type_ver(), records.data_empty(), False, 400),
+    (records.header_content_type_ver(), records.data_no_email_pwd(), False, 400),
+    (records.header_content_type_ver(), records.data_empty_email_pwd(), False, 400),
+    (records.header_content_type_ver(), records.data_invalid_email_pwd(), False, 400),
+    (records.header_content_type_ver(), records.data_email_no_pwd(), False, 400),
+    (records.header_content_type_ver(), records.data_email_empty_pwd(), False, 400),
 ])
 def test_register_account(client, header, data, deliverability, expected):
     #app.config['CHECK_EMAIL_DELIVERABILITY'] = deliverability
@@ -44,26 +43,35 @@ def test_register_account(client, header, data, deliverability, expected):
     assert response.status_code == expected
 
 
-def delete_account_by_id(pk, header):
-    # Delete User
-    # DELETE http://127.0.0.1:5000/accounts/38
+def test_register_a_registered_account(client):
+    headers = records.header_content_type_ver()
+    data = records.data_email_pwd()
 
-    try:
-        response = requests.delete(
-            url="http://127.0.0.1:5000/accounts/" + pk,
-            headers=header
-        )
-        print('delete_account_by_id')
-        print('Response HTTP Status Code: {status_code}'.format(
-            status_code=response.status_code))
-        print('Response HTTP Response Body: {content}'.format(
-            content=response.content))
+    client.post('/accounts/',
+                headers=headers,
+                data=json.dumps(data)
+                )
 
-        return response
+    response_second = client.post('/accounts/',
+                                  headers=headers,
+                                  data=json.dumps(data)
+                                  )
 
-    except requests.exceptions.RequestException:
-        print('delete_account_by_id - HTTP Request failed!')
-        return None
+    assert response_second.status_code == 403
+
+
+def test_delete_account_by_id(client):
+    headers = records.header_content_type_ver()
+    data = records.data_email_pwd()
+
+    response_register = client.post('/accounts/',
+                                    headers=headers,
+                                    data=json.dumps(data)
+                                    )
+
+    response_delete = client.delete('/accounts/' + pk,
+                                    headers=headers)
+
 
 
 def change_account_password(pk, header, data):
