@@ -16,7 +16,8 @@ def create_app(config_filename):
 
     return app
 
-if __name__ == "__main__":
+
+def lepri():
     app = create_app('idManager.settings')
 
     manager = Manager(app)
@@ -29,3 +30,7 @@ if __name__ == "__main__":
         pytest.main("-x idManager/test")
 
     manager.run()
+
+
+if __name__ == "__main__":
+    lepri()
