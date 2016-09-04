@@ -1,1 +1,1 @@
-web: gunicorn manage:run_default
+web: gunicorn manage:default

@@ -17,7 +17,7 @@ def create_app(config_filename):
     return app
 
 
-def run_default():
+def default():
     app = create_app('idManager.settings')
 
     manager = Manager(app)
@@ -33,4 +33,4 @@ def run_default():
 
 
 if __name__ == "__main__":
-    run_default()
+    default()
