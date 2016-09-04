@@ -29,10 +29,9 @@ def app_default(self, arg1):
 
         pytest.main("-x idManager/test")
 
-    manager.run()
-
-    return app
+    return manager
 
 
 if __name__ == "__main__":
-    app_default()
+    manager = app_default()
+    manager.run()

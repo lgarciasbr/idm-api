@@ -4,8 +4,8 @@ from manage import create_app
 
 @pytest.fixture(scope='session')
 def app():
-    app = create_app('idManager.settings')
-    return app
+    app_test = create_app('idManager.settings')
+    return app_test
 
 
 @pytest.fixture(scope='function')
