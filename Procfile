@@ -1,1 +1,1 @@
-web: gunicorn manage --log-file
+web: gunicorn manage:app
