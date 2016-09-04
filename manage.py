@@ -1,5 +1,3 @@
-import os
-
 from flask import Flask
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
@@ -25,34 +23,10 @@ if __name__ == "__main__":
     manager = Manager(app)
     manager.add_command('db', MigrateCommand)
 
-    manager.run()
-
     @manager.command
     def test():
-        """Execute UnitTest."""
-        import unittest
+        import pytest
 
-        tests = unittest.TestLoader().discover('idManager/test')
-        unittest.TextTestRunner(verbosity=2).run(tests)
+        pytest.main("-x idManager/test")
 
-    @manager.command
-    def test_coverage():
-        """Execute UnitTest, than create a coverage page."""
-        import coverage
-        import unittest
-
-        cov = coverage.coverage(
-            branch=True,
-            include={'idManager/*'}
-        )
-        cov.start()
-        tests = unittest.TestLoader().discover('test')
-        unittest.TextTestRunner(verbosity=2).run(tests)
-        cov.stop()
-        cov.save()
-        print('Coverage Summary:')
-        cov.report()
-        basedir = os.path.abspath(os.path.dirname(__file__))
-        covdir = os.path.join(basedir, 'coverage')
-        cov.html_report(directory=covdir)
-        cov.erase()
+    manager.run()

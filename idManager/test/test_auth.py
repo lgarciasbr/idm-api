@@ -1,7 +1,4 @@
 from flask import request as requests, jsonify as json
-from manage import app
-
-tester = app.test_client()
 
 
 def auth_login(header, data):
