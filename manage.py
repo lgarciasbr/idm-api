@@ -17,7 +17,7 @@ def create_app(config_filename):
     return app
 
 
-def app_default(**kwargs):
+def app_default(arg1, arg2):
     app = create_app('idManager.settings')
 
     manager = Manager(app)
