@@ -16,8 +16,7 @@ def create_app(config_filename):
 
     return app
 
-
-def default():
+if __name__ == "__main__":
     app = create_app('idManager.settings')
 
     manager = Manager(app)
@@ -30,7 +29,3 @@ def default():
         pytest.main("-x idManager/test")
 
     manager.run()
-
-
-if __name__ == "__main__":
-    default()
