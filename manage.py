@@ -17,7 +17,7 @@ def create_app(config_filename):
     return app
 
 
-def lepri():
+def app_default(**kwargs):
     app = create_app('idManager.settings')
 
     manager = Manager(app)
@@ -33,4 +33,4 @@ def lepri():
 
 
 if __name__ == "__main__":
-    lepri()
+    app_default()
