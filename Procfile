@@ -1,2 +1,2 @@
-web: run-program gunicorn manage:run_default --log-file -
+web: run-program gunicorn manage:app --log-file -
 upgrade: python manage.py db upgrade
