@@ -17,8 +17,14 @@ def create_app(config_filename):
     return app
 
 
-def app_default(self, arg1):
+def app_default():
     app = create_app('idManager.settings')
+
+    return app
+
+
+if __name__ == "__main__":
+    app = app_default()
 
     manager = Manager(app)
     manager.add_command('db', MigrateCommand)
@@ -29,9 +35,4 @@ def app_default(self, arg1):
 
         pytest.main("-x idManager/test")
 
-    return manager
-
-
-if __name__ == "__main__":
-    manager = app_default()
     manager.run()
