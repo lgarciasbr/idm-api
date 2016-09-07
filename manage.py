@@ -16,16 +16,9 @@ def create_app(config_filename):
 
     return app
 
-
-def app_default(self, arg1):
-    app = create_app('idManager.settings')
-
-    return app
-
+app = create_app('idManager.settings')
 
 if __name__ == "__main__":
-    app = app_default()
-
     manager = Manager(app)
     manager.add_command('db', MigrateCommand)
 
