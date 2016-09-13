@@ -13,6 +13,7 @@ delete_account_by_id
 '''
 
 
+# region Register_Account
 # todo Precisa tratar o banco de dados / limpar os dados ou criar um e-mail diferente a cada vez.
 # todo Precisa resolver o teste do deliverability do e-mail.
 @pytest.mark.parametrize(("header", "data", "deliverability", "expected"), [
@@ -58,13 +59,14 @@ def test_register_a_registered_account(client):
                                   )
 
     assert response_second.status_code == 403
+# endregion
 
 
 def test_delete_account_by_id(client):
-    headers, pk = records.header_content_type_ver_token(client)
+    header, pk = records.header_content_type_ver_token(client)
 
     response_delete = client.delete('/accounts/' + str(pk),
-                                    headers=headers)
+                                    headers=header)
 
     assert response_delete.status_code == 202
 
