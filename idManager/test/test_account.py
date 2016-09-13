@@ -62,13 +62,39 @@ def test_register_a_registered_account(client):
 # endregion
 
 
-def test_delete_account_by_id(client):
-    header, pk = records.header_content_type_ver_token(client)
+@pytest.mark.parametrize(("token", "pk", "expected"), [
+    (True, True, 202),
+    (False, True, 403),
+    (True, False, 405),
+    (False, False, 405),
+])
+def test_delete_account_by_id(client, token, pk, expected):
+    pk_value = ''
+    token_value = ''
 
-    response_delete = client.delete('/accounts/' + str(pk),
-                                    headers=header)
+    headers = records.header_content_type_ver()
+    data = records.data_email_pwd()
 
-    assert response_delete.status_code == 202
+    response_register = client.post('/accounts/',
+                                    headers=headers,
+                                    data=json.dumps(data)
+                                    )
+
+    if pk:
+        pk_value = json.loads(response_register.data.decode('utf-8'))['account']['_id']
+
+    response_login = client.post('/auth/',
+                                 headers=headers,
+                                 data=json.dumps(data)
+                                 )
+
+    if token:
+        token_value = json.loads(response_login.data.decode('utf-8'))['auth']['_token']
+
+    response_delete = client.delete('/accounts/' + str(pk_value),
+                                    headers={'Content-Type': 'application/json', 'ver': '1', 'token': token_value})
+
+    assert response_delete.status_code == expected
 
 
 def change_account_password(pk, header, data):
