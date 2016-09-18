@@ -28,4 +28,12 @@ if __name__ == "__main__":
 
         pytest.main("-x idManager/test")
 
+    @manager.command
+    def coverage():
+        pass
+        # coverage run manage.py test
+        # coverage xml
+        # python-codacy-coverage -r coverage.xml
+
+
     manager.run()
