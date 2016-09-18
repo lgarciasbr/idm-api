@@ -62,13 +62,20 @@ def test_register_a_registered_account(client):
 # endregion
 
 
-@pytest.mark.parametrize(("token", "pk", "expected"), [
-    (True, True, 202),
-    (False, True, 403),
-    (True, False, 405),
-    (False, False, 405),
+@pytest.mark.parametrize(("header", "token", "pk", "expected"), [
+    (records.header_empty(), True, True, 202),
+    (records.header_no_content_type_ver(), True, True, 202),
+    (records.header_content_type_no_ver(), True, True, 202),
+    (records.header_empty_content_type_ver(), True, True, 202),
+    (records.header_content_type_empty_ver(), True, True, 202),
+    (records.header_invalid_content_type_ver(), True, True, 400),
+    (records.header_content_type_invalid_ver(), True, True, 400),
+    (records.header_content_type_ver(), True, True, 202),
+    (records.header_content_type_ver(), False, True, 400),
+    (records.header_content_type_ver(), True, False, 405),
+    (records.header_content_type_ver(), False, False, 405),
 ])
-def test_delete_account_by_id(client, token, pk, expected):
+def test_delete_account_by_id(client, header, token, pk, expected):
     pk_value = ''
     token_value = ''
 
@@ -91,8 +98,10 @@ def test_delete_account_by_id(client, token, pk, expected):
     if token:
         token_value = json.loads(response_login.data.decode('utf-8'))['auth']['_token']
 
+        header['token'] = token_value
+
     response_delete = client.delete('/accounts/' + str(pk_value),
-                                    headers={'Content-Type': 'application/json', 'ver': '1', 'token': token_value})
+                                    headers=header)
 
     assert response_delete.status_code == expected
 

@@ -185,7 +185,7 @@ def delete_account_by_id(header, pk):
     if ver == '1' or not ver:
         return delete_account_by_id_ver_1(pk)
     # elif header['ver'] == '2':
-    #    return get_ver_2()
+    #    return delete_account_by_id_ver_2()
     else:
         # Bad Request
         abort(400, MSN_INVALID_API_VER)
