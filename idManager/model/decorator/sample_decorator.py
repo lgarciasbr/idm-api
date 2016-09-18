@@ -19,7 +19,7 @@ def decorator_name(f):
 
 
 # decorator with arguments
-def decorator_name(args):
+def decorator_name2(args):
     def decorator(f):
         @functools.wraps(f)
         def wrapped(*args, **kwargs):

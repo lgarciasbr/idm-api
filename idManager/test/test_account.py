@@ -1,16 +1,6 @@
 import json
 import pytest
 from idManager.test import records
-# import idManager.settings as settings
-
-'''
-- Account
-register_account
-change_account_password
-get_accounts
-get_account_by_id
-delete_account_by_id
-'''
 
 
 # region Register_Account

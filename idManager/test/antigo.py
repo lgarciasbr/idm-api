@@ -2,8 +2,9 @@ import json
 import time
 import unittest
 from idManager.settings import MSG_LOGIN, MSG_LOGOUT, MSG_LOGIN_ERROR,\
-    MSG_INVALID_TOKEN, EMAIL_TEST, PWD_TEST, CHECK_EMAIL_DELIVERABILITY
+    MSG_INVALID_TOKEN, EMAIL_TEST, PWD_TEST
 from manage import app
+
 
 class AuthenticationSolution(unittest.TestCase):
 
