@@ -52,6 +52,7 @@ def test_register_a_registered_account(client):
 # endregion
 
 
+# todo Token errado e pk errado
 @pytest.mark.parametrize(("header", "token", "pk", "expected"), [
     (records.header_empty(), True, True, 202),
     (records.header_empty(), False, True, 400),
