@@ -1,4 +1,4 @@
-from idManager.model.database.db_model import db, Token
+from idManager.database.db_model import db, Token
 
 
 def set_token(token, account):

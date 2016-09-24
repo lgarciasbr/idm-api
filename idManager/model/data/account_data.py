@@ -1,4 +1,4 @@
-from idManager.model.database.db_model import db, Account
+from idManager.database.db_model import db, Account
 
 
 def register_account(email, password):

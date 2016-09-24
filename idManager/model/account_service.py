@@ -3,9 +3,9 @@ from email_validator import validate_email, EmailNotValidError
 from flask import abort
 
 from idManager import decorators
+from idManager.database.db_schema import AccountSchema
 from idManager.model import token_service
-from idManager.model.database.db_schema import AccountSchema
-from idManager.model.integration import account_data
+from idManager.model.data import account_data
 from idManager.settings import MSG_EMAIL_ALREADY_REGISTERED, MSG_ACCOUNT_SET, CHECK_EMAIL_DELIVERABILITY, \
     MSN_INVALID_API_VER, MSN_EXPECTED_JSON_DATA, MSG_ACCOUNT_DELETED, MSG_ACCOUNT_PWD_CHANGED
 
