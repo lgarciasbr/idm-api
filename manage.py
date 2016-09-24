@@ -26,7 +26,7 @@ if __name__ == "__main__":
     def test():
         import pytest
 
-        pytest.main("-x idManager/test")
+        pytest.main("-x tests")
 
     @manager.command
     def coverage():
