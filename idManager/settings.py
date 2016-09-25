@@ -11,8 +11,7 @@ DEBUG = config('DEBUG', cast=bool)
 # Token Host - option: redis, database
 TOKEN_HOST = config('TOKEN_HOST', default='database')
 # BD Config
-BASE_DIR = Path(__file__).parent
-DATABASE_URL = config('DATABASE_URL', default='sqlite:///' + BASE_DIR.child('app.db'))
+DATABASE_URL = config('DATABASE_URL')
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_DATABASE_URI = DATABASE_URL
 # Set to 'False' or True to domain name resolution on email check when register a new account.
