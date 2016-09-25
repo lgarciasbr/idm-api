@@ -1,8 +1,7 @@
 import bcrypt
 from email_validator import validate_email, EmailNotValidError
 from flask import abort
-
-from idManager import decorators
+import idManager.model.token_service
 from idManager.model import token_service
 from idManager.model.database.db_schema import AccountSchema
 from idManager.model.integration import account_data
@@ -83,7 +82,7 @@ def account_register_ver_1(email, password):
 
 
 # region Change_Account_Password
-@decorators.validate
+@idManager.model.token_service.validate_token
 def change_account_password(header, data, pk):
     if not data or not pk:
         abort(400, MSN_EXPECTED_JSON_DATA)
@@ -127,7 +126,7 @@ def change_account_password_ver_1(pk, password, new_password):
 
 # TODO Verificar se ele pertence ao grupo de ADMIN
 # region Get_Accounts
-@decorators.validate
+@idManager.model.token_service.validate_token
 def get_accounts(header):
     ver = header.get('ver')
 
@@ -150,7 +149,7 @@ def get_accounts_ver_1():
 
 # TODO Verificar se ele pertence ao grupo de ADMIN ou se ele e ele mesmo.
 # region Get_Account_By_Id
-@decorators.validate
+@idManager.model.token_service.validate_token
 def get_account_by_id(header, pk):
     ver = header.get('ver')
 
@@ -178,7 +177,7 @@ def get_account_by_id_ver_1(pk):
 
 # TODO Se nao for o admin pedir senha
 # region Delete_Account_By_Id
-@decorators.validate
+@idManager.model.token_service.validate_token
 def delete_account_by_id(header, pk):
     ver = header.get('ver')
 
