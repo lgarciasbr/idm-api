@@ -4,11 +4,11 @@ from decouple import config
 # todo implementar o sistema em mais de um idioma
 # todo ALLOWED_HOSTS
 # todo Verificar como buscar foto de perfil, igual os sites fazem hoje, voce cadastra e aparece sua foto.
+# todo Redis
 
-SECRET_KEY = config('SECRET_KEY', default='lg-idm')
-DEBUG = config('DEBUG', default=False, cast=bool)
-# todo ElasticSearch
-# Token Host - option: elasticsearch or redis, database
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', cast=bool)
+# Token Host - option: redis, database
 TOKEN_HOST = config('TOKEN_HOST', default='database')
 # BD Config
 BASE_DIR = Path(__file__).parent
@@ -16,7 +16,7 @@ DATABASE_URL = config('DATABASE_URL', default='sqlite:///' + BASE_DIR.child('app
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_DATABASE_URI = DATABASE_URL
 # Set to 'False' or True to domain name resolution on email check when register a new account.
-CHECK_EMAIL_DELIVERABILITY = config('CHECK_EMAIL_DELIVERABILITY', default=True, cast=bool)
+CHECK_EMAIL_DELIVERABILITY = config('CHECK_EMAIL_DELIVERABILITY', cast=bool)
 
 ##############
 

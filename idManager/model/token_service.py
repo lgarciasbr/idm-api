@@ -1,4 +1,4 @@
-from idManager.model.data import token_data
+from idManager.model.integration import token_data
 from idManager.settings import SECRET_KEY
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
 
