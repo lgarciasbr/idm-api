@@ -1,5 +1,4 @@
-import json
-from .util import generate_random_email
+from tests import util
 
 PWD_TEST = 'default'
 
@@ -56,7 +55,7 @@ def data_empty():
 
 
 def data_email_pwd():
-    return {'email': generate_random_email(), 'password': PWD_TEST}
+    return {'email': util.generate_random_email(), 'password': PWD_TEST}
 
 
 # I hope 'NotExistDomain1974.com' do not exist. ;-)
@@ -77,9 +76,9 @@ def data_invalid_email_pwd():
 
 
 def data_email_empty_pwd():
-    return {'email': generate_random_email(), 'password': ''}
+    return {'email': util.generate_random_email(), 'password': ''}
 
 
 def data_email_no_pwd():
-    return {'email': generate_random_email()}
+    return {'email': util.generate_random_email()}
 # endregion

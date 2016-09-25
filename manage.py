@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
+
 from idManager import id_manager_blueprint
 from idManager.model.database.db_model import db
 
@@ -26,6 +27,14 @@ if __name__ == "__main__":
     def test():
         import pytest
 
-        pytest.main("-x idManager/test")
+        pytest.main("-x tests")
+
+    @manager.command
+    def coverage():
+        pass
+        # coverage run manage.py test
+        # coverage xml
+        # python-codacy-coverage -r coverage.xml
+
 
     manager.run()

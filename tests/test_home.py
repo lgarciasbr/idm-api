@@ -1,6 +1,6 @@
 import json
 import pytest
-from idManager.test import records
+from tests import records
 
 
 @pytest.mark.parametrize(("header", "data", "expected"), [
