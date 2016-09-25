@@ -1,10 +1,10 @@
-import idManager.decorators
+import idManager.view.header_view
 from idManager.view import error_handler_view
 from . import id_manager_blueprint
 
 
 @id_manager_blueprint.app_errorhandler(404)
-@idManager.decorators.add_response_headers
+@idManager.view.header_view.add_response_headers
 def not_found(e):
     response = error_handler_view.not_found(e)
     response.status_code = 404
@@ -13,7 +13,7 @@ def not_found(e):
 
 
 @id_manager_blueprint.errorhandler(403)
-@idManager.decorators.add_response_headers
+@idManager.view.header_view.add_response_headers
 def forbidden(e):
     response = error_handler_view.forbidden(e)
     response.status_code = 403

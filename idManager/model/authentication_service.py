@@ -1,6 +1,5 @@
 from flask import abort
-
-from idManager import decorators
+import idManager.model.token_service
 from idManager.model import token_service
 from idManager.model import account_service
 from idManager.settings import MSG_LOGIN, MSG_LOGIN_ERROR, MSG_LOGOUT, MSG_VALID_TOKEN, \
@@ -47,7 +46,7 @@ def auth_login_ver_1(email, password):
 
 
 # region LOGOUT
-@decorators.validate
+@idManager.model.token_service.validate_token
 def auth_logout(header):
     ver = header.get('ver')
     token = header.get('token')
@@ -73,7 +72,7 @@ def auth_logout_ver_1(token):
 
 # region Is token valid?
 # todo Com o timeout do login implementado o is_valid_token pode fazer um refresh no timeout.
-@decorators.validate
+@idManager.model.token_service.validate_token
 def auth_is_valid(header):
     ver = header.get('ver')
     token = header.get('token')

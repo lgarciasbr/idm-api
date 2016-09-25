@@ -1,5 +1,7 @@
+import functools
+from flask import request, abort
 from idManager.model.integration import token_data
-from idManager.settings import SECRET_KEY
+from idManager.settings import SECRET_KEY, MSG_INVALID_TOKEN
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
 
 
@@ -34,10 +36,32 @@ def verify_token(token):
         return True
 
 
+# Decorator
+def validate_token(f):
+    @functools.wraps(f)
+    def wrapped(*args, **kwargs):
+
+        token = request.headers.get('token')
+
+        if token is not None:
+            if verify_token(token):
+                result = f(*args, **kwargs)
+
+            else:
+                abort(403, MSG_INVALID_TOKEN)
+
+        else:
+            # Forbidden
+            abort(400, MSG_INVALID_TOKEN)
+
+        return result
+
+    return wrapped
+
+
 def delete_token(token):
     return token_data.delete_token(token)
 
 
 def delete_token_by_account_id(pk):
     return token_data.delete_token_by_account_id(pk)
-
