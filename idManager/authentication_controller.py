@@ -1,5 +1,4 @@
 from flask import request
-
 import idManager.view.header_view
 from idManager.model import authentication_service
 from idManager.view import authentication_view

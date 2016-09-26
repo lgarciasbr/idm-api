@@ -1,11 +1,10 @@
 import json
+
 import pytest
+
 from tests import records
 
 
-# region Register_Account
-# todo Precisa tratar o banco de dados / limpar os dados ou criar um e-mail diferente a cada vez.
-# todo Precisa resolver o teste do deliverability do e-mail.
 @pytest.mark.parametrize(("header", "data", "deliverability", "expected"), [
     (records.header_empty(), records.data_email_pwd(), False, 201),
     (records.header_no_content_type_ver(), records.data_email_pwd(), False, 201),
@@ -88,27 +87,14 @@ def test_register_a_registered_account(client):
     (records.header_content_type_ver(), False, False, 405),
 ])
 def test_delete_account_by_id(client, header, token, pk, expected):
-    headers = records.header_content_type_ver()
-    data = records.data_email_pwd()
-
     if pk or token:
-        response_register = client.post('/accounts/',
-                                        headers=headers,
-                                        data=json.dumps(data)
-                                        )
+        data, headers, pk_value = records.register_account(client)
 
-    if pk:
-        pk_value = json.loads(response_register.data.decode('utf-8'))['account']['_id']
-    else:
+    if pk is False:
         pk_value = ''
 
     if token:
-        response_login = client.post('/auth/',
-                                     headers=headers,
-                                     data=json.dumps(data)
-                                     )
-
-        token_value = json.loads(response_login.data.decode('utf-8'))['auth']['_token']
+        token_value = records.auth_login(client, data, headers)
 
         header['token'] = token_value
 

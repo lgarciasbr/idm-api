@@ -1,3 +1,4 @@
+import json
 from tests import util
 
 PWD_TEST = 'default'
@@ -81,4 +82,29 @@ def data_email_empty_pwd():
 
 def data_email_no_pwd():
     return {'email': util.generate_random_email()}
+# endregion
+
+
+# region Get Token, Account ID and etc.
+def register_account(client):
+    headers = header_content_type_ver()
+    data = data_email_pwd()
+
+    response_register = client.post('/accounts/',
+                                    headers=headers,
+                                    data=json.dumps(data)
+                                    )
+
+    pk_value = json.loads(response_register.data.decode('utf-8'))['account']['_id']
+
+    return data, headers, pk_value
+
+
+def auth_login(client, data, headers):
+    response_login = client.post('/auth/',
+                                 headers=headers,
+                                 data=json.dumps(data)
+                                 )
+    token_value = json.loads(response_login.data.decode('utf-8'))['auth']['_token']
+    return token_value
 # endregion
