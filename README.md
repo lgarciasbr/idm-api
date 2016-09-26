@@ -35,6 +35,7 @@ cd lg-idm
 ```console
 python -m venv .lg-idm
 source .lg-idm/bin/activate
+.lgidm\Scripts\activate
 pip install -r requirements-dev.txt
 ```
 
@@ -42,6 +43,7 @@ pip install -r requirements-dev.txt
 
 ```console
 cp contrib/env-sample .env
+cp contrib/settings-sample.ini settings.ini
 ```
 
 Obs.: Use environment variables on production.
