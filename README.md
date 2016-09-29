@@ -32,17 +32,29 @@ cd lg-idm
 
 #### 2. Create and initialize virtualenv for the project:
 
+OSX or Linux
 ```console
 python -m venv .lg-idm
 source .lg-idm/bin/activate
+pip install -r requirements-dev.txt
+```
+
+Windows
+```console
+python -m venv .lg-idm
 .lgidm\Scripts\activate
 pip install -r requirements-dev.txt
 ```
 
 #### 3. Configure your project, use *ini* or *.env*:
 
+OSX or Linux
 ```console
 cp contrib/env-sample .env
+```
+
+Windows
+```console
 cp contrib/settings-sample.ini settings.ini
 ```
 
