@@ -1,4 +1,3 @@
-from unipath import Path
 from decouple import config
 
 # todo implementar o sistema em mais de um idioma

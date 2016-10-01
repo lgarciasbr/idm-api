@@ -1,7 +1,6 @@
 import bcrypt
 from email_validator import validate_email, EmailNotValidError
 from flask import abort
-import idManager.model.token_service
 from idManager.model import token_service
 from idManager.model.database.db_schema import AccountSchema
 from idManager.model.integration import account_data

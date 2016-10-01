@@ -1,5 +1,4 @@
 from flask import abort
-import idManager.model.token_service
 from idManager.model import token_service
 from idManager.model import account_service
 from idManager.settings import MSG_LOGIN, MSG_LOGIN_ERROR, MSG_LOGOUT, MSG_VALID_TOKEN, \
