@@ -3,3 +3,4 @@
 .lg-idm
 *.pyc
 coverage
+tests/.cache/
