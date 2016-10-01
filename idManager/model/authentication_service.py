@@ -45,7 +45,7 @@ def auth_login_ver_1(email, password):
 
 
 # region LOGOUT
-@idManager.model.token_service.validate_token
+@token_service.validate_token
 def auth_logout(header):
     ver = header.get('ver')
     token = header.get('token')
@@ -71,7 +71,7 @@ def auth_logout_ver_1(token):
 
 # region Is token valid?
 # todo Com o timeout do login implementado o is_valid_token pode fazer um refresh no timeout.
-@idManager.model.token_service.validate_token
+@token_service.validate_token
 def auth_is_valid(header):
     ver = header.get('ver')
     token = header.get('token')
