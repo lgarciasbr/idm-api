@@ -33,7 +33,7 @@ def test_register_account(client, header, data, deliverability, expected):
     assert response.status_code == expected
 
 
-def test_register_a_registered_account(client):
+def test_try_register_a_registered_account(client):
     headers = records.header_content_type_ver()
     data = records.data_email_pwd()
 
@@ -51,52 +51,81 @@ def test_register_a_registered_account(client):
 # endregion
 
 
-# todo Token errado e pk errado
+# wrong ver
+# token - 0 (no token), 1 (valid token), 2 (invalid token)
+# pk - 0 (no pk), 1 (valid pk), 3 (invalid pk)
 @pytest.mark.parametrize(("header", "token", "pk", "expected"), [
-    (records.header_empty(), True, True, 202),
-    (records.header_empty(), False, True, 400),
-    (records.header_empty(), True, False, 405),
-    (records.header_empty(), False, False, 405),
-    (records.header_no_content_type_ver(), True, True, 202),
-    (records.header_no_content_type_ver(), False, True, 400),
-    (records.header_no_content_type_ver(), True, False, 405),
-    (records.header_no_content_type_ver(), False, False, 405),
-    (records.header_content_type_no_ver(), True, True, 202),
-    (records.header_content_type_no_ver(), False, True, 400),
-    (records.header_content_type_no_ver(), True, False, 405),
-    (records.header_content_type_no_ver(), False, False, 405),
-    (records.header_empty_content_type_ver(), True, True, 202),
-    (records.header_empty_content_type_ver(), False, True, 400),
-    (records.header_empty_content_type_ver(), True, False, 405),
-    (records.header_empty_content_type_ver(), False, False, 405),
-    (records.header_content_type_empty_ver(), True, True, 202),
-    (records.header_content_type_empty_ver(), False, True, 400),
-    (records.header_content_type_empty_ver(), True, False, 405),
-    (records.header_content_type_empty_ver(), False, False, 405),
-    (records.header_invalid_content_type_ver(), True, True, 400),
-    (records.header_invalid_content_type_ver(), False, True, 400),
-    (records.header_invalid_content_type_ver(), True, False, 405),
-    (records.header_invalid_content_type_ver(), False, False, 405),
-    (records.header_content_type_invalid_ver(), True, True, 400),
-    (records.header_content_type_invalid_ver(), False, True, 400),
-    (records.header_content_type_invalid_ver(), True, False, 405),
-    (records.header_content_type_invalid_ver(), False, False, 405),
-    (records.header_content_type_ver(), True, True, 202),
-    (records.header_content_type_ver(), False, True, 400),
-    (records.header_content_type_ver(), True, False, 405),
-    (records.header_content_type_ver(), False, False, 405),
+    (records.header_empty(), 0, 0, 405),
+    (records.header_empty(), 0, 1, 400),
+    (records.header_empty(), 0, 2, 400),
+    (records.header_empty(), 1, 0, 405),
+    (records.header_empty(), 1, 1, 202),
+    (records.header_empty(), 1, 2, 404),
+    (records.header_empty(), 2, 0, 405),
+    (records.header_empty(), 2, 1, 403),
+    (records.header_empty(), 2, 2, 403),
+    (records.header_no_content_type_ver(), 0, 0, 405),
+    (records.header_no_content_type_ver(), 0, 1, 400),
+    (records.header_no_content_type_ver(), 0, 2, 400),
+    (records.header_no_content_type_ver(), 1, 0, 405),
+    (records.header_no_content_type_ver(), 1, 1, 202),
+    (records.header_no_content_type_ver(), 1, 2, 404),
+    (records.header_no_content_type_ver(), 2, 0, 405),
+    (records.header_no_content_type_ver(), 2, 1, 403),
+    (records.header_no_content_type_ver(), 2, 2, 403),
+    (records.header_content_type_no_ver(), 0, 0, 405),
+    (records.header_content_type_no_ver(), 0, 1, 400),
+    (records.header_content_type_no_ver(), 0, 2, 400),
+    (records.header_content_type_no_ver(), 1, 0, 405),
+    (records.header_content_type_no_ver(), 1, 1, 202),
+    (records.header_content_type_no_ver(), 1, 2, 404),
+    (records.header_content_type_no_ver(), 2, 0, 405),
+    (records.header_content_type_no_ver(), 2, 1, 403),
+    (records.header_content_type_no_ver(), 2, 2, 403),
+    (records.header_empty_content_type_ver(), 0, 0, 405),
+    (records.header_empty_content_type_ver(), 0, 1, 400),
+    (records.header_empty_content_type_ver(), 0, 2, 400),
+    (records.header_empty_content_type_ver(), 1, 0, 405),
+    (records.header_empty_content_type_ver(), 1, 1, 202),
+    (records.header_empty_content_type_ver(), 1, 2, 404),
+    (records.header_empty_content_type_ver(), 2, 0, 405),
+    (records.header_empty_content_type_ver(), 2, 1, 403),
+    (records.header_empty_content_type_ver(), 2, 2, 403),
+
+    (records.header_content_type_empty_ver(), 1, 1, 202),
+    (records.header_content_type_empty_ver(), 0, 1, 400),
+    (records.header_content_type_empty_ver(), 1, 0, 405),
+    (records.header_content_type_empty_ver(), 0, 0, 405),
+
+    (records.header_invalid_content_type_ver(), 1, 1, 400),
+    (records.header_invalid_content_type_ver(), 0, 1, 400),
+    (records.header_invalid_content_type_ver(), 1, 0, 405),
+    (records.header_invalid_content_type_ver(), 0, 0, 405),
+
+    (records.header_content_type_invalid_ver(), 1, 1, 400),
+    (records.header_content_type_invalid_ver(), 0, 1, 400),
+    (records.header_content_type_invalid_ver(), 1, 0, 405),
+    (records.header_content_type_invalid_ver(), 0, 0, 405),
+
+    (records.header_content_type_ver(), 1, 1, 202),
+    (records.header_content_type_ver(), 0, 1, 400),
+    (records.header_content_type_ver(), 1, 0, 405),
+    (records.header_content_type_ver(), 0, 0, 405),
 ])
 def test_delete_account_by_id(client, header, token, pk, expected):
-    if pk or token:
+    if pk == 1 or token == 1:
         data, headers, pk_value = records.register_account(client)
 
-    if pk is False:
+    if pk == 0:
         pk_value = ''
+    elif pk == 2:
+        pk_value = '888888888888'
 
-    if token:
+    if token == 1:
         token_value = records.auth_login(client, data, headers)
-
         header['token'] = token_value
+    elif token == 2:
+        header['token'] = 'wrong_token'
 
     response_delete = client.delete('/accounts/' + str(pk_value),
                                     headers=header)
