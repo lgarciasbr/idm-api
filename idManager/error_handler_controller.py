@@ -3,6 +3,24 @@ from idManager.view import error_handler_view
 from . import id_manager_blueprint
 
 
+@id_manager_blueprint.app_errorhandler(500)
+@idManager.view.header_view.add_response_headers
+def not_allowed(e):
+    response = error_handler_view.internal_server_error(e)
+    response.status_code = 500
+
+    return response
+
+
+@id_manager_blueprint.app_errorhandler(405)
+#@idManager.view.header_view.add_response_headers
+def not_allowed(e):
+    response = error_handler_view.not_allowed(e)
+    response.status_code = 405
+
+    return response
+
+
 @id_manager_blueprint.app_errorhandler(404)
 @idManager.view.header_view.add_response_headers
 def not_found(e):

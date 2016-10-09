@@ -1,5 +1,21 @@
 from flask import jsonify
-from idManager.settings import MSN_400, MSN_403, MSN_404
+from idManager.settings import MSN_400, MSN_403, MSN_404, MSN_405, MSN_500
+
+
+def internal_server_error(e):
+    view = jsonify({'status_code': 500,
+                    'error': MSN_500,
+                    'message': e.description})
+
+    return view
+
+
+def not_allowed(e):
+    view = jsonify({'status_code': 405,
+                    'error': MSN_405,
+                    'message': e.description})
+
+    return view
 
 
 def not_found(e):
