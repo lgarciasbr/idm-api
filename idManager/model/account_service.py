@@ -1,6 +1,6 @@
 import bcrypt
 from email_validator import validate_email, EmailNotValidError
-from flask import abort
+from flask import abort, current_app
 from idManager.model import token_service
 from idManager.model.database.db_schema import AccountSchema
 from idManager.model.integration import account_data
@@ -34,11 +34,13 @@ def validate_account_password(email, password):
 # region Register_Account
 def account_register(header, data):
     if not data:
+        current_app.extensions['sentry'].captureMessage('account_register, 400: ' + MSN_EXPECTED_JSON_DATA)
         abort(400, MSN_EXPECTED_JSON_DATA)
 
     # Validate Schema
     account, errors = register_account_schema.load(data)
     if errors:
+        current_app.extensions['sentry'].captureMessage('account_register, 400: ' + str(errors))
         abort(400, errors)
 
     ver = header.get('ver')
@@ -50,6 +52,7 @@ def account_register(header, data):
     #    return get_ver_2()
     else:
         # Bad Request
+        current_app.extensions['sentry'].captureMessage('account_register, 400: ' + MSN_INVALID_API_VER)
         abort(400, MSN_INVALID_API_VER)
 
 
@@ -61,6 +64,7 @@ def account_register_ver_1(email, password):
         email = v["email"]
     except EmailNotValidError as e:
         # email is not valid, exception message is human-readable
+        current_app.extensions['sentry'].captureMessage('account_register_ver_1, 400: ' + str(e))
         abort(400, str(e))
 
     account = account_data.get_account_by_email(email)
@@ -73,9 +77,11 @@ def account_register_ver_1(email, password):
                     'account': get_account_schema.dump(account),
                     'http_status_code': 201}
         else:
+            current_app.extensions['sentry'].captureMessage('account_register_ver_1, 500')
             abort(500)
 
     else:
+        current_app.extensions['sentry'].captureMessage('account_register_ver_1, 403: ' + MSG_EMAIL_ALREADY_REGISTERED)
         abort(403, MSG_EMAIL_ALREADY_REGISTERED)
 # endregion
 
@@ -84,11 +90,13 @@ def account_register_ver_1(email, password):
 @token_service.validate_token
 def change_account_password(header, data, pk):
     if not data or not pk:
+        current_app.extensions['sentry'].captureMessage('change_account_password, 400: ' + MSN_EXPECTED_JSON_DATA)
         abort(400, MSN_EXPECTED_JSON_DATA)
 
     # Validate Schema
     account_password, errors = change_account_password_schema.load(data)
     if errors:
+        current_app.extensions['sentry'].captureMessage('change_account_password, 400: ' + errors)
         abort(400, errors)
 
     ver = header.get('ver')
@@ -100,6 +108,7 @@ def change_account_password(header, data, pk):
     #    return get_ver_2()
     else:
         # Bad Request
+        current_app.extensions['sentry'].captureMessage('change_account_password, 400: ' + MSN_INVALID_API_VER)
         abort(400, MSN_INVALID_API_VER)
 
 
@@ -117,8 +126,10 @@ def change_account_password_ver_1(pk, password, new_password):
                     'account': get_account_schema.dump(account),
                     'http_status_code': 202}
         else:
+            current_app.extensions['sentry'].captureMessage('change_account_password_ver_1, 403')
             abort(403)
     else:
+        current_app.extensions['sentry'].captureMessage('change_account_password_ver_1, 404')
         abort(404)
 # endregion
 
@@ -136,6 +147,7 @@ def get_accounts(header):
     #    return get_ver_2()
     else:
         # Bad Request
+        current_app.extensions['sentry'].captureMessage('get_accounts, 400: ' + MSN_INVALID_API_VER)
         abort(400, MSN_INVALID_API_VER)
 
 
@@ -159,6 +171,7 @@ def get_account_by_id(header, pk):
     #    return get_ver_2()
     else:
         # Bad Request
+        current_app.extensions['sentry'].captureMessage('get_account_by_id, 400: ' + MSN_INVALID_API_VER)
         abort(400, MSN_INVALID_API_VER)
 
 
@@ -170,6 +183,7 @@ def get_account_by_id_ver_1(pk):
         return {'account': get_account_schema.dump(account),
                 'http_status_code': 200}
     else:
+        current_app.extensions['sentry'].captureMessage('get_account_by_id_ver_1, 404')
         abort(404)
 # endregion
 
@@ -187,6 +201,7 @@ def delete_account_by_id(header, pk):
     #    return delete_account_by_id_ver_2()
     else:
         # Bad Request
+        current_app.extensions['sentry'].captureMessage('delete_account_by_id, 400: ' + MSN_INVALID_API_VER)
         abort(400, MSN_INVALID_API_VER)
 
 
@@ -202,7 +217,9 @@ def delete_account_by_id_ver_1(pk):
                     'account': get_account_schema.dump(account),
                     'http_status_code': 202}
         else:
+            current_app.extensions['sentry'].captureMessage('delete_account_by_id_ver_1, 500')
             abort(500)
     else:
+        current_app.extensions['sentry'].captureMessage('delete_account_by_id_ver_1, 404')
         abort(404)
 # endregion

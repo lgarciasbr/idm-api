@@ -1,4 +1,4 @@
-from flask import abort
+from flask import abort, current_app
 from idManager.model import token_service
 from idManager.model import account_service
 from idManager.settings import MSG_LOGIN, MSG_LOGIN_ERROR, MSG_LOGOUT, MSG_VALID_TOKEN, \
@@ -8,11 +8,13 @@ from idManager.settings import MSG_LOGIN, MSG_LOGIN_ERROR, MSG_LOGOUT, MSG_VALID
 # region LOGIN
 def auth_login(header, data):
     if not data:
+        current_app.extensions['sentry'].captureMessage('auth_login, 400: ' + MSN_EXPECTED_JSON_DATA)
         abort(400, MSN_EXPECTED_JSON_DATA)
 
     # Validate Schema
     account, errors = account_service.register_account_schema.load(data)
     if errors:
+        current_app.extensions['sentry'].captureMessage('auth_login, 400: ' + str(errors))
         abort(400, errors)
 
     ver = header.get('ver')
@@ -24,6 +26,7 @@ def auth_login(header, data):
     #    return get_ver_2(username, password, ip)
     else:
         # Bad Request
+        current_app.extensions['sentry'].captureMessage('auth_login, 400: ' + MSN_INVALID_API_VER)
         abort(400, MSN_INVALID_API_VER)
 
 
@@ -38,6 +41,7 @@ def auth_login_ver_1(email, password):
                 'http_status_code': 200}
     else:
         # Forbidden
+        current_app.extensions['sentry'].captureMessage('auth_login_ver_1, 403: ' + MSG_LOGIN_ERROR)
         abort(403, MSG_LOGIN_ERROR)
 
 
@@ -57,6 +61,7 @@ def auth_logout(header):
     #    return auth_logout()
     else:
         # Bad Request
+        current_app.extensions['sentry'].captureMessage('auth_logout, 400: ' + MSN_INVALID_API_VER)
         abort(400, MSN_INVALID_API_VER)
 
 
@@ -83,6 +88,7 @@ def auth_is_valid(header):
     #    return auth_logout()
     else:
         # Bad Request
+        current_app.extensions['sentry'].captureMessage('auth_is_valid, 400: ' + MSN_INVALID_API_VER)
         abort(400, MSN_INVALID_API_VER)
 
 

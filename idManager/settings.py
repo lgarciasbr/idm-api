@@ -15,6 +15,8 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_DATABASE_URI = DATABASE_URL
 # Set to 'False' or True to domain name resolution on email check when register a new account.
 CHECK_EMAIL_DELIVERABILITY = config('CHECK_EMAIL_DELIVERABILITY', cast=bool)
+# Collect log errors. https://sentry.io
+SENTRY_DSN = config('SENTRY_DSN')
 
 ##############
 

@@ -10,7 +10,8 @@ itsdangerous==0.24
 email_validator==1.0.0
 python-decouple==3.0
 unipath==1.1
-coverage==4.0.2
 pytest==2.9.2
 fake-factory==0.6.0
+raven[flask]
+coverage==4.0.2
 codacy-coverage

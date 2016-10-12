@@ -20,6 +20,7 @@ You'll need the following for your development environment:
 1. [Python 3.5](http://www.python.org/)
 2. [PostgreSQL](https://www.postgresql.org/)
 3. [Redis](http://redis.io/)
+4. [Sentry](https://sentry.io)
 
 ### Local Setup
 

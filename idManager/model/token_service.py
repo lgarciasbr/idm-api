@@ -1,5 +1,5 @@
 import functools
-from flask import request, abort
+from flask import request, abort, current_app
 from idManager.model.integration import token_data
 from idManager.settings import SECRET_KEY, MSG_INVALID_TOKEN
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
@@ -48,10 +48,12 @@ def validate_token(f):
                 result = f(*args, **kwargs)
 
             else:
+                current_app.extensions['sentry'].captureMessage('validate_token, 403: ' + MSG_INVALID_TOKEN)
                 abort(403, MSG_INVALID_TOKEN)
 
         else:
-            # Forbidden
+            # Forbidden too ...
+            current_app.extensions['sentry'].captureMessage('validate_token, 400: ' + MSG_INVALID_TOKEN)
             abort(400, MSG_INVALID_TOKEN)
 
         return result
