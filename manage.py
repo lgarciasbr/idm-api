@@ -18,7 +18,6 @@ def create_app(config_filename):
     # Collect log errors.
     sentry = Sentry()
     sentry.init_app(app)
-    app.extensions['sentry'].captureMessage('LG-iDM is running')
 
     return app
 
