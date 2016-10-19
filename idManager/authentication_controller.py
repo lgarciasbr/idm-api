@@ -25,7 +25,11 @@ def auth_login():
         abort(400, errors)
 
     auth = authentication_service.auth_login(ver, account_data)
-    return authentication_view.auth_login(auth), auth.get('http_status_code')
+
+    response = authentication_view.auth_login(**auth)
+    response.status_code = auth.get('http_status_code')
+
+    return response
 
 
 @id_manager_blueprint.route('/auth/', methods=['GET'])
@@ -35,7 +39,11 @@ def auth_is_valid():
     token = request.headers.get('token')
 
     auth = authentication_service.auth_is_valid(ver, token)
-    return authentication_view.auth_is_valid(auth), auth.get('http_status_code')
+
+    response = authentication_view.auth_is_valid(**auth)
+    response.status_code = auth.get('http_status_code')
+
+    return response
 
 
 @id_manager_blueprint.route('/auth/', methods=['DELETE'])
@@ -45,4 +53,8 @@ def auth_logout():
     token = request.headers.get('token')
 
     auth = authentication_service.auth_logout(ver, token)
-    return authentication_view.auth_logout(auth), auth.get('http_status_code')
+
+    response = authentication_view.auth_logout(**auth)
+    response.status_code = auth.get('http_status_code')
+
+    return response
