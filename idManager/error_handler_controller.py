@@ -13,7 +13,7 @@ def not_allowed(e):
 
 
 @id_manager_blueprint.app_errorhandler(405)
-#@idManager.view.header_view.add_response_headers
+@idManager.view.header_view.add_response_headers
 def not_allowed(e):
     response = error_handler_view.not_allowed(e)
     response.status_code = 405
@@ -39,8 +39,8 @@ def forbidden(e):
     return response
 
 
-# Bad Request don' call the decorator add_response_headers, because it is a bad_request. ;-)
 @id_manager_blueprint.errorhandler(400)
+@idManager.view.header_view.add_response_headers
 def bad_request(e):
     response = error_handler_view.bad_request(e)
     response.status_code = 400

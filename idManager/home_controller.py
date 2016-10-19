@@ -4,6 +4,7 @@ from . import id_manager_blueprint
 
 
 @id_manager_blueprint.route('/')
+@idManager.view.header_view.verify_content_type
 @idManager.view.header_view.add_response_headers
 def home():
     response = home_view.home()

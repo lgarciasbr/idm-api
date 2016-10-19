@@ -8,6 +8,7 @@ from idManager.settings import MSN_EXPECTED_JSON_DATA
 
 
 @id_manager_blueprint.route('/accounts/', methods=['POST'])
+@idManager.view.header_view.verify_content_type
 @idManager.view.header_view.add_response_headers
 def register_account():
     ver = request.headers.get('ver')
@@ -32,6 +33,7 @@ def register_account():
 
 
 @id_manager_blueprint.route('/accounts/<int:pk>', methods=['PUT'])
+@idManager.view.header_view.verify_content_type
 @idManager.view.header_view.add_response_headers
 def change_account_password(pk):
     ver = request.headers.get('ver')
@@ -56,6 +58,7 @@ def change_account_password(pk):
 
 
 @id_manager_blueprint.route('/accounts/', methods=['GET'])
+@idManager.view.header_view.verify_content_type
 @idManager.view.header_view.add_response_headers
 def get_accounts():
     ver = request.headers.get('ver')
@@ -68,6 +71,7 @@ def get_accounts():
 
 
 @id_manager_blueprint.route('/accounts/<int:pk>', methods=['GET'])
+@idManager.view.header_view.verify_content_type
 @idManager.view.header_view.add_response_headers
 def get_account_by_id(pk):
     ver = request.headers.get('ver')
@@ -80,6 +84,7 @@ def get_account_by_id(pk):
 
 
 @id_manager_blueprint.route('/accounts/<int:pk>', methods=['DELETE'])
+@idManager.view.header_view.verify_content_type
 @idManager.view.header_view.add_response_headers
 def delete_account_by_id(pk):
     ver = request.headers.get('ver')
