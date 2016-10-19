@@ -6,22 +6,10 @@ from idManager.settings import MSG_LOGIN, MSG_LOGIN_ERROR, MSG_LOGOUT, MSG_VALID
 
 
 # region LOGIN
-def auth_login(header, data):
-    if not data:
-        current_app.extensions['sentry'].captureMessage('auth_login, 400: ' + MSN_EXPECTED_JSON_DATA)
-        abort(400, MSN_EXPECTED_JSON_DATA)
-
-    # Validate Schema
-    account, errors = account_service.register_account_schema.load(data)
-    if errors:
-        current_app.extensions['sentry'].captureMessage('auth_login, 400: ' + str(errors))
-        abort(400, errors)
-
-    ver = header.get('ver')
-
+def auth_login(ver, account_data):
     # Use 'or ver is None' at the last version
     if ver == '1' or not ver:
-        return auth_login_ver_1(account["email"], account["password"])
+        return auth_login_ver_1(account_data["email"], account_data["password"])
     # elif header['ver'] == '2':
     #    return get_ver_2(username, password, ip)
     else:
@@ -50,10 +38,7 @@ def auth_login_ver_1(email, password):
 
 # region LOGOUT
 @token_service.validate_token
-def auth_logout(header):
-    ver = header.get('ver')
-    token = header.get('token')
-
+def auth_logout(ver, token):
     # Use 'or ver is None' at the last version
     if ver == '1' or not ver:
         return auth_logout_ver_1(token)
@@ -77,9 +62,7 @@ def auth_logout_ver_1(token):
 # region Is token valid?
 # todo Com o timeout do login implementado o is_valid_token pode fazer um refresh no timeout.
 @token_service.validate_token
-def auth_is_valid(header):
-    ver = header.get('ver')
-    token = header.get('token')
+def auth_is_valid(ver, token):
 
     # Use 'or ver is None' at the last version
     if ver == '1' or not ver:

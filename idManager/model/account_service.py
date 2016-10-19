@@ -5,7 +5,7 @@ from idManager.model import token_service
 from idManager.model.database.db_schema import AccountSchema
 from idManager.model.integration import account_data
 from idManager.settings import MSG_EMAIL_ALREADY_REGISTERED, MSG_ACCOUNT_SET, CHECK_EMAIL_DELIVERABILITY, \
-    MSN_INVALID_API_VER, MSN_EXPECTED_JSON_DATA, MSG_ACCOUNT_DELETED, MSG_ACCOUNT_PWD_CHANGED
+    MSN_INVALID_API_VER, MSG_ACCOUNT_DELETED, MSG_ACCOUNT_PWD_CHANGED
 
 # region Schema
 register_account_schema = AccountSchema(only=('email', 'password'))
@@ -32,22 +32,10 @@ def validate_account_password(email, password):
 
 
 # region Register_Account
-def account_register(header, data):
-    if not data:
-        current_app.extensions['sentry'].captureMessage('account_register, 400: ' + MSN_EXPECTED_JSON_DATA)
-        abort(400, MSN_EXPECTED_JSON_DATA)
-
-    # Validate Schema
-    account, errors = register_account_schema.load(data)
-    if errors:
-        current_app.extensions['sentry'].captureMessage('account_register, 400: ' + str(errors))
-        abort(400, errors)
-
-    ver = header.get('ver')
-
-    # Use 'or ver is None' at the last version
+def account_register(ver, account_data):
+    # Use 'or not ver' at the last version
     if ver == '1' or not ver:
-        return account_register_ver_1(account["email"], account["password"])
+        return account_register_ver_1(account_data["email"], account_data["password"])
     # elif header['ver'] == '2':
     #    return get_ver_2()
     else:
@@ -88,19 +76,7 @@ def account_register_ver_1(email, password):
 
 # region Change_Account_Password
 @token_service.validate_token
-def change_account_password(header, data, pk):
-    if not data or not pk:
-        current_app.extensions['sentry'].captureMessage('change_account_password, 400: ' + MSN_EXPECTED_JSON_DATA)
-        abort(400, MSN_EXPECTED_JSON_DATA)
-
-    # Validate Schema
-    account_password, errors = change_account_password_schema.load(data)
-    if errors:
-        current_app.extensions['sentry'].captureMessage('change_account_password, 400: ' + errors)
-        abort(400, errors)
-
-    ver = header.get('ver')
-
+def change_account_password(ver, account_password, pk):
     # Use 'or ver is None' at the last version
     if ver == '1' or not ver:
         return change_account_password_ver_1(pk, account_password['password'], account_password['new_password'])
@@ -137,9 +113,7 @@ def change_account_password_ver_1(pk, password, new_password):
 # TODO Verificar se ele pertence ao grupo de ADMIN
 # region Get_Accounts
 @token_service.validate_token
-def get_accounts(header):
-    ver = header.get('ver')
-
+def get_accounts(ver):
     # Use 'or ver is None' at the last version
     if ver == '1' or not ver:
         return get_accounts_ver_1()
@@ -161,9 +135,7 @@ def get_accounts_ver_1():
 # TODO Verificar se ele pertence ao grupo de ADMIN ou se ele e ele mesmo.
 # region Get_Account_By_Id
 @token_service.validate_token
-def get_account_by_id(header, pk):
-    ver = header.get('ver')
-
+def get_account_by_id(ver, pk):
     # Use 'or ver is None' at the last version
     if ver == '1' or not ver:
         return get_account_by_id_ver_1(pk)
@@ -191,9 +163,7 @@ def get_account_by_id_ver_1(pk):
 # TODO Se nao for o admin pedir senha
 # region Delete_Account_By_Id
 @token_service.validate_token
-def delete_account_by_id(header, pk):
-    ver = header.get('ver')
-
+def delete_account_by_id(ver, pk):
     # Use 'or ver is None' at the last version
     if ver == '1' or not ver:
         return delete_account_by_id_ver_1(pk)

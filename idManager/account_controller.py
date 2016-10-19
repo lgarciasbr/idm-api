@@ -1,32 +1,68 @@
-from flask import request
+from flask import request, abort, current_app
 
 import idManager.view.header_view
 from idManager.model import account_service
 from idManager.view import account_view
 from . import id_manager_blueprint
+from idManager.settings import MSN_EXPECTED_JSON_DATA
 
 
 @id_manager_blueprint.route('/accounts/', methods=['POST'])
 @idManager.view.header_view.add_response_headers
 def register_account():
-    account = account_service.account_register(request.headers, request.get_json(force=True, silent=True))
-    return account_view.register_account(account), account.get('http_status_code')
+    ver = request.headers.get('ver')
+    data = request.get_json(force=True, silent=True)
+
+    if not data:
+        current_app.extensions['sentry'].captureMessage('account_register, 400: ' + MSN_EXPECTED_JSON_DATA)
+        abort(400, MSN_EXPECTED_JSON_DATA)
+
+    # Validate Schema
+    account_data, errors = account_service.register_account_schema.load(data)
+    if errors:
+        current_app.extensions['sentry'].captureMessage('account_register, 400: ' + str(errors))
+        abort(400, errors)
+
+    account_data = account_service.account_register(ver, account_data)
+
+    response = account_view.register_account(**account_data)
+    response.status_code = account_data.get('http_status_code')
+
+    return response
 
 
 @id_manager_blueprint.route('/accounts/<int:pk>', methods=['PUT'])
 @idManager.view.header_view.add_response_headers
 def change_account_password(pk):
-    account = account_service.change_account_password(request.headers, request.get_json(force=True, silent=True), pk)
-    return account_view.account_change_password(account), account.get('http_status_code')
+    ver = request.headers.get('ver')
+    data = request.get_json(force=True, silent=True)
+
+    if not data or not pk:
+        current_app.extensions['sentry'].captureMessage('change_account_password, 400: ' + MSN_EXPECTED_JSON_DATA)
+        abort(400, MSN_EXPECTED_JSON_DATA)
+
+    # Validate Schema
+    account_password, errors = account_service.change_account_password_schema.load(data)
+    if errors:
+        current_app.extensions['sentry'].captureMessage('change_account_password, 400: ' + errors)
+        abort(400, errors)
+
+    account_data = account_service.change_account_password(ver, account_password, pk)
+
+    response = account_view.account_change_password(**account_data)
+    response.status_code = account_data.get('http_status_code')
+
+    return response
 
 
 @id_manager_blueprint.route('/accounts/', methods=['GET'])
 @idManager.view.header_view.add_response_headers
 def get_accounts():
-    accounts = account_service.get_accounts(request.headers)
+    ver = request.headers.get('ver')
+    accounts_data = account_service.get_accounts(ver)
 
-    response = account_view.get_accounts(**accounts)
-    response.status_code = accounts.get('http_status_code')
+    response = account_view.get_accounts(**accounts_data)
+    response.status_code = accounts_data.get('http_status_code')
 
     return response
 
@@ -34,12 +70,24 @@ def get_accounts():
 @id_manager_blueprint.route('/accounts/<int:pk>', methods=['GET'])
 @idManager.view.header_view.add_response_headers
 def get_account_by_id(pk):
-    account = account_service.get_account_by_id(request.headers, pk)
-    return account_view.get_account_by_id(account), account.get('http_status_code')
+    ver = request.headers.get('ver')
+    account_data = account_service.get_account_by_id(ver, pk)
+
+    response = account_view.get_account_by_id(**account_data)
+    response.status_code = account_data.get('http_status_code')
+
+    return response
 
 
 @id_manager_blueprint.route('/accounts/<int:pk>', methods=['DELETE'])
 @idManager.view.header_view.add_response_headers
 def delete_account_by_id(pk):
-    account = account_service.delete_account_by_id(request.headers, pk)
-    return account_view.delete_account(account), account.get('http_status_code')
+    ver = request.headers.get('ver')
+    account_data = account_service.delete_account_by_id(ver, pk)
+
+    response = account_view.delete_account(**account_data)
+    response.status_code = account_data.get('http_status_code')
+
+    return response
+
+    # return account_view.delete_account(account), account.get('http_status_code')
