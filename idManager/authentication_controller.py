@@ -5,9 +5,6 @@ from idManager.view import authentication_view
 from . import id_manager_blueprint
 from idManager.settings import MSN_EXPECTED_JSON_DATA
 
-
-# todo 2 steps verification - http://blog.miguelgrinberg.com/post/two-factor-authentication-with-flask
-
 @id_manager_blueprint.route('/auth/', methods=['POST'])
 @idManager.view.header_view.verify_content_type
 @idManager.view.header_view.add_response_headers

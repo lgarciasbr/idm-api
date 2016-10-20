@@ -19,9 +19,6 @@ def crypt_pwd(password):
     return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
 
-# TODO Precisa testar para verificar se o sistema esta diferenciando maiuscula de minuscula.
-# TODO PRECISA CRIAR UMA SOLUCAO PARA REGRAS DE SENHA. Ex.: uma maiscula e etc. Olhar o AD para ver como funciona.
-# TODO COLOCAR O SCRETKEY NA EQUACAO PARA SENHA??
 def validate_account_password(email, password):
     account = account_data.get_account_by_email(email)
 
@@ -110,7 +107,6 @@ def change_account_password_ver_1(pk, password, new_password):
 # endregion
 
 
-# TODO Verificar se ele pertence ao grupo de ADMIN
 # region Get_Accounts
 @token_service.validate_token
 def get_accounts(ver):
@@ -132,7 +128,6 @@ def get_accounts_ver_1():
 # endregion
 
 
-# TODO Verificar se ele pertence ao grupo de ADMIN ou se ele e ele mesmo.
 # region Get_Account_By_Id
 @token_service.validate_token
 def get_account_by_id(ver, pk):
@@ -147,7 +142,6 @@ def get_account_by_id(ver, pk):
         abort(400, MSN_INVALID_API_VER)
 
 
-# TODO CRIAR OS TESTES DO GET
 def get_account_by_id_ver_1(pk):
     account = account_data.get_account_by_id(pk)
 
@@ -160,7 +154,6 @@ def get_account_by_id_ver_1(pk):
 # endregion
 
 
-# TODO Se nao for o admin pedir senha
 # region Delete_Account_By_Id
 @token_service.validate_token
 def delete_account_by_id(ver, pk):

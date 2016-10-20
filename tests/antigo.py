@@ -16,8 +16,7 @@ class AuthenticationSolution(unittest.TestCase):
         pass
 
     # def tearDown(self):
-        # todo remover o usuario criado para o teste.
-        # todo sera que nao devo apagar o banco criado?
+
 
     # Account
     # Register
@@ -32,8 +31,6 @@ class AuthenticationSolution(unittest.TestCase):
         return tester.post('/accounts/', data=data_json, headers=header)
 
 
-    # todo precisa fazer os testes nao passando todos os itens do header no login
-    # todo precisa fazer os testes nao passando o login e depois a senha e os dois.
     # Authentication
     # Login
     def login_v1(self, email, password):
@@ -83,7 +80,6 @@ class AuthenticationSolution(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         # self.assertEqual(json.loads(response.data.decode('utf-8'))['message'], MSN_400)
 
-    # todo precisa fazer os testes nao passando todos os itens do header no login
     # Logout
     def logout_v1(self, token):
         tester = app.test_client(self)

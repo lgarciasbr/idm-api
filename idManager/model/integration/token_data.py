@@ -43,6 +43,3 @@ def delete_token_by_account_id(pk):
     except:
         current_app.extensions['sentry'].captureException()
         return False
-
-
-# todo melhorar o uso do try expect

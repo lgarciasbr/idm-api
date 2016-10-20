@@ -58,7 +58,3 @@ def delete_account_by_id(pk):
     except:
         current_app.extensions['sentry'].captureException()
         return False
-
-
-# todo melhorar o uso do try expect
-# todo deixar estas duas func genericas: by_email e by_id

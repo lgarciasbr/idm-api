@@ -60,7 +60,6 @@ def auth_logout_ver_1(token):
 
 
 # region Is token valid?
-# todo Com o timeout do login implementado o is_valid_token pode fazer um refresh no timeout.
 @token_service.validate_token
 def auth_is_valid(ver, token):
 

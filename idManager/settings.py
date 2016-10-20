@@ -1,10 +1,5 @@
 from decouple import config
 
-# todo implementar o sistema em mais de um idioma
-# todo ALLOWED_HOSTS
-# todo Verificar como buscar foto de perfil, igual os sites fazem hoje, voce cadastra e aparece sua foto.
-# todo Redis
-
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool)
 # Token Host - option: redis, database
