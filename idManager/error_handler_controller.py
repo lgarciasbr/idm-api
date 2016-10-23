@@ -5,7 +5,7 @@ from . import id_manager_blueprint
 
 @id_manager_blueprint.app_errorhandler(500)
 @idManager.view.header_view.add_response_headers
-def not_allowed(e):
+def internal_server_error(e):
     response = error_handler_view.internal_server_error(e)
     response.status_code = 500
 
