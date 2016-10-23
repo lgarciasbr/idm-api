@@ -1,8 +1,7 @@
 import json
-
 import pytest
-
 from tests import records
+from flask import current_app
 
 
 @pytest.mark.parametrize(("header", "data", "deliverability", "expected"), [
@@ -23,8 +22,7 @@ from tests import records
     (records.header_content_type_ver(), records.data_email_empty_pwd(), False, 400),
 ])
 def test_register_account(client, header, data, deliverability, expected):
-    #app.config['CHECK_EMAIL_DELIVERABILITY'] = deliverability
-    #settings.CHECK_EMAIL_DELIVERABILITY = deliverability
+    current_app.config['CHECK_EMAIL_DELIVERABILITY'] = deliverability
 
     response = client.post('/accounts/',
                            headers=header,
