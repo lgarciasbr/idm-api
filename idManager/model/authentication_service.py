@@ -1,8 +1,7 @@
 from flask import abort, current_app
 from idManager.model import token_service
 from idManager.model import account_service
-from idManager.settings import MSG_LOGIN, MSG_LOGIN_ERROR, MSG_LOGOUT, MSG_VALID_TOKEN, \
-    MSN_EXPECTED_JSON_DATA, MSN_INVALID_API_VER
+from idManager.settings import MSG_LOGIN, MSG_LOGIN_ERROR, MSG_LOGOUT, MSG_VALID_TOKEN, MSN_INVALID_API_VER
 
 
 # region LOGIN
