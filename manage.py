@@ -45,8 +45,8 @@ if __name__ == "__main__":
 
         cov.stop()
         cov.save()
-
         cov.xml_report()
+        cov.report()
 
         # token = You can find the token in Project -> Settings -> Integrations -> Project API.
         # export CODACY_PROJECT_TOKEN=token
