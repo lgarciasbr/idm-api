@@ -1,5 +1,4 @@
 from flask import request, abort, current_app
-
 import idManager.view.header_view
 from idManager.model import account_service
 from idManager.view import account_view
