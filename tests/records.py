@@ -95,7 +95,10 @@ def register_account(client):
                                     data=json.dumps(data)
                                     )
 
-    pk_value = json.loads(response_register.data.decode('utf-8'))['account']['_id']
+    try:
+        pk_value = json.loads(response_register.data.decode('utf-8'))['account']['_id']
+    except:
+        pass
 
     return data, headers, pk_value
 
