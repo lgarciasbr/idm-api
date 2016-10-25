@@ -1,9 +1,10 @@
-from flask import request, abort, current_app
+from flask import request, abort
 import idManager.view.header_view
 from idManager.model import account_service
+from idManager.model import message_service
+from idManager.settings import MSN_EXPECTED_JSON_DATA
 from idManager.view import account_view
 from . import id_manager_blueprint
-from idManager.settings import MSN_EXPECTED_JSON_DATA
 
 
 @id_manager_blueprint.route('/accounts/', methods=['POST'])
@@ -14,13 +15,13 @@ def register_account():
     data = request.get_json(force=True, silent=True)
 
     if not data:
-        current_app.extensions['sentry'].captureMessage('account_register, 400: ' + MSN_EXPECTED_JSON_DATA)
+        message_service.send_log_message('account_register, 400: ' + MSN_EXPECTED_JSON_DATA)
         abort(400, MSN_EXPECTED_JSON_DATA)
 
     # Validate Schema
     account_data, errors = account_service.register_account_schema.load(data)
     if errors:
-        current_app.extensions['sentry'].captureMessage('account_register, 400: ' + str(errors))
+        message_service.send_log_message('account_register, 400: ' + str(errors))
         abort(400, errors)
 
     account_data = account_service.account_register(ver, account_data)
@@ -39,13 +40,13 @@ def change_account_password(pk):
     data = request.get_json(force=True, silent=True)
 
     if not data or not pk:
-        current_app.extensions['sentry'].captureMessage('change_account_password, 400: ' + MSN_EXPECTED_JSON_DATA)
+        message_service.send_log_message('change_account_password, 400: ' + MSN_EXPECTED_JSON_DATA)
         abort(400, MSN_EXPECTED_JSON_DATA)
 
     # Validate Schema
     account_password, errors = account_service.change_account_password_schema.load(data)
     if errors:
-        current_app.extensions['sentry'].captureMessage('change_account_password, 400: ' + errors)
+        message_service.send_log_message('change_account_password, 400: ' + errors)
         abort(400, errors)
 
     account_data = account_service.change_account_password(ver, account_password, pk)
@@ -93,5 +94,3 @@ def delete_account_by_id(pk):
     response.status_code = account_data.get('http_status_code')
 
     return response
-
-    # return account_view.delete_account(account), account.get('http_status_code')

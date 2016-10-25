@@ -1,9 +1,10 @@
-from flask import request, abort, current_app
+from flask import request, abort
 import idManager.view.header_view
-from idManager.model import authentication_service, account_service
+from idManager.model import authentication_service, account_service, message_service
 from idManager.view import authentication_view
 from . import id_manager_blueprint
 from idManager.settings import MSN_EXPECTED_JSON_DATA
+
 
 @id_manager_blueprint.route('/auth/', methods=['POST'])
 @idManager.view.header_view.verify_content_type
@@ -13,13 +14,13 @@ def auth_login():
     data = request.get_json(force=True, silent=True)
 
     if not data:
-        current_app.extensions['sentry'].captureMessage('auth_login, 400: ' + MSN_EXPECTED_JSON_DATA)
+        message_service.send_log_message('auth_login, 400: ' + MSN_EXPECTED_JSON_DATA)
         abort(400, MSN_EXPECTED_JSON_DATA)
 
     # Validate Schema
     account_data, errors = account_service.register_account_schema.load(data)
     if errors:
-        current_app.extensions['sentry'].captureMessage('auth_login, 400: ' + str(errors))
+        message_service.send_log_message('auth_login, 400: ' + str(errors))
         abort(400, errors)
 
     auth = authentication_service.auth_login(ver, account_data)
