@@ -1,6 +1,7 @@
 from functools import wraps
-from flask import make_response, abort, request, current_app
+from flask import make_response, abort, request
 from idManager.settings import MSN_EXPECTED_CONTENT_TYPE_JSON, MSG_NEWEST_VERSION
+from idManager.model import message_service
 
 
 def add_response_headers(f):
@@ -34,8 +35,7 @@ def verify_content_type(f):
             return result
         else:
             # Bad Request
-            current_app.extensions['sentry'].captureMessage('add_response_headers, 400: '
-                                                            + MSN_EXPECTED_CONTENT_TYPE_JSON)
+            message_service.send_log_message('add_response_headers, 400: ' + MSN_EXPECTED_CONTENT_TYPE_JSON)
             abort(400, MSN_EXPECTED_CONTENT_TYPE_JSON)
 
     return wrapped
