@@ -1,7 +1,6 @@
 from flask import request, abort
 import idManager.view.header_view
-from idManager.model import account_service
-from idManager.model import message_service
+from idManager.model import account_service, message_service
 from idManager.settings import MSN_EXPECTED_JSON_DATA
 from idManager.view import account_view
 from . import id_manager_blueprint
