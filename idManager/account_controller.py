@@ -1,7 +1,7 @@
-from flask import request, abort
+from flask import request
+
 import idManager.view.header_view
-from idManager.model import account_service, message_service, token_service
-from idManager.settings import MSN_EXPECTED_JSON_DATA, MSN_INVALID_API_VER, MSN_EXPECTED_ID
+from idManager.model import account_service, token_service, message_service
 from idManager.view import account_view
 from . import id_manager_blueprint
 
@@ -14,8 +14,8 @@ def register_account():
     data = request.get_json(force=True, silent=True)
 
     if not data:
-        message_service.send_log_message('account_register, 400: ' + MSN_EXPECTED_JSON_DATA)
-        abort(400, MSN_EXPECTED_JSON_DATA)
+        # Bad Request
+        message_service.message_expected_json_data()
 
     # Use 'or not ver' at the last version
     if ver == '1' or not ver:
@@ -23,8 +23,7 @@ def register_account():
         account_data, errors = account_service.register_account_schema.load(data)
         if errors:
             # Bad Request
-            message_service.send_log_message('account_register, 400: ' + str(errors))
-            abort(400, errors)
+            message_service.message_wrong_json_data(errors)
 
         account_data = account_service.account_register_ver_1(account_data["email"], account_data["password"])
 
@@ -36,8 +35,7 @@ def register_account():
     #    return account_service.account_register_ver_2()
     else:
         # Bad Request
-        message_service.send_log_message('account_register, 400: ' + MSN_INVALID_API_VER)
-        abort(400, MSN_INVALID_API_VER)
+        message_service.message_invalid_api_ver()
 
 
 @id_manager_blueprint.route('/accounts/<int:pk>', methods=['PUT'])
@@ -49,20 +47,20 @@ def change_account_password(pk):
     data = request.get_json(force=True, silent=True)
 
     if not data:
-        message_service.send_log_message('change_account_password, 400: ' + MSN_EXPECTED_JSON_DATA)
-        abort(400, MSN_EXPECTED_JSON_DATA)
+        # Bad Request
+        message_service.message_expected_json_data()
 
     if not pk:
-        message_service.send_log_message('change_account_password, 400: ' + MSN_EXPECTED_ID)
-        abort(400, MSN_EXPECTED_ID)
+        # Bad Request
+        message_service.message_expected_id()
 
     # Use 'or ver is None' at the last version
     if ver == '1' or not ver:
         # Validate Schema using the write version.
         account_password, errors = account_service.change_account_password_schema.load(data)
         if errors:
-            message_service.send_log_message('change_account_password, 400: ' + errors)
-            abort(400, errors)
+            # Bad Request
+            message_service.message_wrong_json_data(errors)
 
         account_data = account_service.change_account_password_ver_1(pk, account_password['password'],
                                                                      account_password['new_password'])
@@ -75,8 +73,7 @@ def change_account_password(pk):
     #    return account_service.change_account_password_ver_2()
     else:
         # Bad Request
-        message_service.send_log_message('change_account_password, 400: ' + MSN_INVALID_API_VER)
-        abort(400, MSN_INVALID_API_VER)
+        message_service.message_invalid_api_ver()
 
 
 @id_manager_blueprint.route('/accounts/', methods=['GET'])
@@ -98,8 +95,7 @@ def get_accounts():
     #    return get_accounts_ver_2()
     else:
         # Bad Request
-        message_service.send_log_message('get_accounts, 400: ' + MSN_INVALID_API_VER)
-        abort(400, MSN_INVALID_API_VER)
+        message_service.message_invalid_api_ver()
 
 
 @id_manager_blueprint.route('/accounts/<int:pk>', methods=['GET'])
@@ -110,8 +106,8 @@ def get_account_by_id(pk):
     ver = request.headers.get('ver')
 
     if not pk:
-        message_service.send_log_message('change_account_password, 400: ' + MSN_EXPECTED_ID)
-        abort(400, MSN_EXPECTED_ID)
+        # Bad Request
+        message_service. message_expected_id()
 
     # Use 'or ver is None' at the last version
     if ver == '1' or not ver:
@@ -125,8 +121,7 @@ def get_account_by_id(pk):
     #    return get_account_by_id_2()
     else:
         # Bad Request
-        message_service.send_log_message('get_account_by_id, 400: ' + MSN_INVALID_API_VER)
-        abort(400, MSN_INVALID_API_VER)
+        message_service.message_invalid_api_ver()
 
 
 @id_manager_blueprint.route('/accounts/<int:pk>', methods=['DELETE'])
@@ -137,8 +132,8 @@ def delete_account_by_id(pk):
     ver = request.headers.get('ver')
 
     if not pk:
-        message_service.send_log_message('change_account_password, 400: ' + MSN_EXPECTED_ID)
-        abort(400, MSN_EXPECTED_ID)
+        # Bad Request
+        message_service.message_expected_id()
 
     # Use 'or ver is None' at the last version
     if ver == '1' or not ver:
@@ -150,7 +145,6 @@ def delete_account_by_id(pk):
     #    return delete_account_by_id_ver_2()
     else:
         # Bad Request
-        message_service.send_log_message('delete_account_by_id, 400: ' + MSN_INVALID_API_VER)
-        abort(400, MSN_INVALID_API_VER)
+        message_service.message_invalid_api_ver()
 
     return response
