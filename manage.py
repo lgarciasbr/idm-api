@@ -50,7 +50,7 @@ if __name__ == "__main__":
         cov.xml_report()
         cov.report()
 
-        # token = You can find the token in Project -> Settings -> Integrations -> Project API.
+        # token = You can find in https://www.codacy.com/ -> Project -> Settings -> Integrations -> Project API.
         # export CODACY_PROJECT_TOKEN=token
         # python-codacy-coverage -r coverage.xml
 

@@ -46,7 +46,6 @@ def test_try_register_a_registered_account(client):
                                   )
 
     assert response_second.status_code == 403
-# endregion
 
 
 # wrong ver
