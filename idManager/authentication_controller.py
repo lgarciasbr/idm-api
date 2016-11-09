@@ -1,9 +1,8 @@
-from flask import request, abort
+from flask import request
 import idManager.view.header_view
-from idManager.model import authentication_service, account_service, message_service
+from idManager.model import authentication_service, token_service, account_service, message_service
 from idManager.view import authentication_view
 from . import id_manager_blueprint
-from idManager.settings import MSN_EXPECTED_JSON_DATA
 
 
 @id_manager_blueprint.route('/auth/', methods=['POST'])
@@ -14,48 +13,71 @@ def auth_login():
     data = request.get_json(force=True, silent=True)
 
     if not data:
-        message_service.send_log_message('auth_login, 400: ' + MSN_EXPECTED_JSON_DATA)
-        abort(400, MSN_EXPECTED_JSON_DATA)
+        # Bad Request
+        message_service.message_expected_json_data()
 
-    # Validate Schema
-    account_data, errors = account_service.register_account_schema.load(data)
-    if errors:
-        message_service.send_log_message('auth_login, 400: ' + str(errors))
-        abort(400, errors)
+    # Use 'or ver is None' at the last version
+    if ver == '1' or not ver:
+        # Validate Schema using the write version.
+        account_data, errors = account_service.register_account_schema.load(data)
+        if errors:
+            # Bad Request
+            message_service.message_wrong_json_data(errors)
 
-    auth = authentication_service.auth_login(ver, account_data)
+        auth = authentication_service.auth_login_ver_1(account_data["email"], account_data["password"])
 
-    response = authentication_view.auth_login(**auth)
-    response.status_code = auth.get('http_status_code')
+        response = authentication_view.auth_login(**auth)
+        response.status_code = auth.get('http_status_code')
 
-    return response
+        return response
+    # elif header['ver'] == '2':
+    #    return auth_login_ver_2(username, password, ip)
+    else:
+        # Bad Request
+        message_service.message_invalid_api_ver()
 
 
 @id_manager_blueprint.route('/auth/', methods=['GET'])
 @idManager.view.header_view.verify_content_type
+@token_service.validate_token
 @idManager.view.header_view.add_response_headers
 def auth_is_valid():
     ver = request.headers.get('ver')
     token = request.headers.get('token')
 
-    auth = authentication_service.auth_is_valid(ver, token)
+    # Use 'or ver is None' at the last version
+    if ver == '1' or not ver:
+        auth = authentication_service.auth_logout_ver_1(token)
 
-    response = authentication_view.auth_is_valid(**auth)
-    response.status_code = auth.get('http_status_code')
+        response = authentication_view.auth_is_valid(**auth)
+        response.status_code = auth.get('http_status_code')
 
-    return response
+        return response
+    # elif header['ver'] == '2':
+    #    return auth_logout_ver_2()
+    else:
+        # Bad Request
+        message_service.message_invalid_api_ver()
 
 
 @id_manager_blueprint.route('/auth/', methods=['DELETE'])
 @idManager.view.header_view.verify_content_type
+@token_service.validate_token
 @idManager.view.header_view.add_response_headers
 def auth_logout():
     ver = request.headers.get('ver')
     token = request.headers.get('token')
 
-    auth = authentication_service.auth_logout(ver, token)
+    # Use 'or ver is None' at the last version
+    if ver == '1' or not ver:
+        auth = authentication_service.auth_is_valid_ver_1(token)
 
-    response = authentication_view.auth_logout(**auth)
-    response.status_code = auth.get('http_status_code')
+        response = authentication_view.auth_logout(**auth)
+        response.status_code = auth.get('http_status_code')
 
-    return response
+        return response
+    # elif header['ver'] == '2':
+    #    return auth_is_valid_ver_2()
+    else:
+        # Bad Request
+        message_service.message_invalid_api_ver()

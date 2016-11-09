@@ -1,5 +1,4 @@
 from flask import request
-
 import idManager.view.header_view
 from idManager.model import account_service, token_service, message_service
 from idManager.view import account_view
