@@ -5,7 +5,7 @@ from idManager.model import token_service, message_service
 from idManager.model.database.db_schema import AccountSchema
 from idManager.model.integration import account_data
 from idManager.settings import MSG_EMAIL_ALREADY_REGISTERED, MSG_ACCOUNT_SET, CHECK_EMAIL_DELIVERABILITY, \
-    MSN_INVALID_API_VER, MSG_ACCOUNT_DELETED, MSG_ACCOUNT_PWD_CHANGED
+    MSG_ACCOUNT_DELETED, MSG_ACCOUNT_PWD_CHANGED
 
 # region Schema
 register_account_schema = AccountSchema(only=('email', 'password'))
@@ -26,19 +26,6 @@ def validate_account_password(email, password):
         return True, account
     else:
         return False, None
-
-
-# region Register_Account
-def account_register(ver, account_data):
-    # Use 'or not ver' at the last version
-    if ver == '1' or not ver:
-        return account_register_ver_1(account_data["email"], account_data["password"])
-    # elif header['ver'] == '2':
-    #    return get_ver_2()
-    else:
-        # Bad Request
-        message_service.send_log_message('account_register, 400: ' + MSN_INVALID_API_VER)
-        abort(400, MSN_INVALID_API_VER)
 
 
 def account_register_ver_1(email, password):
@@ -68,21 +55,6 @@ def account_register_ver_1(email, password):
     else:
         message_service.send_log_message('account_register_ver_1, 403: ' + MSG_EMAIL_ALREADY_REGISTERED)
         abort(403, MSG_EMAIL_ALREADY_REGISTERED)
-# endregion
-
-
-# region Change_Account_Password
-@token_service.validate_token
-def change_account_password(ver, account_password, pk):
-    # Use 'or ver is None' at the last version
-    if ver == '1' or not ver:
-        return change_account_password_ver_1(pk, account_password['password'], account_password['new_password'])
-    # elif header['ver'] == '2':
-    #    return get_ver_2()
-    else:
-        # Bad Request
-        message_service.send_log_message('change_account_password, 400: ' + MSN_INVALID_API_VER)
-        abort(400, MSN_INVALID_API_VER)
 
 
 def change_account_password_ver_1(pk, password, new_password):
@@ -104,42 +76,12 @@ def change_account_password_ver_1(pk, password, new_password):
     else:
         message_service.send_log_message('change_account_password_ver_1, 404')
         abort(404)
-# endregion
-
-
-# region Get_Accounts
-@token_service.validate_token
-def get_accounts(ver):
-    # Use 'or ver is None' at the last version
-    if ver == '1' or not ver:
-        return get_accounts_ver_1()
-    # elif header['ver'] == '2':
-    #    return get_ver_2()
-    else:
-        # Bad Request
-        message_service.send_log_message('get_accounts, 400: ' + MSN_INVALID_API_VER)
-        abort(400, MSN_INVALID_API_VER)
 
 
 def get_accounts_ver_1():
     accounts = account_data.get_accounts()
     return {'accounts': get_accounts_schema.dump(accounts),
             'http_status_code': 200}
-# endregion
-
-
-# region Get_Account_By_Id
-@token_service.validate_token
-def get_account_by_id(ver, pk):
-    # Use 'or ver is None' at the last version
-    if ver == '1' or not ver:
-        return get_account_by_id_ver_1(pk)
-    # elif header['ver'] == '2':
-    #    return get_ver_2()
-    else:
-        # Bad Request
-        message_service.send_log_message('get_account_by_id, 400: ' + MSN_INVALID_API_VER)
-        abort(400, MSN_INVALID_API_VER)
 
 
 def get_account_by_id_ver_1(pk):
@@ -151,21 +93,6 @@ def get_account_by_id_ver_1(pk):
     else:
         message_service.send_log_message('get_account_by_id_ver_1, 404')
         abort(404)
-# endregion
-
-
-# region Delete_Account_By_Id
-@token_service.validate_token
-def delete_account_by_id(ver, pk):
-    # Use 'or ver is None' at the last version
-    if ver == '1' or not ver:
-        return delete_account_by_id_ver_1(pk)
-    # elif header['ver'] == '2':
-    #    return delete_account_by_id_ver_2()
-    else:
-        # Bad Request
-        message_service.send_log_message('delete_account_by_id, 400: ' + MSN_INVALID_API_VER)
-        abort(400, MSN_INVALID_API_VER)
 
 
 def delete_account_by_id_ver_1(pk):
@@ -185,4 +112,3 @@ def delete_account_by_id_ver_1(pk):
     else:
         message_service.send_log_message('delete_account_by_id_ver_1, 404')
         abort(404)
-# endregion
