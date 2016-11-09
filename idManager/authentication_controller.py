@@ -47,7 +47,7 @@ def auth_is_valid():
 
     # Use 'or ver is None' at the last version
     if ver == '1' or not ver:
-        auth = authentication_service.auth_logout_ver_1(token)
+        auth = authentication_service.auth_is_valid_ver_1(token)
 
         response = authentication_view.auth_is_valid(**auth)
         response.status_code = auth.get('http_status_code')
@@ -70,7 +70,7 @@ def auth_logout():
 
     # Use 'or ver is None' at the last version
     if ver == '1' or not ver:
-        auth = authentication_service.auth_is_valid_ver_1(token)
+        auth = authentication_service.auth_logout_ver_1(token)
 
         response = authentication_view.auth_logout(**auth)
         response.status_code = auth.get('http_status_code')

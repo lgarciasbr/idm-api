@@ -18,16 +18,16 @@ def auth_login_ver_1(email, password):
         abort(403, MSG_LOGIN_ERROR)
 
 
-def auth_logout_ver_1(token):
-        token_service.delete_token(token)
-        # Logout
-        return {'message': MSG_LOGOUT,
-                'token': token,
-                'http_status_code': 200}
-
-
 def auth_is_valid_ver_1(token):
             # Allowed
             return {'message': MSG_VALID_TOKEN,
                     'token': token,
                     'http_status_code': 200}
+
+
+def auth_logout_ver_1(token):
+    token_service.delete_token(token)
+    # Logout
+    return {'message': MSG_LOGOUT,
+            'token': token,
+            'http_status_code': 200}
