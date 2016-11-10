@@ -49,12 +49,10 @@ def account_register_ver_1(email, password):
                     'account': get_account_schema.dump(account),
                     'http_status_code': 201}
         else:
-            message_service.send_log_message('account_register_ver_1, 500')
-            abort(500)
+            message_error_500('account_register_ver_1, 500')
 
     else:
-        message_service.send_log_message('account_register_ver_1, 403: ' + MSG_EMAIL_ALREADY_REGISTERED)
-        abort(403, MSG_EMAIL_ALREADY_REGISTERED)
+        message_error_403('account_register_ver_1, 403: ' + MSG_EMAIL_ALREADY_REGISTERED, MSG_EMAIL_ALREADY_REGISTERED)
 
 
 def change_account_password_ver_1(pk, password, new_password):
@@ -71,11 +69,9 @@ def change_account_password_ver_1(pk, password, new_password):
                     'account': get_account_schema.dump(account),
                     'http_status_code': 202}
         else:
-            message_service.send_log_message('change_account_password_ver_1, 403')
-            abort(403)
+            message_error_403('change_account_password_ver_1, 403')
     else:
-        message_service.send_log_message('change_account_password_ver_1, 404')
-        abort(404)
+        message_error_404('change_account_password_ver_1, 404')
 
 
 def get_accounts_ver_1():
@@ -91,8 +87,7 @@ def get_account_by_id_ver_1(pk):
         return {'account': get_account_schema.dump(account),
                 'http_status_code': 200}
     else:
-        message_service.send_log_message('get_account_by_id_ver_1, 404')
-        abort(404)
+        message_error_404('get_account_by_id_ver_1, 404')
 
 
 def delete_account_by_id_ver_1(pk):
@@ -107,8 +102,23 @@ def delete_account_by_id_ver_1(pk):
                     'account': get_account_schema.dump(account),
                     'http_status_code': 202}
         else:
-            message_service.send_log_message('delete_account_by_id_ver_1, 500')
-            abort(500)
+            message_error_500('delete_account_by_id_ver_1, 500')
     else:
-        message_service.send_log_message('delete_account_by_id_ver_1, 404')
-        abort(404)
+        message_error_404('delete_account_by_id_ver_1, 404')
+
+
+def message_error_403(text_log, text_message=''):
+    message_service.send_log_message(text_log)
+    abort(403, text_message)
+
+
+def message_error_404(text_log):
+    message_service.send_log_message(text_log)
+    abort(404)
+
+
+def message_error_500(text_log):
+    message_service.send_log_message(text_log)
+    abort(500)
+
+
