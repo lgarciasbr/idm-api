@@ -1,9 +1,8 @@
 import bcrypt
 from email_validator import validate_email, EmailNotValidError
-from idManager.model import token_service
+from idManager.model import token_service, message_service
 from idManager.model.database.db_schema import AccountSchema
 from idManager.model.integration import account_data
-from idManager.model.message_service import message_error_400, message_error_403, message_error_404, message_error_500
 from idManager.settings import MSG_EMAIL_ALREADY_REGISTERED, MSG_ACCOUNT_SET, CHECK_EMAIL_DELIVERABILITY, \
     MSG_ACCOUNT_DELETED, MSG_ACCOUNT_PWD_CHANGED
 
@@ -36,7 +35,7 @@ def account_register_ver_1(email, password):
         email = v["email"]
     except EmailNotValidError as e:
         # email is not valid, exception message is human-readable
-        message_error_400('account_register_ver_1, 400: ' + str(e), str(e))
+        message_service.error_400('account_register_ver_1: ' + str(e), str(e))
 
     account = account_data.get_account_by_email(email)
 
@@ -48,10 +47,10 @@ def account_register_ver_1(email, password):
                     'account': get_account_schema.dump(account),
                     'http_status_code': 201}
         else:
-            message_error_500('account_register_ver_1, 500')
+            message_service.error_500('account_register_ver_1')
 
     else:
-        message_error_403('account_register_ver_1, 403: ' + MSG_EMAIL_ALREADY_REGISTERED, MSG_EMAIL_ALREADY_REGISTERED)
+        message_service.error_403('account_register_ver_1: ' + MSG_EMAIL_ALREADY_REGISTERED, MSG_EMAIL_ALREADY_REGISTERED)
 
 
 def change_account_password_ver_1(pk, password, new_password):
@@ -68,9 +67,9 @@ def change_account_password_ver_1(pk, password, new_password):
                     'account': get_account_schema.dump(account),
                     'http_status_code': 202}
         else:
-            message_error_403('change_account_password_ver_1, 403')
+            message_service.error_403('change_account_password_ver_1')
     else:
-        message_error_404('change_account_password_ver_1, 404')
+        message_service.error_404('change_account_password_ver_1')
 
 
 def get_accounts_ver_1():
@@ -86,7 +85,7 @@ def get_account_by_id_ver_1(pk):
         return {'account': get_account_schema.dump(account),
                 'http_status_code': 200}
     else:
-        message_error_404('get_account_by_id_ver_1, 404')
+        message_service.error_404('get_account_by_id_ver_1')
 
 
 def delete_account_by_id_ver_1(pk):
@@ -101,6 +100,6 @@ def delete_account_by_id_ver_1(pk):
                     'account': get_account_schema.dump(account),
                     'http_status_code': 202}
         else:
-            message_error_500('delete_account_by_id_ver_1, 500')
+            message_service.error_500('delete_account_by_id_ver_1')
     else:
-        message_error_404('delete_account_by_id_ver_1, 404')
+        message_service.error_404('delete_account_by_id_ver_1')

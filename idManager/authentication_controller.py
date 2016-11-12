@@ -1,20 +1,19 @@
 from flask import request
-import idManager.view.header_view
 from idManager.model import authentication_service, token_service, account_service, message_service
-from idManager.view import authentication_view
+from idManager.view import authentication_view, header_view
 from . import id_manager_blueprint
 
 
 @id_manager_blueprint.route('/auth/', methods=['POST'])
-@idManager.view.header_view.verify_content_type
-@idManager.view.header_view.add_response_headers
+@header_view.verify_content_type
+@header_view.add_response_headers
 def auth_login():
     ver = request.headers.get('ver')
     data = request.get_json(force=True, silent=True)
 
     if not data:
         # Bad Request
-        message_service.message_expected_json_data()
+        message_service.expected_json_data()
 
     # Use 'or ver is None' at the last version
     if ver == '1' or not ver:
@@ -22,7 +21,7 @@ def auth_login():
         account_data, errors = account_service.register_account_schema.load(data)
         if errors:
             # Bad Request
-            message_service.message_wrong_json_data(errors)
+            message_service.wrong_json_data(errors)
 
         auth = authentication_service.auth_login_ver_1(account_data["email"], account_data["password"])
 
@@ -34,13 +33,13 @@ def auth_login():
     #    return auth_login_ver_2(username, password, ip)
     else:
         # Bad Request
-        message_service.message_invalid_api_ver()
+        message_service.invalid_api_ver()
 
 
 @id_manager_blueprint.route('/auth/', methods=['GET'])
-@idManager.view.header_view.verify_content_type
+@header_view.verify_content_type
 @token_service.validate_token
-@idManager.view.header_view.add_response_headers
+@header_view.add_response_headers
 def auth_is_valid():
     ver = request.headers.get('ver')
     token = request.headers.get('token')
@@ -57,13 +56,13 @@ def auth_is_valid():
     #    return auth_logout_ver_2()
     else:
         # Bad Request
-        message_service.message_invalid_api_ver()
+        message_service.invalid_api_ver()
 
 
 @id_manager_blueprint.route('/auth/', methods=['DELETE'])
-@idManager.view.header_view.verify_content_type
+@header_view.verify_content_type
 @token_service.validate_token
-@idManager.view.header_view.add_response_headers
+@header_view.add_response_headers
 def auth_logout():
     ver = request.headers.get('ver')
     token = request.headers.get('token')
@@ -80,4 +79,4 @@ def auth_logout():
     #    return auth_is_valid_ver_2()
     else:
         # Bad Request
-        message_service.message_invalid_api_ver()
+        message_service.invalid_api_ver()

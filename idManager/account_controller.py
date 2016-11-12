@@ -14,7 +14,7 @@ def register_account():
 
     if not data:
         # Bad Request
-        message_service.message_expected_json_data()
+        message_service.expected_json_data()
 
     # Use 'or not ver' at the last version
     if ver == '1' or not ver:
@@ -22,7 +22,7 @@ def register_account():
         account_data, errors = account_service.register_account_schema.load(data)
         if errors:
             # Bad Request
-            message_service.message_wrong_json_data(errors)
+            message_service.wrong_json_data(errors)
 
         account_data = account_service.account_register_ver_1(account_data["email"], account_data["password"])
 
@@ -34,7 +34,7 @@ def register_account():
     #    return account_service.account_register_ver_2()
     else:
         # Bad Request
-        message_service.message_invalid_api_ver()
+        message_service.invalid_api_ver()
 
 
 @id_manager_blueprint.route('/accounts/<int:pk>', methods=['PUT'])
@@ -47,11 +47,11 @@ def change_account_password(pk):
 
     if not data:
         # Bad Request
-        message_service.message_expected_json_data()
+        message_service.expected_json_data()
 
     if not pk:
         # Bad Request
-        message_service.message_expected_id()
+        message_service.expected_id()
 
     # Use 'or ver is None' at the last version
     if ver == '1' or not ver:
@@ -59,7 +59,7 @@ def change_account_password(pk):
         account_password, errors = account_service.change_account_password_schema.load(data)
         if errors:
             # Bad Request
-            message_service.message_wrong_json_data(errors)
+            message_service.wrong_json_data(errors)
 
         account_data = account_service.change_account_password_ver_1(pk, account_password['password'],
                                                                      account_password['new_password'])
@@ -72,7 +72,7 @@ def change_account_password(pk):
     #    return account_service.change_account_password_ver_2()
     else:
         # Bad Request
-        message_service.message_invalid_api_ver()
+        message_service.invalid_api_ver()
 
 
 @id_manager_blueprint.route('/accounts/', methods=['GET'])
@@ -94,7 +94,7 @@ def get_accounts():
     #    return get_accounts_ver_2()
     else:
         # Bad Request
-        message_service.message_invalid_api_ver()
+        message_service.invalid_api_ver()
 
 
 @id_manager_blueprint.route('/accounts/<int:pk>', methods=['GET'])
@@ -106,7 +106,7 @@ def get_account_by_id(pk):
 
     if not pk:
         # Bad Request
-        message_service. message_expected_id()
+        message_service. expected_id()
 
     # Use 'or ver is None' at the last version
     if ver == '1' or not ver:
@@ -120,7 +120,7 @@ def get_account_by_id(pk):
     #    return get_account_by_id_2()
     else:
         # Bad Request
-        message_service.message_invalid_api_ver()
+        message_service.invalid_api_ver()
 
 
 @id_manager_blueprint.route('/accounts/<int:pk>', methods=['DELETE'])
@@ -132,7 +132,7 @@ def delete_account_by_id(pk):
 
     if not pk:
         # Bad Request
-        message_service.message_expected_id()
+        message_service.expected_id()
 
     # Use 'or ver is None' at the last version
     if ver == '1' or not ver:
@@ -144,6 +144,6 @@ def delete_account_by_id(pk):
     #    return delete_account_by_id_ver_2()
     else:
         # Bad Request
-        message_service.message_invalid_api_ver()
+        message_service.invalid_api_ver()
 
     return response
