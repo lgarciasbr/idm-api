@@ -1,9 +1,9 @@
 import bcrypt
 from email_validator import validate_email, EmailNotValidError
-from flask import abort
-from idManager.model import token_service, message_service
+from idManager.model import token_service
 from idManager.model.database.db_schema import AccountSchema
 from idManager.model.integration import account_data
+from idManager.model.message_service import message_error_400, message_error_403, message_error_404, message_error_500
 from idManager.settings import MSG_EMAIL_ALREADY_REGISTERED, MSG_ACCOUNT_SET, CHECK_EMAIL_DELIVERABILITY, \
     MSG_ACCOUNT_DELETED, MSG_ACCOUNT_PWD_CHANGED
 
@@ -36,8 +36,7 @@ def account_register_ver_1(email, password):
         email = v["email"]
     except EmailNotValidError as e:
         # email is not valid, exception message is human-readable
-        message_service.send_log_message('account_register_ver_1, 400: ' + str(e))
-        abort(400, str(e))
+        message_error_400('account_register_ver_1, 400: ' + str(e), str(e))
 
     account = account_data.get_account_by_email(email)
 
@@ -105,20 +104,3 @@ def delete_account_by_id_ver_1(pk):
             message_error_500('delete_account_by_id_ver_1, 500')
     else:
         message_error_404('delete_account_by_id_ver_1, 404')
-
-
-def message_error_403(text_log, text_message=''):
-    message_service.send_log_message(text_log)
-    abort(403, text_message)
-
-
-def message_error_404(text_log):
-    message_service.send_log_message(text_log)
-    abort(404)
-
-
-def message_error_500(text_log):
-    message_service.send_log_message(text_log)
-    abort(500)
-
-

@@ -27,3 +27,23 @@ def message_invalid_api_ver():
 def message_wrong_json_data(errors):
     send_log_message('account_register, 400: ' + str(errors))
     abort(400, errors)
+
+
+def message_error_400(text_log, text_message=''):
+    send_log_message(text_log)
+    abort(400, text_message)
+
+
+def message_error_403(text_log, text_message=''):
+    send_log_message(text_log)
+    abort(403, text_message)
+
+
+def message_error_404(text_log, text_message=''):
+    send_log_message(text_log)
+    abort(404, text_message)
+
+
+def message_error_500(text_log, text_message=''):
+    send_log_message(text_log)
+    abort(500, text_message)
