@@ -47,15 +47,12 @@ def validate_token(f):
         if token is not None:
             if verify_token(token):
                 result = f(*args, **kwargs)
-
             else:
-                message_service.send_log_message('validate_token, 403: ' + MSG_INVALID_TOKEN)
-                abort(403, MSG_INVALID_TOKEN)
-
+                # Forbidden
+                message_service.error_403('validate_token: ' + MSG_INVALID_TOKEN, MSG_INVALID_TOKEN)
         else:
             # Forbidden too ...
-            message_service.send_log_message('validate_token, 400: ' + MSG_INVALID_TOKEN)
-            abort(400, MSG_INVALID_TOKEN)
+            message_service.error_400('validate_token: ' + MSG_INVALID_TOKEN, MSG_INVALID_TOKEN)
 
         return result
 

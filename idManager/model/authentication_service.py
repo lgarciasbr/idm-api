@@ -1,4 +1,3 @@
-from flask import abort
 from idManager.model import token_service, account_service, message_service
 from idManager.settings import MSG_LOGIN, MSG_LOGIN_ERROR, MSG_LOGOUT, MSG_VALID_TOKEN
 
@@ -14,8 +13,7 @@ def auth_login_ver_1(email, password):
                 'http_status_code': 200}
     else:
         # Forbidden
-        message_service.send_log_message('auth_login_ver_1, 403: ' + MSG_LOGIN_ERROR)
-        abort(403, MSG_LOGIN_ERROR)
+        message_service.error_403('auth_login_ver_1: ' + MSG_LOGIN_ERROR)
 
 
 def auth_is_valid_ver_1(token):
