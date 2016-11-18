@@ -26,13 +26,14 @@ class Account(db.Model):
 
 class Token(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    token = db.Column(db.String(200), unique=False)
-    account_id = db.Column(db.Integer, db.ForeignKey(Account.id), nullable=False)
+    account_id = db.Column(db.Integer, db.ForeignKey(Account.id), unique=False, nullable=False)
+    token = db.Column(db.String(200), unique=False, nullable=False)
+    last_accessed_date = db.Column(db.DateTime, nullable=False, default=func.now())
     account = db.relationship(Account, backref=backref('tokens'))
 
-    def __init__(self, token, account):
-        self.token = token
+    def __init__(self, account, token):
         self.account = account
+        self.token = token
 
     def __repr__(self):
         return self.token

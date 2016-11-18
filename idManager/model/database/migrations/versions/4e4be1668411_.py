@@ -1,17 +1,19 @@
 """empty message
 
-Revision ID: da2c381dfd99
-Revises: d3a865bbaccb
-Create Date: 2016-06-22 13:38:04.959439
+Revision ID: 4e4be1668411
+Revises: 
+Create Date: 2016-11-18 17:07:00.008466
 
 """
-
-# revision identifiers, used by Alembic.
-revision = 'da2c381dfd99'
-down_revision = 'd3a865bbaccb'
-
 from alembic import op
 import sqlalchemy as sa
+
+
+# revision identifiers, used by Alembic.
+revision = '4e4be1668411'
+down_revision = None
+branch_labels = None
+depends_on = None
 
 
 def upgrade():
@@ -26,8 +28,9 @@ def upgrade():
     )
     op.create_table('token',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('token', sa.String(length=200), nullable=True),
     sa.Column('account_id', sa.Integer(), nullable=False),
+    sa.Column('token', sa.String(length=200), nullable=False),
+    sa.Column('last_accessed_date', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['account_id'], ['account.id'], ),
     sa.PrimaryKeyConstraint('id')
     )

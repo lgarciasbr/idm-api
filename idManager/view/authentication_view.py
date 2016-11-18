@@ -2,7 +2,7 @@ from flask import jsonify
 
 
 def auth_login(http_status_code, message, token):
-    view = jsonify({'status_code': http_status_code, 'message': message, 'auth': {'_token': token}})
+    view = jsonify({'status_code': http_status_code, 'message': message, 'auth': token.data})
 
     return view
 

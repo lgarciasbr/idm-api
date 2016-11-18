@@ -7,8 +7,8 @@ def register_account(http_status_code, account, message):
     return view
 
 
-def account_change_password(http_status_code, account, message):
-    view = jsonify({'status_code': http_status_code, 'message': message, 'account': account.data})
+def account_change_password(http_status_code, message):
+    view = jsonify({'status_code': http_status_code, 'message': message})
 
     return view
 

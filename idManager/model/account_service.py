@@ -64,7 +64,6 @@ def change_account_password_ver_1(pk, password, new_password):
         if valid_pwd:
             account_data.change_account_password(pk, crypt_pwd(new_password))
             return {'message': MSG_ACCOUNT_PWD_CHANGED,
-                    'account': get_account_schema.dump(account),
                     'http_status_code': 202}
         else:
             message_service.error_403('change_account_password_ver_1')

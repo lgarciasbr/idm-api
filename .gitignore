@@ -1,6 +1,6 @@
 .env
 .idea
 .lg-idm
+.cache/
 *.pyc
 coverage
-tests/.cache/

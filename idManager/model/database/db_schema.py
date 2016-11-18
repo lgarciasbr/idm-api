@@ -15,3 +15,8 @@ class AccountSchema(Schema):
     email = fields.Email(required=True)
     url = fields.Url(dump_only=True, dump_to='_url')
     created_at = fields.DateTime(dump_only=True, dump_to='_created_at')
+
+
+class TokenSchema(Schema):
+    token = fields.String(required=True, validate=must_not_be_blank, dump_to='_token')
+    last_accessed_date = fields.DateTime(dump_only=True, dump_to='_last_accessed_date')
