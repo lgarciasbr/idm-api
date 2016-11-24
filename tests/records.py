@@ -108,6 +108,6 @@ def auth_login(client, data, headers):
                                  headers=headers,
                                  data=json.dumps(data)
                                  )
-    token_value = json.loads(response_login.data.decode('utf-8'))['auth']['_token']
+    token_value = json.loads(response_login.data.decode('utf-8'))['_token']
     return token_value
 # endregion
