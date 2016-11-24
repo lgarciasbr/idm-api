@@ -17,6 +17,7 @@ def auth_login_ver_1(email, password):
 
 
 def auth_is_valid_ver_1(token):
+            # Take a look at token_service.validate_token (decorator)
             # Allowed
             return {'message': MSG_VALID_TOKEN,
                     'token': token,

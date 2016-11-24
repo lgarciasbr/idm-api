@@ -4,6 +4,8 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool)
 # Token Host - option: redis, database
 TOKEN_HOST = config('TOKEN_HOST', default='database')
+# Token TimeOut in seconds
+TOKEN_TIMEOUT = config('TOKEN_TIMEOUT', cast=int)
 # BD Config
 DATABASE_URL = config('DATABASE_URL')
 SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -24,7 +26,7 @@ PROJECT_DESCRIPTION = 'LG - Identity Manager'
 MSG_LOGIN = 'You were logged in!'
 MSG_LOGIN_ERROR = 'Invalid username or password'
 MSG_LOGOUT = 'You were logged out!'
-MSG_INVALID_TOKEN = 'Invalid Token!'
+MSG_INVALID_TOKEN = 'Invalid token or expired!'
 MSG_VALID_TOKEN = 'Valid Token!'
 MSG_INVALID_SERIALIZATION = 'Unknown serialization format.'
 MSG_EMAIL_ALREADY_REGISTERED = 'E-mail is already registered.'
