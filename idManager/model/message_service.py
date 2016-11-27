@@ -9,6 +9,10 @@ def send_log_message(text):
         message_data.send_log_message(text)
 
 
+def exception(method_name, error):
+    send_log_message(method_name + ': ' + error)
+
+
 def expected_json_data():
     send_log_message('change_account_password, 400: ' + MSN_EXPECTED_JSON_DATA)
     abort(400, MSN_EXPECTED_JSON_DATA)

@@ -1,10 +1,7 @@
-from idManager.model.database.db_model import db, Token
+from idManager.model.database.db_model import db, db_redis, Token
 from idManager.settings import TOKEN_HOST
-from flask import current_app
+from idManager.model import message_service
 import datetime
-import redis
-
-db_redis = redis.Redis('192.168.99.100', '32768')
 
 
 def set_token(account, token):
@@ -20,12 +17,12 @@ def set_token(account, token):
             return True
         else:
             return False
-    except ValueError:
-        current_app.extensions['sentry'].captureException()
+    except Exception as e:
+        message_service.exception('set_token', repr(e))
         return False
 
 
-def get_token(account_id, token):
+def get_token_last_accessed_date(account_id, token):
     try:
         if TOKEN_HOST == 'redis':
             last_accessed_date = (db_redis.hget(account_id, token)).decode('ascii')
@@ -35,8 +32,8 @@ def get_token(account_id, token):
             return token.last_accessed_date
         else:
             return None
-    except ValueError:
-        current_app.extensions['sentry'].captureException()
+    except Exception as e:
+        message_service.exception('get_token_last_accessed_date', repr(e))
         return None
 
 
@@ -54,8 +51,8 @@ def change_last_accessed_date(account_id, token):
             return True
         else:
             return False
-    except ValueError:
-        current_app.extensions['sentry'].captureException()
+    except Exception as e:
+        message_service.exception('change_last_accessed_date', repr(e))
         return False
 
 
@@ -72,8 +69,8 @@ def delete_token(account_id, token):
             return True
         else:
             return False
-    except ValueError:
-        current_app.extensions['sentry'].captureException()
+    except Exception as e:
+        message_service.exception('delete_token', repr(e))
         return False
 
 
@@ -90,6 +87,6 @@ def delete_token_by_account_id(pk):
             return True
         else:
             return False
-    except ValueError:
-        current_app.extensions['sentry'].captureException()
+    except Exception as e:
+        message_service.exception('delete_token_by_account_id', repr(e))
         return False

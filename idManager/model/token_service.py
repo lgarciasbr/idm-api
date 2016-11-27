@@ -23,8 +23,8 @@ def set_token(account):
         return None
 
 
-def get_token(account_id, token):
-    return token_data.get_token(account_id, token)
+def get_token_last_accessed_date(account_id, token):
+    return token_data.get_token_last_accessed_date(account_id, token)
 
 
 def get_account_id_from_token(token):
@@ -46,7 +46,7 @@ def validate_token(f):
 
         if token is not None:
             account_id = get_account_id_from_token(token)
-            last_accessed_date = get_token(account_id, token)
+            last_accessed_date = get_token_last_accessed_date(account_id, token)
 
             if last_accessed_date:
                 if (datetime.datetime.now() - last_accessed_date).total_seconds() < TOKEN_TIMEOUT:

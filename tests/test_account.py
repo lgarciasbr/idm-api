@@ -50,7 +50,7 @@ def test_try_register_a_registered_account(client):
 
 # wrong ver
 # token - 0 (no token), 1 (valid token), 2 (invalid token)
-# pk - 0 (no pk), 1 (valid pk), 3 (invalid pk)
+# pk - 0 (no pk), 1 (valid pk), 2 (invalid pk)
 @pytest.mark.parametrize(("header", "token", "pk", "expected"), [
     (records.header_empty(), 0, 0, 405),
     (records.header_empty(), 0, 1, 400),

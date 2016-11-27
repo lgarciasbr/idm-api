@@ -6,10 +6,12 @@ DEBUG = config('DEBUG', cast=bool)
 TOKEN_HOST = config('TOKEN_HOST', default='database')
 # Token TimeOut in seconds
 TOKEN_TIMEOUT = config('TOKEN_TIMEOUT', cast=int)
-# BD Config
+# BD Config. sqlite:///app.db
 DATABASE_URL = config('DATABASE_URL')
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_DATABASE_URI = DATABASE_URL
+#  REDIS Config. redis://127.0.0.1:6379
+REDIS_URL = config('REDIS_URL')
 # Set to 'False' or True to domain name resolution on email check when register a new account.
 CHECK_EMAIL_DELIVERABILITY = config('CHECK_EMAIL_DELIVERABILITY', cast=bool)
 # Collect log errors. https://sentry.io
@@ -25,6 +27,7 @@ PROJECT_DESCRIPTION = 'LG - Identity Manager'
 # General Messages
 MSG_LOGIN = 'You were logged in!'
 MSG_LOGIN_ERROR = 'Invalid username or password'
+MSG_LOGIN_PROBLEM = 'Impossible to login'
 MSG_LOGOUT = 'You were logged out!'
 MSG_INVALID_TOKEN = 'Invalid token or expired!'
 MSG_VALID_TOKEN = 'Valid Token!'

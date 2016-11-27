@@ -2,8 +2,15 @@ from flask import url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
 from sqlalchemy.orm import backref
+from idManager.settings import TOKEN_HOST, REDIS_URL
+import redis
 
 db = SQLAlchemy()
+
+if TOKEN_HOST == 'redis':
+    db_redis = redis.from_url(REDIS_URL)
+else:
+    db_redis = ''
 
 
 class Account(db.Model):
