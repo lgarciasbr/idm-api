@@ -13,8 +13,11 @@ def account_change_password(http_status_code, message):
     return view
 
 
-def get_accounts(http_status_code, accounts):
-    view = jsonify({'status_code': http_status_code, 'accounts': accounts.data})
+def get_accounts(accounts, total, pages, http_status_code):
+    view = jsonify({'accounts':accounts.data,
+                    'total': total,
+                    'pages': pages,
+                    'status_code': http_status_code})
 
     return view
 

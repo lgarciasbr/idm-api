@@ -12,6 +12,8 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_DATABASE_URI = DATABASE_URL
 #  REDIS Config. redis://127.0.0.1:6379
 REDIS_URL = config('REDIS_URL')
+# Max register per page, when you try to get all
+MAX_PER_PAGE = config('MAX_PER_PAGE', cast=int)
 # Set to 'False' or True to domain name resolution on email check when register a new account.
 CHECK_EMAIL_DELIVERABILITY = config('CHECK_EMAIL_DELIVERABILITY', cast=bool)
 # Collect log errors. https://sentry.io

@@ -29,9 +29,9 @@ def get_account_by_id(pk):
         return None
 
 
-def get_accounts():
+def get_accounts(page, per_page):
     try:
-        return Account.query.all()
+        return Account.query.paginate(page, per_page, error_out=False)
     except Exception as e:
         message_service.exception('get_accounts', repr(e))
         return None

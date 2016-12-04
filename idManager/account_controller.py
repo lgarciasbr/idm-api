@@ -3,6 +3,7 @@ import idManager.view.header_view
 from idManager.model import account_service, token_service, message_service
 from idManager.view import account_view
 from . import id_manager_blueprint
+from idManager.settings import MAX_PER_PAGE
 
 
 @id_manager_blueprint.route('/accounts/', methods=['POST'])
@@ -82,9 +83,14 @@ def change_account_password(pk):
 def get_accounts():
     ver = request.headers.get('ver')
 
-    # Use 'or ver is None' at the last version
+    # Use 'or not ver' at the last version
     if ver == '1' or not ver:
-        accounts_data = account_service.get_accounts_ver_1()
+        page = max(request.args.get('page', 1, type=int), 1)
+        per_page = max(min(request.args.get('per_page', MAX_PER_PAGE,
+                                            type=int), MAX_PER_PAGE),
+                       1)
+
+        accounts_data = account_service.get_accounts_ver_1(page, per_page)
 
         response = account_view.get_accounts(**accounts_data)
         response.status_code = accounts_data.get('http_status_code')
