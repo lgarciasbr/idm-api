@@ -3,9 +3,9 @@ from email_validator import validate_email, EmailNotValidError
 from idManager.model import token_service, message_service
 from idManager.model.database.db_schema import AccountSchema
 from idManager.model.integration import account_data
+from idManager.model.util_service import pagination
 from idManager.settings import MSG_EMAIL_ALREADY_REGISTERED, MSG_ACCOUNT_SET, CHECK_EMAIL_DELIVERABILITY, \
     MSG_ACCOUNT_DELETED, MSG_ACCOUNT_PWD_CHANGED
-from flask import request, url_for
 
 # region Schema
 register_account_schema = AccountSchema(only=('email', 'password'))
@@ -75,23 +75,7 @@ def change_account_password_ver_1(pk, password, new_password):
 def get_accounts_ver_1(page, per_page):
     accounts = account_data.get_accounts(page, per_page)
 
-    # build the pagination metadata to include in the response
-    pages = {'page': page, 'per_page': per_page, 'pages': accounts.pages}
-    if accounts.has_prev:
-        pages['prev_url'] = url_for(request.endpoint, page=accounts.prev_num,
-                                    per_page=per_page, _external=True)
-    else:
-        pages['prev_url'] = None
-    if accounts.has_next:
-        pages['next_url'] = url_for(request.endpoint, page=accounts.next_num,
-                                    per_page=per_page, _external=True)
-    else:
-        pages['next_url'] = None
-
-    pages['first_url'] = url_for(request.endpoint, page=1,
-                                 per_page=per_page, _external=True)
-    pages['last_url'] = url_for(request.endpoint, page=accounts.pages,
-                                per_page=per_page, _external=True)
+    pages = pagination(accounts, page, per_page)
 
     return {'accounts': get_accounts_schema.dump(accounts.items),
             'total': accounts.total,
