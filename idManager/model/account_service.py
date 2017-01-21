@@ -11,7 +11,7 @@ from idManager.settings import MSG_EMAIL_ALREADY_REGISTERED, MSG_ACCOUNT_SET, CH
 register_account_schema = AccountSchema(only=('email', 'password'))
 change_account_password_schema = AccountSchema(only=('password', 'new_password'))
 get_account_schema = AccountSchema(only=('email', 'url', 'created_at', 'id'))
-get_accounts_schema = AccountSchema(many=True, only=('email', 'url'))
+get_accounts_schema = AccountSchema(many=True, only=('id','email', 'url'))
 # endregion
 
 

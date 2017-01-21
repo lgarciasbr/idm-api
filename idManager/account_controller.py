@@ -4,11 +4,13 @@ from idManager.model import account_service, token_service, message_service
 from idManager.view import account_view
 from . import id_manager_blueprint
 from idManager.settings import MAX_PER_PAGE
+from flask_cors import cross_origin
 
 
 @id_manager_blueprint.route('/accounts/', methods=['POST'])
 @idManager.view.header_view.verify_content_type
 @idManager.view.header_view.add_response_headers
+@cross_origin()
 def register_account():
     ver = request.headers.get('ver')
     data = request.get_json(force=True, silent=True)
@@ -42,6 +44,7 @@ def register_account():
 @idManager.view.header_view.verify_content_type
 @token_service.validate_token
 @idManager.view.header_view.add_response_headers
+@cross_origin()
 def change_account_password(pk):
     ver = request.headers.get('ver')
     data = request.get_json(force=True, silent=True)
@@ -80,6 +83,7 @@ def change_account_password(pk):
 @idManager.view.header_view.verify_content_type
 @token_service.validate_token
 @idManager.view.header_view.add_response_headers
+@cross_origin()
 def get_accounts():
     ver = request.headers.get('ver')
 
@@ -107,6 +111,7 @@ def get_accounts():
 @idManager.view.header_view.verify_content_type
 @token_service.validate_token
 @idManager.view.header_view.add_response_headers
+@cross_origin()
 def get_account_by_id(pk):
     ver = request.headers.get('ver')
 
@@ -133,6 +138,7 @@ def get_account_by_id(pk):
 @idManager.view.header_view.verify_content_type
 @token_service.validate_token
 @idManager.view.header_view.add_response_headers
+@cross_origin()
 def delete_account_by_id(pk):
     ver = request.headers.get('ver')
 

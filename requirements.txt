@@ -15,4 +15,5 @@ fake-factory==0.6.0
 raven[flask]
 coverage==4.0.2
 redis
+flask-cors==3.0.2
 codacy-coverage

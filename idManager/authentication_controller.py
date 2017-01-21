@@ -2,11 +2,13 @@ from flask import request
 from idManager.model import authentication_service, token_service, account_service, message_service
 from idManager.view import authentication_view, header_view
 from . import id_manager_blueprint
+from flask_cors import cross_origin
 
 
 @id_manager_blueprint.route('/auth/', methods=['POST'])
 @header_view.verify_content_type
 @header_view.add_response_headers
+@cross_origin()
 def auth_login():
     ver = request.headers.get('ver')
     data = request.get_json(force=True, silent=True)
@@ -40,6 +42,7 @@ def auth_login():
 @header_view.verify_content_type
 @token_service.validate_token
 @header_view.add_response_headers
+@cross_origin()
 def auth_is_valid():
     ver = request.headers.get('ver')
     token = request.headers.get('token')
@@ -63,6 +66,7 @@ def auth_is_valid():
 @header_view.verify_content_type
 @token_service.validate_token
 @header_view.add_response_headers
+@cross_origin()
 def auth_logout():
     ver = request.headers.get('ver')
     token = request.headers.get('token')

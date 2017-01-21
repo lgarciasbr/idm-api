@@ -6,12 +6,15 @@ from idManager.model.database.db_model import db
 from raven.contrib.flask import Sentry
 import coverage as cov_test
 from idManager.settings import COLLECT_LOG_ERRORS
+from flask_cors import CORS
 
 
 def create_app(config_filename):
     app = Flask(__name__)
     app.config.from_object(config_filename)
     app.register_blueprint(id_manager_blueprint)
+
+    cors = CORS(app)
 
     db.init_app(app)
     migrate = Migrate(app, db)

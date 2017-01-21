@@ -14,7 +14,8 @@ def account_change_password(http_status_code, message):
 
 
 def get_accounts(accounts, total, pages, http_status_code):
-    view = jsonify({'accounts':accounts.data,
+
+    view = jsonify({'accounts': accounts.data,
                     'total': total,
                     'pages': pages,
                     'status_code': http_status_code})
