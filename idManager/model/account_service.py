@@ -11,7 +11,7 @@ from idManager.settings import MSG_EMAIL_ALREADY_REGISTERED, MSG_ACCOUNT_SET, CH
 register_account_schema = AccountSchema(only=('email', 'password'))
 change_account_password_schema = AccountSchema(only=('password', 'new_password'))
 get_account_schema = AccountSchema(only=('email', 'url', 'created_at', 'id'))
-get_accounts_schema = AccountSchema(many=True, only=('id','email', 'url'))
+get_accounts_schema = AccountSchema(many=True, only=('email', 'url'))
 # endregion
 
 
@@ -51,7 +51,7 @@ def account_register_ver_1(email, password):
             message_service.error_500('account_register_ver_1')
 
     else:
-        message_service.error_403('account_register_ver_1: ' + MSG_EMAIL_ALREADY_REGISTERED, MSG_EMAIL_ALREADY_REGISTERED)
+        message_service.error_400('account_register_ver_1: ' + MSG_EMAIL_ALREADY_REGISTERED, MSG_EMAIL_ALREADY_REGISTERED)
 
 
 def change_account_password_ver_1(pk, password, new_password):
