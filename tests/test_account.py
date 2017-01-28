@@ -45,7 +45,7 @@ def test_try_register_a_registered_account(client):
                                   data=json.dumps(data)
                                   )
 
-    assert response_second.status_code == 403
+    assert response_second.status_code == 400
 
 
 # wrong ver
