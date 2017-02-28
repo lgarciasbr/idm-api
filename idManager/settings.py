@@ -41,6 +41,9 @@ MSG_ACCOUNT_SET = 'Account set!'
 MSG_ACCOUNT_DELETED = 'Account permanently deleted!'
 MSG_ACCOUNT_PWD_CHANGED = 'Account password changed!'
 MSG_NEWEST_VERSION = 'The newest version!'
+MSG_GROUP_ALREADY_REGISTERED = 'Account is already registered.'
+MSG_GROUP_SET = 'Group set!'
+MSG_GROUP_DELETED = 'Group permanently deleted!'
 
 # Error Messages
 MSN_400 = 'Bad Request'

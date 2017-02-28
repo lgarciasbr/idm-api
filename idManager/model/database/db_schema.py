@@ -7,6 +7,11 @@ def must_not_be_blank(data):
         raise ValidationError('Data not provided.')
 
 
+class GroupSchema(Schema):
+    id = fields.Int(dump_only=True, dump_to='_id')
+    name = fields.String(required=True, validate=must_not_be_blank)
+
+
 class AccountSchema(Schema):
     id = fields.Int(dump_only=True, dump_to='_id')
     password = fields.String(required=True, validate=must_not_be_blank)

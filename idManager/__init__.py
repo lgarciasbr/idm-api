@@ -13,4 +13,4 @@ def after_request(rv):
     return rv
 
 
-from . import error_handler_controller, home_controller, account_controller, authentication_controller
+from . import error_handler_controller, home_controller, account_controller, authentication_controller, group_controller
