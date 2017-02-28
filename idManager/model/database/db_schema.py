@@ -10,6 +10,8 @@ def must_not_be_blank(data):
 class GroupSchema(Schema):
     id = fields.Int(dump_only=True, dump_to='_id')
     name = fields.String(required=True, validate=must_not_be_blank)
+    url = fields.Url(dump_only=True, dump_to='_url')
+    created_at = fields.DateTime(dump_only=True, dump_to='_created_at')
 
 
 class AccountSchema(Schema):

@@ -1,6 +1,6 @@
 from flask import Blueprint
 
-id_manager_blueprint = Blueprint('accounts', __name__)
+id_manager_blueprint = Blueprint('api', __name__)
 
 
 @id_manager_blueprint.before_request

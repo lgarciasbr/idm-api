@@ -9,6 +9,7 @@ from flask_cors import cross_origin
 
 @id_manager_blueprint.route('/groups/', methods=['POST'])
 @idManager.view.header_view.verify_content_type
+@token_service.validate_token
 @idManager.view.header_view.add_response_headers
 @cross_origin()
 def register_group():
@@ -27,7 +28,7 @@ def register_group():
             # Bad Request
             message_service.wrong_json_data(errors)
 
-        group_data = group_service.account_register_ver_1(group_data["name"])
+        group_data = group_service.group_register_ver_1(group_data["name"])
 
         response = group_view.register_group(**group_data)
         response.status_code = group_data.get('http_status_code')
@@ -55,7 +56,7 @@ def get_groups():
                                             type=int), MAX_PER_PAGE),
                        1)
 
-        groups_data = group_service.get_accounts_ver_1(page, per_page)
+        groups_data = group_service.get_groups_ver_1(page, per_page)
 
         response = group_view.get_groups(**groups_data)
         response.status_code = groups_data.get('http_status_code')
@@ -82,9 +83,9 @@ def get_group_by_id(pk):
 
     # Use 'or ver is None' at the last version
     if ver == '1' or not ver:
-        group_data = group_service.get_account_by_id_ver_1(pk)
+        group_data = group_service.get_group_by_id_ver_1(pk)
 
-        response = group_view.get_account_by_id(**group_data)
+        response = group_view.get_group_by_id(**group_data)
         response.status_code = group_data.get('http_status_code')
 
         return response

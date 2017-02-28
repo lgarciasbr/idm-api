@@ -5,7 +5,9 @@ from idManager.model.util_service import pagination
 from idManager.settings import MSG_GROUP_ALREADY_REGISTERED, MSG_GROUP_SET, MSG_GROUP_DELETED
 
 # region Schema
-group_schema = GroupSchema(only=('name',))
+group_schema = GroupSchema(only=('name','id'))
+get_groups_schema = GroupSchema(many=True, only=('id', 'name', 'url'))
+get_group_schema = GroupSchema(only=('id', 'name', 'url', 'created_at'))
 # endregion
 
 
@@ -14,10 +16,10 @@ def group_register_ver_1(name):
 
     if group is None:
         if group_data.register_group(name):
-            account = group_data.get_group_by_name(name)
+            group = group_data.get_group_by_name(name)
 
             return {'message': MSG_GROUP_SET,
-                    'account': group_schema.dump(account),
+                    'group': group_schema.dump(group),
                     'http_status_code': 201}
         else:
             message_service.error_500('account_register_ver_1')
@@ -31,17 +33,17 @@ def get_groups_ver_1(page, per_page):
 
     pages = pagination(groups, page, per_page)
 
-    return {'accounts': group_schema.dump(groups.items),
+    return {'groups': get_groups_schema.dump(groups.items),
             'total': groups.total,
             'pages': pages,
             'http_status_code': 200}
 
 
 def get_group_by_id_ver_1(pk):
-    group = group_data.get_account_by_id(pk)
+    group = group_data.get_group_by_id(pk)
 
     if group is not None:
-        return {'account': group_schema.dump(group),
+        return {'group': get_group_schema.dump(group),
                 'http_status_code': 200}
     else:
         message_service.error_404('get_account_by_id_ver_1')
@@ -52,7 +54,7 @@ def delete_group_by_id_ver_1(pk):
     if group is not None:
         if group_data.delete_account_by_id(pk):
             return {'message': MSG_GROUP_DELETED,
-                    'account': group_schema.dump(group),
+                    'group': group_schema.dump(group),
                     'http_status_code': 202}
         else:
             message_service.error_500('delete_group_by_id_ver_1')

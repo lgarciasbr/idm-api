@@ -16,12 +16,17 @@ else:
 class Group(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=False, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=func.now())
 
     def __init__(self, name):
         self.name = name
 
     def __repr__(self):
         return self.name
+
+    @property
+    def url(self):
+        return url_for('api.get_group_by_id', pk=self.id, _external=True)
 
 
 class Account(db.Model):
@@ -39,7 +44,7 @@ class Account(db.Model):
 
     @property
     def url(self):
-        return url_for('accounts.get_account_by_id', pk=self.id, _external=True)
+        return url_for('api.get_account_by_id', pk=self.id, _external=True)
 
 
 class Token(db.Model):
