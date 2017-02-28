@@ -14,6 +14,7 @@ else:
 
 
 class Group(db.Model):
+    __tablename__ = 'idm-groups'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=False, nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=func.now())
@@ -30,6 +31,7 @@ class Group(db.Model):
 
 
 class Account(db.Model):
+    __tablename__ = 'idm-accounts'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.Binary, unique=False, nullable=False)
@@ -48,6 +50,7 @@ class Account(db.Model):
 
 
 class Token(db.Model):
+    __tablename__ = 'idm-token'
     id = db.Column(db.Integer, primary_key=True)
     account_id = db.Column(db.Integer, db.ForeignKey(Account.id), unique=False, nullable=False)
     token = db.Column(db.String(200), unique=False, nullable=False)
