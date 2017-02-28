@@ -52,7 +52,7 @@ def get_group_by_id_ver_1(pk):
 def delete_group_by_id_ver_1(pk):
     group = group_data.get_group_by_id(pk)
     if group is not None:
-        if group_data.delete_account_by_id(pk):
+        if group_data.delete_group_by_id(pk):
             return {'message': MSG_GROUP_DELETED,
                     'group': group_schema.dump(group),
                     'http_status_code': 202}
