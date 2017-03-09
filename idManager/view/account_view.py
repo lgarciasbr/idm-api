@@ -29,6 +29,14 @@ def get_account_by_id(http_status_code, account):
     return view
 
 
+def get_accounts_filter_by(accounts, http_status_code):
+
+    view = jsonify({'accounts': accounts.data,
+                    'status_code': http_status_code})
+
+    return view
+
+
 def delete_account(http_status_code, account, message):
     view = jsonify({'status_code': http_status_code, 'message': message, 'account': account.data})
 

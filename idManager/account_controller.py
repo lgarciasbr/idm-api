@@ -134,6 +134,32 @@ def get_account_by_id(pk):
         message_service.invalid_api_ver()
 
 
+@id_manager_blueprint.route('/accounts/search/', methods=['GET'])
+@idManager.view.header_view.verify_content_type
+@token_service.validate_token
+@idManager.view.header_view.add_response_headers
+@cross_origin()
+def get_accounts_filter_by():
+    ver = request.headers.get('ver')
+
+    email = request.args.get('email')
+
+    # Use 'or ver is None' at the last version
+    if ver == '1' or not ver:
+
+        accounts_data = account_service.get_accounts_filter_by_ver_1(email)
+
+        response = account_view.get_accounts_filter_by(**accounts_data)
+        response.status_code = accounts_data.get('http_status_code')
+
+        return response
+    # elif header['ver'] == '2':
+    #    return get_account_by_id_2()
+    else:
+        # Bad Request
+        message_service.invalid_api_ver()
+
+
 @id_manager_blueprint.route('/accounts/<int:pk>', methods=['DELETE'])
 @idManager.view.header_view.verify_content_type
 @token_service.validate_token

@@ -12,6 +12,7 @@ register_account_schema = AccountSchema(only=('email', 'password'))
 change_account_password_schema = AccountSchema(only=('password', 'new_password'))
 get_account_schema = AccountSchema(only=('email', 'url', 'created_at', 'id'))
 get_accounts_schema = AccountSchema(many=True, only=('email', 'url'))
+get_account_filter_by_schema = AccountSchema(only=('email', 'created_at'))
 # endregion
 
 
@@ -91,6 +92,13 @@ def get_account_by_id_ver_1(pk):
                 'http_status_code': 200}
     else:
         message_service.error_404('get_account_by_id_ver_1')
+
+
+def get_accounts_filter_by_ver_1(email):
+    accounts = account_data.get_accounts_filter_by(email)
+
+    return {'accounts': get_accounts_schema.dump(accounts),
+            'http_status_code': 200}
 
 
 def delete_account_by_id_ver_1(pk):

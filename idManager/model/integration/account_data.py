@@ -21,6 +21,14 @@ def get_account_by_email(email):
         return None
 
 
+def get_accounts_filter_by(email):
+    try:
+        return Account.query.filter(Account.email.like('%' + email + '%')).all()
+    except Exception as e:
+        message_service.exception('get_accounts_filter_by', repr(e))
+        return None
+
+
 def get_account_by_id(pk):
     try:
         return Account.query.get(pk)
