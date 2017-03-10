@@ -94,10 +94,14 @@ def get_account_by_id_ver_1(pk):
         message_service.error_404('get_account_by_id_ver_1')
 
 
-def get_accounts_filter_by_ver_1(email):
-    accounts = account_data.get_accounts_filter_by(email)
+def get_accounts_filter_by_ver_1(email, page, per_page):
+    accounts = account_data.get_accounts_filter_by(email, page, per_page)
 
-    return {'accounts': get_accounts_schema.dump(accounts),
+    pages = pagination(accounts, page, per_page)
+
+    return {'accounts': get_accounts_schema.dump(accounts.items),
+            'total': accounts.total,
+            'pages': pages,
             'http_status_code': 200}
 
 

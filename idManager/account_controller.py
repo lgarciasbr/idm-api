@@ -146,8 +146,12 @@ def get_accounts_filter_by():
 
     # Use 'or ver is None' at the last version
     if ver == '1' or not ver:
+        page = max(request.args.get('page', 1, type=int), 1)
+        per_page = max(min(request.args.get('per_page', MAX_PER_PAGE,
+                                            type=int), MAX_PER_PAGE),
+                       1)
 
-        accounts_data = account_service.get_accounts_filter_by_ver_1(email)
+        accounts_data = account_service.get_accounts_filter_by_ver_1(email, page, per_page)
 
         response = account_view.get_accounts_filter_by(**accounts_data)
         response.status_code = accounts_data.get('http_status_code')

@@ -29,9 +29,11 @@ def get_account_by_id(http_status_code, account):
     return view
 
 
-def get_accounts_filter_by(accounts, http_status_code):
+def get_accounts_filter_by(accounts, total, pages, http_status_code):
 
     view = jsonify({'accounts': accounts.data,
+                    'total': total,
+                    'pages': pages,
                     'status_code': http_status_code})
 
     return view

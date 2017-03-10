@@ -21,9 +21,9 @@ def get_account_by_email(email):
         return None
 
 
-def get_accounts_filter_by(email):
+def get_accounts_filter_by(email, page, per_page):
     try:
-        return Account.query.filter(Account.email.like('%' + email + '%')).all()
+        return Account.query.filter(Account.email.like('%' + email + '%')).paginate(page, per_page, error_out=False)
     except Exception as e:
         message_service.exception('get_accounts_filter_by', repr(e))
         return None
