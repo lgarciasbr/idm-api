@@ -27,6 +27,7 @@ def create_app(config_filename):
 
     return app
 
+
 app = create_app('idManager.settings')
 
 if __name__ == "__main__":

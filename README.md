@@ -35,15 +35,15 @@ cd lg-idm-api
 
 OSX or Linux
 ```console
-python -m venv .lg-idm
-source .lg-idm/bin/activate
+python -m venv .lg-idm-api
+source .lg-idm-api/bin/activate
 pip install -r requirements-dev.txt
 ```
 
 Windows
 ```console
-python -m venv .lg-idm
-.lgidm\Scripts\activate
+python -m venv .lg-idm-api
+.lg-idm-api\Scripts\activate
 pip install -r requirements-dev.txt
 ```
 
