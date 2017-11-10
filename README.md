@@ -27,8 +27,8 @@ You'll need the following for your development environment:
 #### 1. Clone the project:
 
 ```console
-git clone https://lgarciasbr@bitbucket.org/lgarciasbr/lg-idm.git lg-idm
-cd lg-idm
+git clone https://lgarciasbr@bitbucket.org/lgarciasbr/lg-idm-api.git
+cd lg-idm-api
 ```
 
 #### 2. Create and initialize virtualenv for the project:
