@@ -6,10 +6,6 @@
 "Identity management (IdM) describes the management of individual identities, their authentication, authorization, roles and privileges within or across system and enterprise boundaries with the goal of increasing security and productivity while decreasing cost, downtime, and repetitive tasks."
 [Wikipedia](https://en.wikipedia.org/wiki/Identity_management_system)
 
-Why?
-
-SOMETHING HERE
-
 Project RoadMap - https://trello.com/b/DJvDqM1d/mindstorm
 
 ### Development Environment
