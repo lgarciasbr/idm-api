@@ -46,7 +46,7 @@ pip install -r requirements.txt
 
 OSX or Linux
 ```console
-cp contrib/env-sample .env
+cp contrib/.env-sample .env
 ```
 
 Windows
