@@ -32,14 +32,14 @@ OSX or Linux
 ```console
 python -m venv .idm-api
 source .idm-api/bin/activate
-pip install -r requirements-dev.txt
+pip install -r requirements.txt
 ```
 
 Windows
 ```console
 python -m venv .idm-api
 .idm-api\Scripts\activate
-pip install -r requirements-dev.txt
+pip install -r requirements.txt
 ```
 
 #### 3. Configure your project, use *ini* or *.env*:
