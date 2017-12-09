@@ -1,6 +1,6 @@
 ## IdM - Identity Management
 
-https://travis-ci.org/lgarciasbr/idm-api.svg?branch=master
+[![Build Status](https://travis-ci.org/lgarciasbr/idm-api.svg?branch=master)](https://travis-ci.org/lgarciasbr/idm-api)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6c01f4786068422e9b50575b30f60373)](https://www.codacy.com/app/leandro-garcias/idm-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lgarciasbr/idm-api&amp;utm_campaign=Badge_Grade)
 
 "Identity management (IdM) describes the management of individual identities, their authentication, authorization, roles and privileges within or across system and enterprise boundaries with the goal of increasing security and productivity while decreasing cost, downtime, and repetitive tasks."
