@@ -1,4 +1,4 @@
-## LG-IdM - LG Identity Management
+## IdM - Identity Management
 
 [ ![Codeship Status for lgarciasbr/lg-idm](https://codeship.com/projects/875dd1c0-6694-0133-fcc4-72bdfd530753/status?branch=master)](https://codeship.com/projects/113803)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/ae7d8519e3cd459ab55bd82d16136056)](https://www.codacy.com/app/leandro-garcias/lg-idm?utm_source=lgarciasbr@bitbucket.org&amp;utm_medium=referral&amp;utm_content=lgarciasbr/lg-idm&amp;utm_campaign=Badge_Coverage)
