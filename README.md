@@ -27,23 +27,23 @@ You'll need the following for your development environment:
 #### 1. Clone the project:
 
 ```console
-git clone https://lgarciasbr@bitbucket.org/lgarciasbr/lg-idm-api.git
-cd lg-idm-api
+git clone https://github.com/lgarciasbr/idm-api.git
+cd idm-api
 ```
 
 #### 2. Create and initialize virtualenv for the project:
 
 OSX or Linux
 ```console
-python -m venv .lg-idm-api
-source .lg-idm-api/bin/activate
+python -m venv .idm-api
+source .idm-api/bin/activate
 pip install -r requirements-dev.txt
 ```
 
 Windows
 ```console
-python -m venv .lg-idm-api
-.lg-idm-api\Scripts\activate
+python -m venv .idm-api
+.idm-api\Scripts\activate
 pip install -r requirements-dev.txt
 ```
 
@@ -56,7 +56,7 @@ cp contrib/env-sample .env
 
 Windows
 ```console
-cp contrib/settings-sample.ini settings.ini
+copy contrib/settings-sample.ini settings.ini
 ```
 
 Obs.: Use environment variables on production.
