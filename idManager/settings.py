@@ -25,8 +25,8 @@ CORS_HEADERS = config('SENTRY_DSN', default='Content-Type')
 ##############
 
 # Project
-PROJECT_NAME = 'LG-IdM'
-PROJECT_DESCRIPTION = 'LG - Identity Manager'
+PROJECT_NAME = 'IdM'
+PROJECT_DESCRIPTION = 'Identity Manager'
 
 # General Messages
 MSG_LOGIN = 'You were logged in!'
