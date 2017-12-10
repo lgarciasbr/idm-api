@@ -1,6 +1,7 @@
 .env
 .idea
-.lg-idm-api
+.idm-api/
 .cache/
 *.pyc
 coverage
+app.db

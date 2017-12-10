@@ -4,5 +4,6 @@ python:
 install:
     - cp contrib/.env-sample .env
     - pip install -q -r requirements.txt
+    - python manage.py db upgrade
 script:
     - python manage.py test
