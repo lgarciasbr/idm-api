@@ -61,7 +61,7 @@ def data_email_pwd():
 
 # I hope 'NotExistDomain1974.com' do not exist. ;-)
 def data_deliverability_email_pwd():
-    return {'email': 'admin@NotExistDomain1974.com', 'password': PWD_TEST}
+    return {'email': 'admin13@NotExistDomain1974.com', 'password': PWD_TEST}
 
 
 def data_no_email_pwd():
