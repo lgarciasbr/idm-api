@@ -58,12 +58,6 @@ Obs.: Use environment variables on production.
 
 ### Management Commands
 
-The project management commands can be listed with the following command:
-
-```console
-python manage.py
-```
-
 #### 1. Create or upgrade database tables:
 
 ```console
@@ -76,6 +70,11 @@ python manage.py db upgrade
 python manage.py test
 ```
 
+Other project management commands can be listed with the following command:
+
+```console
+python manage.py
+```
 
 #### 3. Run your project:
 
