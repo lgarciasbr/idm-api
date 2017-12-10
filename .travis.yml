@@ -7,3 +7,5 @@ install:
     - python manage.py db upgrade
 script:
     - python manage.py test
+notifications:
+    slack: estatera:4FRVMHc9QBAHDcLxmrnGD4dU
