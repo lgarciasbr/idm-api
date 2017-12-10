@@ -2,6 +2,7 @@
   "environments": {
     "test": {
       "scripts": {
+        "postdeploy": "python manage.py db upgrade",
         "test": "python manage.py test"
       }
     }
