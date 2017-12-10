@@ -1,0 +1,10 @@
+{
+  "environments": {
+    "test": {
+      "scripts": {
+        "test-setup": "python manage.py db upgrade",
+        "test": "python manage.py test"
+      }
+    }
+  }
+}
