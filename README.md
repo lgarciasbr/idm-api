@@ -57,30 +57,30 @@ copy contrib/settings-sample.ini settings.ini
 
 Obs.: Use environment variables on production.
 
-### Management Commands
-
-#### 1. Create or upgrade database tables:
+#### 4. Create or upgrade database tables:
 
 ```console
 python manage.py db upgrade
 ```
 
-#### 2. Test your project:
+#### 5. Test your project:
 
 ```console
 python manage.py test
+```
+
+### Management Commands
+
+#### 1. Run your project:
+
+```console
+python manage.py runserver
 ```
 
 Other project management commands can be listed with the following command:
 
 ```console
 python manage.py
-```
-
-#### 3. Run your project:
-
-```console
-python manage.py runserver
 ```
 
 ##
