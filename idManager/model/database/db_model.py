@@ -22,7 +22,7 @@ class Group(db.Model):
     def __init__(self, name):
         self.name = name
 
-    def __repr__(self):
+    def __str__(self):
         return self.name
 
     @property
@@ -41,7 +41,7 @@ class Account(db.Model):
         self.email = email
         self.password = password
 
-    def __repr__(self):
+    def __str__(self):
         return self.email
 
     @property
@@ -61,5 +61,5 @@ class Token(db.Model):
         self.account = account
         self.token = token
 
-    def __repr__(self):
+    def __str__(self):
         return self.token
