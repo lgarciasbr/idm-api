@@ -1,6 +1,9 @@
 language: python
 python:
     - "3.6.3"
+branches:
+  only:
+    - master
 install:
     - cp contrib/.env-sample .env
     - pip install -q -r requirements.txt
@@ -8,4 +11,4 @@ install:
 script:
     - python manage.py test
 notifications:
-    slack: estatera:4FRVMHc9QBAHDcLxmrnGD4dU
+    slack: $slack
