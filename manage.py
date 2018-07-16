@@ -43,7 +43,7 @@ if __name__ == "__main__":
 
     @manager.command
     def coverage():
-        """Runs coverage tests"""
+        """Runs local coverage tests"""
         cov = cov_test.Coverage()
         cov.start()
 
