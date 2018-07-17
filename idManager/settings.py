@@ -26,7 +26,7 @@ CORS_HEADERS = config('SENTRY_DSN', default='Content-Type')
 
 # Project
 PROJECT_NAME = 'IdM'
-PROJECT_DESCRIPTION = 'Identity Manager'
+PROJECT_DESCRIPTION = 'Identity Manager - test'
 
 # General Messages
 MSG_LOGIN = 'You were logged in!'
